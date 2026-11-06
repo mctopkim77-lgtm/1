@@ -1,0 +1,5023 @@
+<title>JPT 독해 2주 코스</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: 한 줄 읽기 화면. 위에 14일 스트립(고정), 아래에 카드 → 퀴즈 → 체크 순서 */
+:root{
+  --bg:#F4F5FA; --surface:#FFFFFF; --fg:#1A2036; --muted:#5B6382; --line:#DDE0EC;
+  --accent:#2E48A3; --accent-ink:#FFFFFF; --accent-soft:#E6EAFA;
+  --ok:#1F7A4D; --ok-soft:#E1F3E9; --bad:#B3322B; --bad-soft:#FBE7E5;
+  --f-body:"Noto Sans KR","Noto Sans JP",system-ui,sans-serif;
+  --f-jp:"Noto Sans JP","Noto Sans KR",system-ui,sans-serif;
+  --f-display:"Noto Sans JP","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101423; --surface:#181D31; --fg:#E8EAF4; --muted:#9AA3C4; --line:#2A3150;
+    --accent:#8EA2F2; --accent-ink:#0F1428; --accent-soft:#222B52;
+    --ok:#6FD0A0; --ok-soft:#173528; --bad:#F08A82; --bad-soft:#40201F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101423; --surface:#181D31; --fg:#E8EAF4; --muted:#9AA3C4; --line:#2A3150;
+  --accent:#8EA2F2; --accent-ink:#0F1428; --accent-soft:#222B52;
+  --ok:#6FD0A0; --ok-soft:#173528; --bad:#F08A82; --bad-soft:#40201F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.65 var(--f-body);
+  padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto}
+.jp{font-family:var(--f-jp)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header{padding:20px 0 14px}
+.kicker{font-size:12px;letter-spacing:.08em;color:var(--muted);margin:0 0 4px}
+h1{font:700 25px/1.3 var(--f-display);margin:0 0 10px;text-wrap:balance}
+.prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.prog b{color:var(--fg);font-variant-numeric:tabular-nums}
+
+details.ov{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+details.ov summary{cursor:pointer;font-weight:500;font-size:14px}
+.ov ul{margin:10px 0 2px;padding:0;list-style:none;display:grid;gap:6px;font-size:13.5px}
+.ov li{display:grid;grid-template-columns:76px 1fr;gap:8px}
+.ov li span{color:var(--accent);font-weight:700}
+.ov p{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+
+ruby rt{font-size:.5em;font-weight:400;color:var(--muted);letter-spacing:0;font-family:var(--f-jp)}
+.nofuri rt{display:none}
+body:not(.nofuri) .ex,body:not(.nofuri) .ctx,body:not(.nofuri) .qt,body:not(.nofuri) .opt{line-height:2.1}
+body:not(.nofuri) .pat,body:not(.nofuri) .mean,body:not(.nofuri) .tip,body:not(.nofuri) .exp{line-height:1.95}
+.plan{margin-top:10px;font-size:13.5px}
+.plan .rule{margin:0 0 10px;padding:9px 11px;border-radius:8px;background:var(--accent-soft);line-height:1.7}
+.plan h4{margin:16px 0 4px;font-size:14px;color:var(--accent)}
+.prow{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:7px 0;border-top:1px solid var(--line);line-height:1.6}
+.prow b{color:var(--muted)}
+.prow.light b{color:var(--ok)}
+.prow a{color:var(--accent);font-weight:700;text-decoration:underline;padding:2px 3px}
+.plan small{display:block;color:var(--muted);font-size:12px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
+.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.days::-webkit-scrollbar{display:none}
+.dbtn{flex:0 0 auto;width:48px;height:52px;border-radius:10px;border:1px solid var(--line);background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;gap:2px;position:relative}
+.dbtn b{font-size:16px;font-variant-numeric:tabular-nums}
+.dbtn i{font-style:normal;font-size:10.5px;color:var(--muted)}
+.dbtn.done::after{content:"✓";position:absolute;top:2px;right:5px;font-size:10px;color:var(--ok);font-weight:700}
+.dbtn.cur{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.dbtn.cur i{color:var(--accent-ink);opacity:.85}
+.dbtn.cur.done::after{color:var(--accent-ink)}
+
+.dhead{padding:20px 0 6px}
+.tag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px;margin-right:6px}
+.min{font-size:12.5px;color:var(--muted)}
+h2{font:700 21px/1.35 var(--f-display);margin:8px 0 6px;text-wrap:balance}
+.goal{margin:0;color:var(--muted);font-size:14px}
+h3{font-size:13px;letter-spacing:.06em;color:var(--muted);margin:26px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tog{font-size:12.5px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;min-height:34px;letter-spacing:0}
+.tog[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.hint{font-size:12.5px;color:var(--muted);margin:-4px 0 10px}
+
+.cards{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left;width:100%;display:block}
+.pat{font:700 20px/1.4 var(--f-display);color:var(--accent);margin:0}
+.mean{margin:2px 0 0;font-size:14.5px;font-weight:500;overflow-wrap:anywhere}
+.ex{margin:10px 0 0;padding:9px 11px;border-radius:8px;background:var(--accent-soft);font-family:var(--f-jp);font-size:15px;line-height:1.7;overflow-wrap:anywhere}
+.ex b{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent)}
+.kr{display:block;margin-top:2px;font-family:var(--f-body);font-size:13px;color:var(--muted)}
+.tip{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.tip::before{content:"기억 포인트 ";font-weight:700;color:var(--fg)}
+.rev{transition:filter .2s}
+.hide .card:not(.shown) .rev{filter:blur(7px);user-select:none}
+@media (prefers-reduced-motion:reduce){.rev,.bar i{transition:none}}
+
+.q{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.qn{font-size:12px;font-weight:700;color:var(--accent);margin:0 0 4px}
+.ctx{margin:0 0 10px;padding:10px 12px;border-radius:8px;background:var(--accent-soft);font-family:var(--f-jp);font-size:14.5px;line-height:1.8}
+.qt{margin:0 0 10px;font-family:var(--f-jp);font-size:16px;line-height:1.7;overflow-wrap:anywhere}
+.opts{display:grid;gap:8px}
+.opt{min-height:46px;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-family:var(--f-jp);font-size:15px;line-height:1.5}
+.ol{font-family:var(--f-body);font-weight:700;color:var(--accent);margin-right:.3em}
+.qt u{text-decoration-thickness:2px;text-underline-offset:5px}
+.opt u{text-decoration-thickness:2px;text-underline-offset:4px}
+.opt:active{background:var(--accent-soft)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.q.done .opt{cursor:default}
+.exp{margin:10px 0 0;font-size:13.5px;color:var(--fg)}
+.exp b{color:var(--accent)}
+
+.tasks{display:grid;gap:8px}
+.task{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;cursor:pointer}
+.task input{width:22px;height:22px;accent-color:var(--accent);flex:0 0 auto}
+.task span{font-size:14px}
+.task:has(input:checked) span{color:var(--muted);text-decoration:line-through}
+
+.pager{display:flex;gap:10px;margin-top:28px}
+.pager button{flex:1;min-height:48px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:500}
+.pager .next{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.pager button[disabled]{opacity:.35;cursor:default}
+.reset{margin-top:22px;text-align:center}
+.reset button{background:none;border:0;color:var(--muted);font-size:12.5px;text-decoration:underline;min-height:40px}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">JPT 독해 PART 5–8 · 2주 완성</p>
+    <h1>JPT 독해 2주 코스</h1>
+    <div class="prog" aria-live="polite"><div class="bar"><i id="barfill"></i></div><span><b id="pcount">0</b> / 14일 완료</span></div>
+    <div style="margin-top:12px"><button type="button" class="tog" id="furibtn" aria-pressed="true">후리가나 보기</button></div>
+    <details class="ov">
+      <summary>2주 전체 일정 보기</summary>
+      <ul>
+        <li><span>1~7일</span>문법 빈칸 (실제 시험의 Part 7 공란 메우기형): 혼동 쌍, 역접, 시간, 추측, 부정, 경향, 경어</li>
+        <li><span>8~9일</span>Part 6 오문 정정 (틀리는 유형, 호응 부사)</li>
+        <li><span>10~11일</span>Part 7 공란 독해 (접속사, 풀이 순서, 연어)</li>
+        <li><span>12~13일</span>Part 8 독해 (주제 찾기, 지시어, 혼합 실전)</li>
+        <li><span>14일</span>총복습과 시험 당일 요령</li>
+        <li><span>보너스</span>15~16일 어휘와 장문, 17~23일 RC 보강(어휘 2일, 추가 문법, 오문 정정, 혼합, 장문 3편, 시간 재고 풀기)</li>
+        <li><span>Part 5</span>24~26일 정답 찾기(한자 읽기·표기·같은 뜻·용법), 27일 공란 메우기 고급 문법</li>
+        <li><span>복습</span>맨 끝 ‘복’ 탭에서 틀린 문제만 다시 풀기</li>
+      </ul>
+      <p>하루 40분 기준입니다. 파트 구성은 가지고 계신 기출 교재 기준(5 정답 찾기, 6 오문 정정, 7 공란 메우기, 8 독해)입니다. 5는 한자 읽기·표기·같은 뜻·같은 용법이라 24~26일차에 따로 만들었습니다.</p>
+    </details>
+    <details class="ov" id="planbox">
+      <summary>4주 일정표 (월~일, 하루 2~3시간)</summary>
+      <div class="plan" id="plan"></div>
+    </details>
+  </header>
+
+  <div class="nav"><div class="days" id="days" role="tablist" aria-label="일차 선택"></div></div>
+  <main id="panel"></main>
+  <div class="reset"><button id="reset" type="button">진행 기록 지우기</button></div>
+</div>
+
+<script>
+var DAYS = [
+ {
+  "n": 1,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "원인·목적 표현",
+  "min": 40,
+  "goal": "‘덕분/탓’, ‘~하기 위해/~하도록’처럼 비슷해 보이는 표현을 구분합니다.",
+  "cards": [
+   {
+    "p": "~おかげで",
+    "m": "~덕분에 (좋은 결과)",
+    "ex": "<ruby>先生<rt>せんせい</rt></ruby>の<ruby>説明<rt>せつめい</rt></ruby><b>のおかげで</b>、<ruby>試験<rt>しけん</rt></ruby>に<ruby>合格<rt>ごうかく</rt></ruby>できた。",
+    "kr": "선생님 설명 덕분에 시험에 합격했다.",
+    "tip": "짝꿍은 ~せいで. 결과가 좋으면 おかげ."
+   },
+   {
+    "p": "~せいで",
+    "m": "~탓에 (나쁜 결과)",
+    "ex": "<ruby>雨<rt>あめ</rt></ruby><b>のせいで</b>、<ruby>試合<rt>しあい</rt></ruby>が<ruby>中止<rt>ちゅうし</rt></ruby>になった。",
+    "kr": "비 때문에 경기가 취소됐다."
+   },
+   {
+    "p": "~ために",
+    "m": "~하기 위해 (의지 동사) / ~때문에",
+    "ex": "<ruby>合格<rt>ごうかく</rt></ruby>する<b>ために</b>、<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>している。",
+    "kr": "합격하기 위해 매일 공부한다.",
+    "tip": "앞이 내 의지로 하는 동사면 ために."
+   },
+   {
+    "p": "~ように",
+    "m": "~하도록 (가능·부정·무의지)",
+    "ex": "<ruby>忘<rt>わす</rt></ruby>れない<b>ように</b>、メモを<ruby>取<rt>と</rt></ruby>る。",
+    "kr": "잊지 않도록 메모한다.",
+    "tip": "~ない, 가능형, 상태 앞에는 ように."
+   },
+   {
+    "p": "~ものだから",
+    "m": "~하는 바람에 (변명)",
+    "ex": "<ruby>道<rt>みち</rt></ruby>が<ruby>混<rt>こ</rt></ruby>んでいた<b>ものだから</b>、<ruby>遅<rt>おく</rt></ruby>れてしまいました。",
+    "kr": "길이 막혀서 늦고 말았습니다."
+   },
+   {
+    "p": "~ばかりに",
+    "m": "~한 탓에 (후회)",
+    "ex": "<ruby>一言<rt>ひとこと</rt></ruby><ruby>多<rt>おお</rt></ruby>かった<b>ばかりに</b>、<ruby>彼<rt>かれ</rt></ruby>を<ruby>怒<rt>おこ</rt></ruby>らせてしまった。",
+    "kr": "한마디 더 한 탓에 그를 화나게 했다."
+   },
+   {
+    "p": "~だけに",
+    "m": "~인 만큼",
+    "ex": "<ruby>期待<rt>きたい</rt></ruby>していた<b>だけに</b>、<ruby>結果<rt>けっか</rt></ruby>が<ruby>残念<rt>ざんねん</rt></ruby>だ。",
+    "kr": "기대했던 만큼 결과가 아쉽다."
+   },
+   {
+    "p": "~からには / ~<ruby>以上<rt>いじょう</rt></ruby>(は)",
+    "m": "~한 이상은",
+    "ex": "やると<ruby>決<rt>き</rt></ruby>めた<b>からには</b>、<ruby>最後<rt>さいご</rt></ruby>までやる。",
+    "kr": "하기로 정한 이상 끝까지 한다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>の<ruby>指導<rt>しどう</rt></ruby>（　　）、<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>が<ruby>上達<rt>じょうたつ</rt></ruby>した。",
+    "opts": [
+     "おかげで",
+     "せいで",
+     "ばかりに",
+     "ように"
+    ],
+    "a": 0,
+    "e": "좋은 결과이므로 <b>おかげで</b>."
+   },
+   {
+    "q": "<ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby>をしない（　　）、<ruby>前<rt>まえ</rt></ruby>の<ruby>晩<rt>ばん</rt></ruby>に<ruby>準備<rt>じゅんび</rt></ruby>する。",
+    "opts": [
+     "ために",
+     "ように",
+     "だけに",
+     "せいで"
+    ],
+    "a": 1,
+    "e": "‘しない’처럼 부정 표현 뒤에는 <b>ように</b>."
+   },
+   {
+    "q": "<ruby>無理<rt>むり</rt></ruby>をした（　　）、<ruby>病気<rt>びょうき</rt></ruby>になってしまった。",
+    "opts": [
+     "おかげで",
+     "からには",
+     "せいで",
+     "ように"
+    ],
+    "a": 2,
+    "e": "나쁜 결과이므로 <b>せいで</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>が<ruby>手伝<rt>てつだ</rt></ruby>ってくれた（　　）、<ruby>早<rt>はや</rt></ruby>く<ruby>終<rt>お</rt></ruby>わった。",
+    "opts": [
+     "せいで",
+     "ばかりに",
+     "ように",
+     "おかげで"
+    ],
+    "a": 3,
+    "e": "좋은 결과이므로 <b>おかげで</b>."
+   },
+   {
+    "q": "<ruby>健康<rt>けんこう</rt></ruby>の（　　）、<ruby>毎朝<rt>まいあさ</rt></ruby><ruby>走<rt>はし</rt></ruby>っている。",
+    "opts": [
+     "ために",
+     "ように",
+     "せいで",
+     "からには"
+    ],
+    "a": 0,
+    "e": "명사+の 뒤에서 목적을 말할 때는 <b>ために</b>."
+   },
+   {
+    "q": "<ruby>道<rt>みち</rt></ruby>が<ruby>混<rt>こ</rt></ruby>んでいた（　　）、<ruby>約束<rt>やくそく</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れてしまった。",
+    "opts": [
+     "おかげで",
+     "ものだから",
+     "からには",
+     "ように"
+    ],
+    "a": 1,
+    "e": "변명처럼 이유를 말할 때는 <b>ものだから</b>."
+   },
+   {
+    "q": "<ruby>医者<rt>いしゃ</rt></ruby>になる（　　）、<ruby>毎日<rt>まいにち</rt></ruby><ruby>遅<rt>おそ</rt></ruby>くまで<ruby>勉強<rt>べんきょう</rt></ruby>している。",
+    "opts": [
+     "せいで",
+     "おかげで",
+     "ために",
+     "だけに"
+    ],
+    "a": 2,
+    "e": "의지로 하는 동작의 목적은 <b>ために</b>."
+   },
+   {
+    "q": "<ruby>風邪<rt>かぜ</rt></ruby>をひかない（　　）、<ruby>手<rt>て</rt></ruby>を<ruby>洗<rt>あら</rt></ruby>いましょう。",
+    "opts": [
+     "おかげで",
+     "ばかりに",
+     "からには",
+     "ように"
+    ],
+    "a": 3,
+    "e": "‘~ない’ 뒤의 목적은 <b>ように</b>."
+   },
+   {
+    "q": "プロになった（　　）、<ruby>練習<rt>れんしゅう</rt></ruby>は<ruby>続<rt>つづ</rt></ruby>けなければならない。",
+    "opts": [
+     "からには",
+     "せいで",
+     "ように",
+     "おかげで"
+    ],
+    "a": 0,
+    "e": "‘~한 이상은’ 은 <b>からには</b>."
+   },
+   {
+    "q": "<ruby>一人<rt>ひとり</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>った（　　）、<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ってしまった。",
+    "opts": [
+     "おかげで",
+     "ばかりに",
+     "だけに",
+     "ように"
+    ],
+    "a": 1,
+    "e": "후회하는 나쁜 결과는 <b>ばかりに</b>."
+   }
+  ]
+ },
+ {
+  "n": 2,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "역접·양보 표현",
+  "min": 40,
+  "goal": "‘~인데도, ~라고는 해도, ~해봤자’를 문장 맛으로 구분합니다.",
+  "cards": [
+   {
+    "p": "~のに",
+    "m": "~인데도 (예상과 다른 결과, 불만)",
+    "ex": "<ruby>勉強<rt>べんきょう</rt></ruby>した<b>のに</b>、<ruby>点<rt>てん</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>かった。",
+    "kr": "공부했는데도 점수가 나빴다."
+   },
+   {
+    "p": "~にもかかわらず",
+    "m": "~에도 불구하고 (딱딱한 글)",
+    "ex": "<ruby>雨<rt>あめ</rt></ruby><b>にもかかわらず</b>、<ruby>大勢<rt>おおぜい</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>が<ruby>集<rt>あつ</rt></ruby>まった。",
+    "kr": "비가 오는데도 많은 사람이 모였다."
+   },
+   {
+    "p": "~ものの",
+    "m": "~이긴 하지만",
+    "ex": "<ruby>免許<rt>めんきょ</rt></ruby>は<ruby>取<rt>と</rt></ruby>った<b>ものの</b>、<ruby>運転<rt>うんてん</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>がない。",
+    "kr": "면허는 땄지만 운전할 기회가 없다."
+   },
+   {
+    "p": "~とはいえ",
+    "m": "~라고는 해도",
+    "ex": "<ruby>春<rt>はる</rt></ruby><b>とはいえ</b>、まだ<ruby>寒<rt>さむ</rt></ruby>い。",
+    "kr": "봄이라고는 해도 아직 춥다."
+   },
+   {
+    "p": "~くせに",
+    "m": "~주제에 (비난)",
+    "ex": "<ruby>知<rt>し</rt></ruby>っている<b>くせに</b>、<ruby>教<rt>おし</rt></ruby>えてくれない。",
+    "kr": "알면서도 가르쳐 주지 않는다."
+   },
+   {
+    "p": "~ながら(も)",
+    "m": "~이면서도",
+    "ex": "<ruby>狭<rt>せま</rt></ruby>い<b>ながらも</b>、<ruby>楽<rt>たの</rt></ruby>しい<ruby>我<rt>わ</rt></ruby>が<ruby>家<rt>や</rt></ruby>だ。",
+    "kr": "좁지만 즐거운 우리 집이다."
+   },
+   {
+    "p": "~つつも",
+    "m": "~하면서도 (글말)",
+    "ex": "<ruby>悪<rt>わる</rt></ruby>いと<ruby>思<rt>おも</rt></ruby>い<b>つつも</b>、<ruby>嘘<rt>うそ</rt></ruby>をついた。",
+    "kr": "나쁘다고 생각하면서도 거짓말을 했다."
+   },
+   {
+    "p": "~たところで",
+    "m": "~해봤자",
+    "ex": "<ruby>今<rt>いま</rt></ruby>から<ruby>急<rt>いそ</rt></ruby>い<b>だところで</b>、<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わない。",
+    "kr": "지금 서둘러봤자 늦는다.",
+    "tip": "뒤에는 ‘소용없다’ 계열이 온다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>忙<rt>いそが</rt></ruby>しい（　　）、<ruby>毎日<rt>まいにち</rt></ruby>ジムに<ruby>通<rt>かよ</rt></ruby>っている。",
+    "opts": [
+     "おかげで",
+     "からには",
+     "にもかかわらず",
+     "ばかりに"
+    ],
+    "a": 2,
+    "e": "바쁜데도 다닌다는 역접. <b>にもかかわらず</b>."
+   },
+   {
+    "q": "<ruby>今<rt>いま</rt></ruby>さら<ruby>謝<rt>あやま</rt></ruby>った（　　）、<ruby>許<rt>ゆる</rt></ruby>してもらえないだろう。",
+    "opts": [
+     "ものの",
+     "つつ",
+     "ながら",
+     "ところで"
+    ],
+    "a": 3,
+    "e": "뒤가 ‘소용없다’ 느낌이면 <b>~たところで</b>."
+   },
+   {
+    "q": "<ruby>立春<rt>りっしゅん</rt></ruby>（　　）、まだ<ruby>寒<rt>さむ</rt></ruby>い<ruby>日<rt>ひ</rt></ruby>が<ruby>続<rt>つづ</rt></ruby>く。",
+    "opts": [
+     "とはいえ",
+     "ために",
+     "ついでに",
+     "ものだから"
+    ],
+    "a": 0,
+    "e": "‘~라고는 해도’ 는 <b>とはいえ</b>."
+   },
+   {
+    "q": "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っている（　　）、<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>たずに<ruby>出<rt>で</rt></ruby>かけた。",
+    "opts": [
+     "ために",
+     "のに",
+     "おかげで",
+     "からには"
+    ],
+    "a": 1,
+    "e": "예상과 다른 행동이므로 <b>のに</b>."
+   },
+   {
+    "q": "<ruby>頭<rt>あたま</rt></ruby>ではわかっている（　　）、<ruby>行動<rt>こうどう</rt></ruby>に<ruby>移<rt>うつ</rt></ruby>せない。",
+    "opts": [
+     "おかげで",
+     "ために",
+     "ものの",
+     "ばかりか"
+    ],
+    "a": 2,
+    "e": "‘~이긴 하지만’ 은 <b>ものの</b>."
+   },
+   {
+    "q": "この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>（　　）、やりがいがある。",
+    "opts": [
+     "からには",
+     "たところで",
+     "おかげで",
+     "ながらも"
+    ],
+    "a": 3,
+    "e": "‘~이면서도’ 는 <b>ながらも</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>も<ruby>知<rt>し</rt></ruby>らない（　　）、えらそうに<ruby>話<rt>はな</rt></ruby>す。",
+    "opts": [
+     "くせに",
+     "おかげで",
+     "つつも",
+     "たところで"
+    ],
+    "a": 0,
+    "e": "비난하는 말투는 <b>くせに</b>."
+   },
+   {
+    "q": "やめたほうがいいと<ruby>思<rt>おも</rt></ruby>い（　　）、つい<ruby>食<rt>た</rt></ruby>べてしまった。",
+    "opts": [
+     "たところで",
+     "つつも",
+     "くせに",
+     "とはいえ"
+    ],
+    "a": 1,
+    "e": "‘~하면서도’ 는 <b>つつも</b> (ます형 어간에 붙음)."
+   },
+   {
+    "q": "<ruby>今<rt>いま</rt></ruby>さら<ruby>後悔<rt>こうかい</rt></ruby>した（　　）、もう<ruby>遅<rt>おそ</rt></ruby>い。",
+    "opts": [
+     "おかげで",
+     "くせに",
+     "ところで",
+     "つつも"
+    ],
+    "a": 2,
+    "e": "‘~해봤자’ 는 <b>~たところで</b>."
+   },
+   {
+    "q": "<ruby>約束<rt>やくそく</rt></ruby>した（　　）、<ruby>彼<rt>かれ</rt></ruby>は<ruby>来<rt>こ</rt></ruby>なかった。",
+    "opts": [
+     "おかげで",
+     "からには",
+     "ように",
+     "のに"
+    ],
+    "a": 3,
+    "e": "예상과 다른 결과는 <b>のに</b>."
+   }
+  ]
+ },
+ {
+  "n": 3,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "시간·순서 표현",
+  "min": 40,
+  "goal": "うちに/間に, ところだ/たばかり 같은 시간 표현의 차이를 잡습니다.",
+  "cards": [
+   {
+    "p": "~うちに",
+    "m": "~하는 동안에 (변하기 전에 해둔다)",
+    "ex": "<ruby>若<rt>わか</rt></ruby>い<b>うちに</b>、いろいろ<ruby>経験<rt>けいけん</rt></ruby>したい。",
+    "kr": "젊을 때 여러 경험을 하고 싶다.",
+    "tip": "<ruby>冷<rt>さ</rt></ruby>めないうちに처럼 ‘~ない+うちに’도 자주 나온다."
+   },
+   {
+    "p": "~<ruby>間<rt>あいだ</rt></ruby>に",
+    "m": "~하는 사이에",
+    "ex": "<ruby>母<rt>はは</rt></ruby>が<ruby>寝<rt>ね</rt></ruby>ている<b><ruby>間<rt>あいだ</rt></ruby>に</b>、<ruby>掃除<rt>そうじ</rt></ruby>をした。",
+    "kr": "엄마가 자는 사이에 청소했다."
+   },
+   {
+    "p": "~ところだ",
+    "m": "~하려는 참 / ~하는 중 / 막 ~한 참",
+    "ex": "<ruby>今<rt>いま</rt></ruby>、<ruby>出<rt>で</rt></ruby>かける<b>ところだ</b>。",
+    "kr": "지금 막 나가려던 참이다.",
+    "tip": "기본형=직전, ている=진행, た=직후."
+   },
+   {
+    "p": "~たばかり",
+    "m": "막 ~했다 (심리적으로 방금)",
+    "ex": "<ruby>日本<rt>にほん</rt></ruby>に<ruby>来<rt>き</rt></ruby><b>たばかり</b>で、まだ<ruby>慣<rt>な</rt></ruby>れていない。",
+    "kr": "일본에 막 와서 아직 익숙하지 않다."
+   },
+   {
+    "p": "~たとたん(に)",
+    "m": "~하자마자 (뜻밖의 일)",
+    "ex": "<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby><b>たとたん</b>、<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>り<ruby>出<rt>だ</rt></ruby>した。",
+    "kr": "집을 나서자마자 비가 내리기 시작했다.",
+    "tip": "뒤에 내 의지 행동은 못 온다."
+   },
+   {
+    "p": "~<ruby>次第<rt>しだい</rt></ruby>",
+    "m": "~하는 대로 (의지·앞으로)",
+    "ex": "<ruby>着<rt>つ</rt></ruby>き<b><ruby>次第<rt>しだい</rt></ruby></b>、<ruby>連絡<rt>れんらく</rt></ruby>します。",
+    "kr": "도착하는 대로 연락하겠습니다."
+   },
+   {
+    "p": "~<ruby>最中<rt>さいちゅう</rt></ruby>に",
+    "m": "한창 ~하는 중에",
+    "ex": "<ruby>会議<rt>かいぎ</rt></ruby>の<b><ruby>最中<rt>さいちゅう</rt></ruby>に</b>、<ruby>電話<rt>でんわ</rt></ruby>が<ruby>鳴<rt>な</rt></ruby>った。",
+    "kr": "회의 한창 중에 전화가 울렸다."
+   },
+   {
+    "p": "~たびに",
+    "m": "~할 때마다",
+    "ex": "この<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>見<rt>み</rt></ruby>る<b>たびに</b>、<ruby>昔<rt>むかし</rt></ruby>を<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>だ</rt></ruby>す。",
+    "kr": "이 사진을 볼 때마다 옛날이 떠오른다."
+   },
+   {
+    "p": "~てからでないと",
+    "m": "~한 후가 아니면",
+    "ex": "<ruby>確認<rt>かくにん</rt></ruby>し<b>てからでないと</b>、お<ruby>答<rt>こた</rt></ruby>えできません。",
+    "kr": "확인한 뒤가 아니면 답할 수 없습니다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "お<ruby>茶<rt>ちゃ</rt></ruby>が<ruby>冷<rt>さ</rt></ruby>めない（　　）、<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がってください。",
+    "opts": [
+     "うちに",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に",
+     "とたん"
+    ],
+    "a": 0,
+    "e": "변하기 전에 하라는 뜻이라 <b>うちに</b>."
+   },
+   {
+    "q": "<ruby>席<rt>せき</rt></ruby>に<ruby>着<rt>つ</rt></ruby>いた（　　）、<ruby>先生<rt>せんせい</rt></ruby>が<ruby>話<rt>はな</rt></ruby>し<ruby>始<rt>はじ</rt></ruby>めた。",
+    "opts": [
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "とたんに",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に",
+     "うちに"
+    ],
+    "a": 1,
+    "e": "~하자마자는 <b>~たとたんに</b>."
+   },
+   {
+    "q": "<ruby>駅<rt>えき</rt></ruby>に<ruby>着<rt>つ</rt></ruby>き（　　）、<ruby>電話<rt>でんわ</rt></ruby>します。",
+    "opts": [
+     "とたん",
+     "ばかり",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に"
+    ],
+    "a": 2,
+    "e": "의지가 들어간 ‘도착하는 대로’는 <b><ruby>次第<rt>しだい</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>授業<rt>じゅぎょう</rt></ruby>の（　　）、<ruby>携帯<rt>けいたい</rt></ruby>が<ruby>鳴<rt>な</rt></ruby>ってしまった。",
+    "opts": [
+     "うちに",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "ばかり",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に"
+    ],
+    "a": 3,
+    "e": "‘한창 ~하는 중에’ 는 <b><ruby>最中<rt>さいちゅう</rt></ruby>に</b>."
+   },
+   {
+    "q": "この<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む（　　）、いつも<ruby>泣<rt>な</rt></ruby>いてしまう。",
+    "opts": [
+     "たびに",
+     "とたん",
+     "ばかり",
+     "<ruby>次第<rt>しだい</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘~할 때마다’ 는 <b>たびに</b>."
+   },
+   {
+    "q": "<ruby>昼休<rt>ひるやす</rt></ruby>みの（　　）、<ruby>銀行<rt>ぎんこう</rt></ruby>へ<ruby>行<rt>い</rt></ruby>ってきた。",
+    "opts": [
+     "とたん",
+     "<ruby>間<rt>あいだ</rt></ruby>に",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "ばかり"
+    ],
+    "a": 1,
+    "e": "‘~하는 사이에’ 는 <b><ruby>間<rt>あいだ</rt></ruby>に</b>."
+   },
+   {
+    "q": "ちょうど<ruby>食事<rt>しょくじ</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>める（　　）です。",
+    "opts": [
+     "ばかり",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>",
+     "ところ",
+     "<ruby>間<rt>あいだ</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘막 ~하려는 참’ 은 <b>ところ</b>."
+   },
+   {
+    "q": "お<ruby>金<rt>かね</rt></ruby>を<ruby>払<rt>はら</rt></ruby>って（　　）、<ruby>商品<rt>しょうひん</rt></ruby>は<ruby>受<rt>う</rt></ruby>け<ruby>取<rt>と</rt></ruby>れません。",
+    "opts": [
+     "からには",
+     "たとたん",
+     "うちに",
+     "からでないと"
+    ],
+    "a": 3,
+    "e": "‘~한 후가 아니면’ 은 <b>~てからでないと</b>."
+   },
+   {
+    "q": "この<ruby>町<rt>まち</rt></ruby>に<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>してきた（　　）で、まだ<ruby>友達<rt>ともだち</rt></ruby>がいない。",
+    "opts": [
+     "ばかり",
+     "とたん",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>",
+     "<ruby>次第<rt>しだい</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘막 ~했다’ 는 <b>たばかり</b>."
+   },
+   {
+    "q": "<ruby>忘<rt>わす</rt></ruby>れない（　　）、<ruby>今<rt>いま</rt></ruby>すぐメモしておこう。",
+    "opts": [
+     "とたん",
+     "うちに",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "たびに"
+    ],
+    "a": 1,
+    "e": "‘변하기 전에’ 는 <b>うちに</b>."
+   }
+  ]
+ },
+ {
+  "n": 4,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "추측·판단 표현",
+  "min": 40,
+  "goal": "はず/わけ/べき, そうだ 두 종류, らしい/ようだ를 구분합니다.",
+  "cards": [
+   {
+    "p": "~はずだ",
+    "m": "당연히 ~일 것이다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>今日<rt>きょう</rt></ruby><ruby>来<rt>く</rt></ruby>る<b>はずだ</b>。",
+    "kr": "그는 오늘 올 것이다."
+   },
+   {
+    "p": "~わけだ",
+    "m": "그러니까 ~인 거구나 (납득·결론)",
+    "ex": "10<ruby>年<rt>ねん</rt></ruby><ruby>住<rt>す</rt></ruby>んでいるのか。<ruby>上手<rt>じょうず</rt></ruby>な<b>わけだ</b>。",
+    "kr": "10년 살고 있구나. 잘할 만하네."
+   },
+   {
+    "p": "~べきだ",
+    "m": "~해야 한다 (의무)",
+    "ex": "<ruby>約束<rt>やくそく</rt></ruby>は<ruby>守<rt>まも</rt></ruby>る<b>べきだ</b>。",
+    "kr": "약속은 지켜야 한다."
+   },
+   {
+    "p": "~に<ruby>違<rt>ちが</rt></ruby>いない",
+    "m": "틀림없이 ~이다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>が<ruby>犯人<rt>はんにん</rt></ruby><b>に<ruby>違<rt>ちが</rt></ruby>いない</b>。",
+    "kr": "그가 범인임에 틀림없다."
+   },
+   {
+    "p": "~らしい",
+    "m": "~라는 것 같다 (전해 들음) / ~답다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>来月<rt>らいげつ</rt></ruby><ruby>結婚<rt>けっこん</rt></ruby>する<b>らしい</b>。",
+    "kr": "그는 다음 달 결혼한대."
+   },
+   {
+    "p": "~ようだ / ~みたい",
+    "m": "보기에 ~인 듯하다",
+    "ex": "<ruby>誰<rt>だれ</rt></ruby>もいない<b>ようだ</b>。",
+    "kr": "아무도 없는 것 같다."
+   },
+   {
+    "p": "~そうだ (양태)",
+    "m": "~할 것 같다 (눈으로 본 느낌)",
+    "ex": "このケーキはおいし<b>そうだ</b>。",
+    "kr": "이 케이크는 맛있어 보인다.",
+    "tip": "い형용사·ます형 어간+そう. 부정은 ~なさそう."
+   },
+   {
+    "p": "~そうだ (전문)",
+    "m": "~라고 한다",
+    "ex": "<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>によると、<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だ<b>そうだ</b>。",
+    "kr": "일기예보에 따르면 내일은 비가 온대.",
+    "tip": "기본형+そうだ. 어간이 아니라 원래 형태."
+   },
+   {
+    "p": "~かもしれない",
+    "m": "~일지도 모른다",
+    "ex": "<ruby>明日<rt>あした</rt></ruby>は<ruby>雪<rt>ゆき</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る<b>かもしれない</b>。",
+    "kr": "내일은 눈이 올지도 모른다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "A：<ruby>彼<rt>かれ</rt></ruby>、フランスに5<ruby>年<rt>ねん</rt></ruby><ruby>住<rt>す</rt></ruby>んでいたんだって。\nB：ああ、フランス<ruby>語<rt>ご</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>な（　　）ね。",
+    "opts": [
+     "はず",
+     "べき",
+     "わけだ",
+     "らしい"
+    ],
+    "a": 2,
+    "e": "사실을 듣고 ‘그래서 그렇구나’ 하고 납득하는 말은 <b>わけだ</b>."
+   },
+   {
+    "q": "<ruby>学生<rt>がくせい</rt></ruby>は<ruby>勉強<rt>べんきょう</rt></ruby>する（　　）だ。",
+    "opts": [
+     "わけ",
+     "そう",
+     "らしい",
+     "べき"
+    ],
+    "a": 3,
+    "e": "‘해야 한다’는 의무는 <b>べきだ</b>."
+   },
+   {
+    "q": "<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>によると、<ruby>明日<rt>あした</rt></ruby>は<ruby>雪<rt>ゆき</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る（　　）。",
+    "opts": [
+     "そうだ",
+     "そうな",
+     "そうに",
+     "そうで"
+    ],
+    "a": 0,
+    "e": "전해 들은 말(전문)은 기본형+<b>そうだ</b>."
+   },
+   {
+    "q": "この<ruby>道<rt>みち</rt></ruby>を<ruby>行<rt>い</rt></ruby>けば、<ruby>駅<rt>えき</rt></ruby>に<ruby>着<rt>つ</rt></ruby>く（　　）だ。",
+    "opts": [
+     "わけ",
+     "はず",
+     "らしい",
+     "うち"
+    ],
+    "a": 1,
+    "e": "당연한 예상은 <b>はずだ</b>."
+   },
+   {
+    "q": "<ruby>友達<rt>ともだち</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>によると、あの<ruby>店<rt>みせ</rt></ruby>は<ruby>来月<rt>らいげつ</rt></ruby><ruby>閉<rt>し</rt></ruby>まる（　　）。",
+    "opts": [
+     "べきだ",
+     "わけだ",
+     "そうだ",
+     "ことだ"
+    ],
+    "a": 2,
+    "e": "전해 들은 말이므로 <b>そうだ</b>."
+   },
+   {
+    "q": "<ruby>雲<rt>くも</rt></ruby>が<ruby>黒<rt>くろ</rt></ruby>い。<ruby>今<rt>いま</rt></ruby>にも<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>り（　　）だ。",
+    "opts": [
+     "らしい",
+     "べき",
+     "はず",
+     "そう"
+    ],
+    "a": 3,
+    "e": "눈으로 본 느낌은 ます형 어간+<b>そうだ</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby>から<ruby>何<rt>なん</rt></ruby>も<ruby>食<rt>た</rt></ruby>べていない。お<ruby>腹<rt>なか</rt></ruby>が<ruby>空<rt>あ</rt></ruby>いている（　　）。",
+    "opts": [
+     "に<ruby>違<rt>ちが</rt></ruby>いない",
+     "べきだ",
+     "ことだ",
+     "そうに"
+    ],
+    "a": 0,
+    "e": "‘틀림없이’ 는 <b>に<ruby>違<rt>ちが</rt></ruby>いない</b>."
+   },
+   {
+    "q": "<ruby>人<rt>ひと</rt></ruby>に<ruby>迷惑<rt>めいわく</rt></ruby>をかけない（　　）だ。",
+    "opts": [
+     "ばかり",
+     "べき",
+     "わけ",
+     "らしい"
+    ],
+    "a": 1,
+    "e": "‘해야 한다’ 는 <b>べきだ</b>."
+   },
+   {
+    "q": "ニュースによると、<ruby>昨夜<rt>さくや</rt></ruby>この<ruby>近<rt>ちか</rt></ruby>くで<ruby>事故<rt>じこ</rt></ruby>があった（　　）。",
+    "opts": [
+     "べきだ",
+     "ことだ",
+     "らしい",
+     "そうに"
+    ],
+    "a": 2,
+    "e": "전해 들은 이야기는 <b>らしい</b>."
+   },
+   {
+    "q": "あの<ruby>店<rt>みせ</rt></ruby>は<ruby>人<rt>ひと</rt></ruby>がたくさん<ruby>並<rt>なら</rt></ruby>んでいる。きっとおいしい（　　）。",
+    "opts": [
+     "べきだ",
+     "ことだ",
+     "ばかりだ",
+     "に<ruby>違<rt>ちが</rt></ruby>いない"
+    ],
+    "a": 3,
+    "e": "‘きっと’ 와 짝인 확신은 <b>に<ruby>違<rt>ちが</rt></ruby>いない</b>."
+   }
+  ]
+ },
+ {
+  "n": 5,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "부정·불가능 표현",
+  "min": 40,
+  "goal": "‘~할 수 없다’ 계열이 많아 헷갈리는 표현을 하나씩 분리합니다.",
+  "cards": [
+   {
+    "p": "~わけにはいかない",
+    "m": "~할 수는 없다 (사정상)",
+    "ex": "<ruby>明日<rt>あした</rt></ruby><ruby>試験<rt>しけん</rt></ruby>だから、<ruby>遊<rt>あそ</rt></ruby>ぶ<b>わけにはいかない</b>。",
+    "kr": "내일 시험이라 놀 수는 없다."
+   },
+   {
+    "p": "~ないわけにはいかない",
+    "m": "~하지 않을 수는 없다",
+    "ex": "<ruby>上司<rt>じょうし</rt></ruby>の<ruby>命令<rt>めいれい</rt></ruby>なので、<ruby>行<rt>い</rt></ruby>かない<b>わけにはいかない</b>。",
+    "kr": "상사의 명령이라 안 갈 수는 없다."
+   },
+   {
+    "p": "~ざるを<ruby>得<rt>え</rt></ruby>ない",
+    "m": "~하지 않을 수 없다",
+    "ex": "<ruby>上司<rt>じょうし</rt></ruby>の<ruby>命令<rt>めいれい</rt></ruby>なので、<ruby>行<rt>い</rt></ruby>か<b>ざるを<ruby>得<rt>え</rt></ruby>ない</b>。",
+    "kr": "상사의 명령이라 가지 않을 수 없다.",
+    "tip": "する는 せざるを<ruby>得<rt>え</rt></ruby>ない. しざる는 오답."
+   },
+   {
+    "p": "~ようがない",
+    "m": "~할 방법이 없다",
+    "ex": "<ruby>連絡<rt>れんらく</rt></ruby><ruby>先<rt>さき</rt></ruby>がわからないので、<ruby>連絡<rt>れんらく</rt></ruby>し<b>ようがない</b>。",
+    "kr": "연락처를 몰라서 연락할 방법이 없다."
+   },
+   {
+    "p": "~どころではない",
+    "m": "~할 상황이 아니다",
+    "ex": "<ruby>忙<rt>いそが</rt></ruby>しくて、<ruby>旅行<rt>りょこう</rt></ruby><b>どころではない</b>。",
+    "kr": "바빠서 여행할 때가 아니다."
+   },
+   {
+    "p": "~わけがない / ~はずがない",
+    "m": "~일 리가 없다",
+    "ex": "あの<ruby>人<rt>ひと</rt></ruby>が<ruby>嘘<rt>うそ</rt></ruby>をつく<b>わけがない</b>。",
+    "kr": "그 사람이 거짓말할 리 없다."
+   },
+   {
+    "p": "~ないことはない",
+    "m": "못할 것도 없다",
+    "ex": "<ruby>行<rt>い</rt></ruby>け<b>ないことはない</b>が、あまり<ruby>行<rt>い</rt></ruby>きたくない。",
+    "kr": "갈 수 없는 것은 아니지만 별로 가고 싶지 않다."
+   },
+   {
+    "p": "~に<ruby>越<rt>こ</rt></ruby>したことはない",
+    "m": "~하는 게 제일이다",
+    "ex": "<ruby>早<rt>はや</rt></ruby>い<b>に<ruby>越<rt>こ</rt></ruby>したことはない</b>。",
+    "kr": "빠를수록 좋다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>責任<rt>せきにん</rt></ruby><ruby>者<rt>しゃ</rt></ruby>として、この<ruby>問題<rt>もんだい</rt></ruby>を<ruby>無視<rt>むし</rt></ruby>する（　　）。",
+    "opts": [
+     "わけにはいかない",
+     "ようがない",
+     "どころではない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない"
+    ],
+    "a": 0,
+    "e": "입장상 ‘할 수는 없다’는 <b>わけにはいかない</b>."
+   },
+   {
+    "q": "<ruby>住所<rt>じゅうしょ</rt></ruby>も<ruby>名前<rt>なまえ</rt></ruby>もわからないのでは、<ruby>探<rt>さが</rt></ruby>し（　　）。",
+    "opts": [
+     "わけがない",
+     "ようがない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "に<ruby>越<rt>こ</rt></ruby>したことはない"
+    ],
+    "a": 1,
+    "e": "방법 자체가 없다는 뜻이라 <b>ようがない</b>."
+   },
+   {
+    "q": "<ruby>仕事<rt>しごと</rt></ruby>が<ruby>山積<rt>やまづ</rt></ruby>みで、<ruby>休暇<rt>きゅうか</rt></ruby>（　　）。",
+    "opts": [
+     "わけにはいかない",
+     "に<ruby>越<rt>こ</rt></ruby>したことはない",
+     "どころではない",
+     "ようがない"
+    ],
+    "a": 2,
+    "e": "‘그럴 상황이 아니다’는 <b>どころではない</b>."
+   },
+   {
+    "q": "この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>難<rt>むずか</rt></ruby>しいが、やれない（　　）。",
+    "opts": [
+     "わけにはいかない",
+     "どころではない",
+     "ようがない",
+     "ことはない"
+    ],
+    "a": 3,
+    "e": "‘못할 것도 없다’ 는 <b>ないことはない</b>."
+   },
+   {
+    "q": "<ruby>大事<rt>だいじ</rt></ruby>な<ruby>試験<rt>しけん</rt></ruby>の<ruby>前日<rt>ぜんじつ</rt></ruby>に、<ruby>遊<rt>あそ</rt></ruby>んでいる（　　）。",
+    "opts": [
+     "どころではない",
+     "に<ruby>越<rt>こ</rt></ruby>したことはない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "ようがない"
+    ],
+    "a": 0,
+    "e": "‘놀 상황이 아니다’ 는 <b>どころではない</b>."
+   },
+   {
+    "q": "<ruby>明日<rt>あした</rt></ruby>は<ruby>大事<rt>だいじ</rt></ruby>な<ruby>会議<rt>かいぎ</rt></ruby>だから、<ruby>今日<rt>きょう</rt></ruby>は<ruby>遅<rt>おそ</rt></ruby>くまで<ruby>飲<rt>の</rt></ruby>む（　　）。",
+    "opts": [
+     "ようがない",
+     "わけにはいかない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "ないことはない"
+    ],
+    "a": 1,
+    "e": "사정상 ‘할 수는 없다’ 는 <b>わけにはいかない</b>."
+   },
+   {
+    "q": "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>止<rt>と</rt></ruby>まってしまったので、<ruby>歩<rt>ある</rt></ruby>いて<ruby>帰<rt>かえ</rt></ruby>ら（　　）。",
+    "opts": [
+     "わけがない",
+     "ようがない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "どころではない"
+    ],
+    "a": 2,
+    "e": "‘하지 않을 수 없다’ 는 <b>ざるを<ruby>得<rt>え</rt></ruby>ない</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>が<ruby>約束<rt>やくそく</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れる（　　）。いつも<ruby>手帳<rt>てちょう</rt></ruby>に<ruby>書<rt>か</rt></ruby>いているから。",
+    "opts": [
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "ようがない",
+     "に<ruby>越<rt>こ</rt></ruby>したことはない",
+     "わけがない"
+    ],
+    "a": 3,
+    "e": "‘~일 리가 없다’ 는 <b>わけがない</b>."
+   },
+   {
+    "q": "<ruby>連絡<rt>れんらく</rt></ruby><ruby>先<rt>さき</rt></ruby>が<ruby>消<rt>き</rt></ruby>えてしまって、<ruby>連絡<rt>れんらく</rt></ruby>し（　　）。",
+    "opts": [
+     "ようがない",
+     "わけがない",
+     "どころではない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない"
+    ],
+    "a": 0,
+    "e": "방법이 없을 때는 <b>ようがない</b>."
+   },
+   {
+    "q": "<ruby>準備<rt>じゅんび</rt></ruby>は<ruby>早<rt>はや</rt></ruby>め（　　）。",
+    "opts": [
+     "どころではない",
+     "に<ruby>越<rt>こ</rt></ruby>したことはない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "ようがない"
+    ],
+    "a": 1,
+    "e": "‘~하는 게 제일이다’ 는 <b>に<ruby>越<rt>こ</rt></ruby>したことはない</b>."
+   }
+  ]
+ },
+ {
+  "n": 6,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "경향·변화·범위 표현",
+  "min": 40,
+  "goal": "がち/気味/っぽい와 をはじめ/を通じて/にわたって를 구분합니다.",
+  "cards": [
+   {
+    "p": "~つつある",
+    "m": "점점 ~하고 있다",
+    "ex": "<ruby>日本<rt>にほん</rt></ruby>の<ruby>人口<rt>じんこう</rt></ruby>は<ruby>減少<rt>げんしょう</rt></ruby>し<b>つつある</b>。",
+    "kr": "일본의 인구는 점점 줄고 있다."
+   },
+   {
+    "p": "~がち",
+    "m": "~하기 쉽다 (나쁜 경향)",
+    "ex": "<ruby>冬<rt>ふゆ</rt></ruby>は<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>になり<b>がち</b>だ。",
+    "kr": "겨울은 운동 부족이 되기 쉽다."
+   },
+   {
+    "p": "~<ruby>気味<rt>きみ</rt></ruby>",
+    "m": "~한 기미, 약간 ~한 상태",
+    "ex": "<ruby>風邪<rt>かぜ</rt></ruby><b><ruby>気味<rt>きみ</rt></ruby></b>で、<ruby>頭<rt>あたま</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>い。",
+    "kr": "감기 기운이 있어서 머리가 아프다."
+   },
+   {
+    "p": "~っぽい",
+    "m": "~스러운, ~하기 쉬운",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>怒<rt>いか</rt></ruby>り<b>っぽい</b>。",
+    "kr": "그는 화를 잘 낸다."
+   },
+   {
+    "p": "~をはじめ",
+    "m": "~을 비롯해",
+    "ex": "<ruby>社長<rt>しゃちょう</rt></ruby><b>をはじめ</b>、<ruby>社員<rt>しゃいん</rt></ruby><ruby>全員<rt>ぜんいん</rt></ruby>が<ruby>出席<rt>しゅっせき</rt></ruby>した。",
+    "kr": "사장을 비롯해 전 직원이 참석했다."
+   },
+   {
+    "p": "~を<ruby>通<rt>つう</rt></ruby>じて / ~を<ruby>通<rt>とお</rt></ruby>して",
+    "m": "~을 통해 / ~내내",
+    "ex": "<ruby>一<rt>いち</rt></ruby><ruby>年<rt>ねん</rt></ruby><b>を<ruby>通<rt>つう</rt></ruby>じて</b><ruby>暖<rt>あたた</rt></ruby>かい。",
+    "kr": "일 년 내내 따뜻하다."
+   },
+   {
+    "p": "~にわたって",
+    "m": "~에 걸쳐",
+    "ex": "3<ruby>日間<rt>かかん</rt></ruby><b>にわたって</b><ruby>会議<rt>かいぎ</rt></ruby>が<ruby>行<rt>おこな</rt></ruby>われた。",
+    "kr": "3일에 걸쳐 회의가 열렸다."
+   },
+   {
+    "p": "~に<ruby>限<rt>かぎ</rt></ruby>り",
+    "m": "~에 한해",
+    "ex": "<ruby>本日<rt>ほんじつ</rt></ruby><b>に<ruby>限<rt>かぎ</rt></ruby>り</b>、<ruby>半額<rt>はんがく</rt></ruby>です。",
+    "kr": "오늘에 한해 반값입니다."
+   },
+   {
+    "p": "~に<ruby>関<rt>かん</rt></ruby>して",
+    "m": "~에 관해서",
+    "ex": "この<ruby>件<rt>けん</rt></ruby><b>に<ruby>関<rt>かん</rt></ruby>して</b>、ご<ruby>意見<rt>いけん</rt></ruby>をお<ruby>聞<rt>き</rt></ruby>かせください。",
+    "kr": "이 건에 관해 의견을 들려주세요."
+   },
+   {
+    "p": "~において",
+    "m": "~에서 (장소·시기)",
+    "ex": "<ruby>大会<rt>たいかい</rt></ruby>は<ruby>東京<rt>とうきょう</rt></ruby><b>において</b><ruby>開催<rt>かいさい</rt></ruby>される。",
+    "kr": "대회는 도쿄에서 개최된다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>風邪<rt>かぜ</rt></ruby>（　　）で、<ruby>今日<rt>きょう</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>帰<rt>かえ</rt></ruby>ります。",
+    "opts": [
+     "がち",
+     "つつある",
+     "<ruby>気味<rt>きみ</rt></ruby>",
+     "っぽい"
+    ],
+    "a": 2,
+    "e": "명사 뒤에 붙어 ‘약간 ~한 기운’은 <b><ruby>気味<rt>きみ</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>社長<rt>しゃちょう</rt></ruby>（　　）、<ruby>社員<rt>しゃいん</rt></ruby><ruby>全員<rt>ぜんいん</rt></ruby>が<ruby>参加<rt>さんか</rt></ruby>した。",
+    "opts": [
+     "に<ruby>限<rt>かぎ</rt></ruby>り",
+     "において",
+     "にわたって",
+     "をはじめ"
+    ],
+    "a": 3,
+    "e": "‘~을 비롯해’는 <b>をはじめ</b>."
+   },
+   {
+    "q": "<ruby>地震<rt>じしん</rt></ruby>は、<ruby>2日間<rt>ふつかかん</rt></ruby>（　　）<ruby>続<rt>つづ</rt></ruby>いた。",
+    "opts": [
+     "にわたって",
+     "において",
+     "に<ruby>関<rt>かん</rt></ruby>して",
+     "をはじめ"
+    ],
+    "a": 0,
+    "e": "기간이 ‘걸쳐’ 이어지면 <b>にわたって</b>."
+   },
+   {
+    "q": "<ruby>冬<rt>ふゆ</rt></ruby>は<ruby>寒<rt>さむ</rt></ruby>さで<ruby>外出<rt>がいしゅつ</rt></ruby>を<ruby>控<rt>ひか</rt></ruby>え（　　）だ。",
+    "opts": [
+     "つつ",
+     "がち",
+     "ながら",
+     "っぽい"
+    ],
+    "a": 1,
+    "e": "‘~하기 쉽다’ 는 <b>がち</b>."
+   },
+   {
+    "q": "このサービスは、<ruby>会員<rt>かいいん</rt></ruby>（　　）、<ruby>無料<rt>むりょう</rt></ruby>でご<ruby>利用<rt>りよう</rt></ruby>いただけます。",
+    "opts": [
+     "を<ruby>通<rt>つう</rt></ruby>じて",
+     "にわたって",
+     "に<ruby>限<rt>かぎ</rt></ruby>り",
+     "つつある"
+    ],
+    "a": 2,
+    "e": "‘~에 한해’ 는 <b>に<ruby>限<rt>かぎ</rt></ruby>り</b>."
+   },
+   {
+    "q": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>彼<rt>かれ</rt></ruby>は<ruby>怒<rt>いか</rt></ruby>り（　　）。",
+    "opts": [
+     "をはじめ",
+     "に<ruby>限<rt>かぎ</rt></ruby>り",
+     "において",
+     "っぽい"
+    ],
+    "a": 3,
+    "e": "‘~하기 쉽다’ 는 <b>っぽい</b>."
+   },
+   {
+    "q": "この<ruby>地域<rt>ちいき</rt></ruby>では、<ruby>都市<rt>とし</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>進<rt>すす</rt></ruby>み（　　）。",
+    "opts": [
+     "つつある",
+     "っぽい",
+     "に<ruby>限<rt>かぎ</rt></ruby>り",
+     "において"
+    ],
+    "a": 0,
+    "e": "‘점점 ~하고 있다’ 는 <b>つつある</b>."
+   },
+   {
+    "q": "<ruby>年間<rt>ねんかん</rt></ruby>（　　）、この<ruby>店<rt>みせ</rt></ruby>は<ruby>人気<rt>にんき</rt></ruby>がある。",
+    "opts": [
+     "をはじめ",
+     "を<ruby>通<rt>つう</rt></ruby>じて",
+     "に<ruby>限<rt>かぎ</rt></ruby>り",
+     "つつある"
+    ],
+    "a": 1,
+    "e": "‘~내내’ 는 <b>を<ruby>通<rt>つう</rt></ruby>じて</b>."
+   },
+   {
+    "q": "この<ruby>問題<rt>もんだい</rt></ruby>（　　）、<ruby>私<rt>わたし</rt></ruby>は<ruby>何<rt>なん</rt></ruby>も<ruby>知<rt>し</rt></ruby>りません。",
+    "opts": [
+     "にわたって",
+     "をはじめ",
+     "に<ruby>関<rt>かん</rt></ruby>して",
+     "っぽい"
+    ],
+    "a": 2,
+    "e": "‘~에 관해서’ 는 <b>に<ruby>関<rt>かん</rt></ruby>して</b>."
+   },
+   {
+    "q": "<ruby>会議<rt>かいぎ</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>、<ruby>大阪<rt>おおさか</rt></ruby>（　　）<ruby>行<rt>おこな</rt></ruby>われる。",
+    "opts": [
+     "にわたって",
+     "<ruby>気味<rt>きみ</rt></ruby>",
+     "がち",
+     "において"
+    ],
+    "a": 3,
+    "e": "장소를 나타낼 때는 <b>において</b>."
+   }
+  ]
+ },
+ {
+  "n": 7,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "경어 + 1주차 점검",
+  "min": 45,
+  "goal": "자주 나오는 존경어·겸양어를 쌍으로 외우고, 1주차를 마무리합니다.",
+  "cards": [
+   {
+    "p": "<ruby>言<rt>い</rt></ruby>う",
+    "m": "존경 おっしゃる ／ 겸양 <ruby>申<rt>もう</rt></ruby>す・<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げる",
+    "ex": "<ruby>社長<rt>しゃちょう</rt></ruby>が<b>おっしゃった</b>ことを、<ruby>部下<rt>ぶか</rt></ruby>に<ruby>伝<rt>つた</rt></ruby>えます。",
+    "kr": "사장님이 말씀하신 것을 부하에게 전하겠습니다."
+   },
+   {
+    "p": "<ruby>行<rt>い</rt></ruby>く・<ruby>来<rt>く</rt></ruby>る",
+    "m": "존경 いらっしゃる ／ 겸양 <ruby>参<rt>まい</rt></ruby>る・<ruby>伺<rt>うかが</rt></ruby>う",
+    "ex": "<ruby>明日<rt>あした</rt></ruby>、<ruby>御社<rt>おんしゃ</rt></ruby>に<b><ruby>伺<rt>うかが</rt></ruby>います</b>。",
+    "kr": "내일 귀사에 찾아뵙겠습니다.",
+    "tip": "<ruby>伺<rt>うかが</rt></ruby>う는 방문할 때, <ruby>参<rt>まい</rt></ruby>る는 가다/오다의 일반 겸양."
+   },
+   {
+    "p": "いる",
+    "m": "존경 いらっしゃる ／ 겸양 おる",
+    "ex": "<ruby>部長<rt>ぶちょう</rt></ruby>は<ruby>席<rt>せき</rt></ruby>に<b>いらっしゃいます</b>か。",
+    "kr": "부장님은 자리에 계십니까?"
+   },
+   {
+    "p": "<ruby>食<rt>た</rt></ruby>べる・<ruby>飲<rt>の</rt></ruby>む",
+    "m": "존경 <ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がる ／ 겸양 いただく",
+    "ex": "どうぞ<b><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がって</b>ください。",
+    "kr": "어서 드세요."
+   },
+   {
+    "p": "<ruby>見<rt>み</rt></ruby>る",
+    "m": "존경 ご<ruby>覧<rt>らん</rt></ruby>になる ／ 겸양 <ruby>拝見<rt>はいけん</rt></ruby>する",
+    "ex": "<ruby>資料<rt>しりょう</rt></ruby>を<b><ruby>拝見<rt>はいけん</rt></ruby></b>しました。",
+    "kr": "자료를 보았습니다."
+   },
+   {
+    "p": "する",
+    "m": "존경 なさる ／ 겸양 いたす",
+    "ex": "<ruby>私<rt>わたし</rt></ruby>が<b>いたします</b>。",
+    "kr": "제가 하겠습니다."
+   },
+   {
+    "p": "くれる・あげる・もらう",
+    "m": "くださる(존경) ／ さしあげる・いただく(겸양)",
+    "ex": "<ruby>先生<rt>せんせい</rt></ruby>が<ruby>本<rt>ほん</rt></ruby>を<b>くださいました</b>。",
+    "kr": "선생님이 책을 주셨습니다."
+   },
+   {
+    "p": "<ruby>知<rt>し</rt></ruby>っている・<ruby>会<rt>あ</rt></ruby>う",
+    "m": "ご<ruby>存<rt>ぞん</rt></ruby>じだ ／ <ruby>存<rt>ぞん</rt></ruby>じている, お<ruby>目<rt>め</rt></ruby>にかかる",
+    "ex": "お<ruby>目<rt>め</rt></ruby>に<b>かかれて</b><ruby>光栄<rt>こうえい</rt></ruby>です。",
+    "kr": "뵙게 되어 영광입니다."
+   },
+   {
+    "p": "お/ご~になる ・ お/ご~する",
+    "m": "앞은 존경(상대 행동), 뒤는 겸양(내 행동)",
+    "ex": "<ruby>先生<rt>せんせい</rt></ruby>がお<ruby>書<rt>か</rt></ruby>き<b>になる</b>。／ <ruby>私<rt>わたし</rt></ruby>がお<ruby>持<rt>も</rt></ruby>ち<b>する</b>。",
+    "kr": "선생님이 쓰신다. ／ 제가 들어 드리겠다.",
+    "tip": "함정: 윗사람 행동에 겸양어(<ruby>参<rt>まい</rt></ruby>る, <ruby>申<rt>もう</rt></ruby>す)를 쓰면 오답."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>に（　　）ますか。",
+    "opts": [
+     "いらっしゃい",
+     "<ruby>参<rt>まい</rt></ruby>り",
+     "<ruby>伺<rt>うかが</rt></ruby>い",
+     "おっしゃい"
+    ],
+    "a": 0,
+    "e": "선생님의 행동이니 존경어 <b>いらっしゃる</b>."
+   },
+   {
+    "q": "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>、こちらのお<ruby>料理<rt>りょうり</rt></ruby>を（　　）ください。",
+    "opts": [
+     "いただいて",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がって",
+     "<ruby>食<rt>た</rt></ruby>べさせて",
+     "<ruby>拝見<rt>はいけん</rt></ruby>して"
+    ],
+    "a": 1,
+    "e": "손님의 행동이므로 존경어 <b><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がる</b>."
+   },
+   {
+    "q": "<ruby>明日<rt>あした</rt></ruby>、<ruby>御社<rt>おんしゃ</rt></ruby>に（　　）ます。",
+    "opts": [
+     "いらっしゃい",
+     "おっしゃい",
+     "<ruby>伺<rt>うかが</rt></ruby>い",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり"
+    ],
+    "a": 2,
+    "e": "내가 방문하는 것은 겸양어 <b><ruby>伺<rt>うかが</rt></ruby>う</b>."
+   },
+   {
+    "q": "<ruby>社長<rt>しゃちょう</rt></ruby>が<ruby>明日<rt>あした</rt></ruby>の<ruby>予定<rt>よてい</rt></ruby>について（　　）ました。",
+    "opts": [
+     "<ruby>申<rt>もう</rt></ruby>し",
+     "<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げ",
+     "<ruby>参<rt>まい</rt></ruby>り",
+     "おっしゃい"
+    ],
+    "a": 3,
+    "e": "사장님의 행동은 존경어 <b>おっしゃる</b>."
+   },
+   {
+    "q": "<ruby>私<rt>わたし</rt></ruby>が<ruby>資料<rt>しりょう</rt></ruby>をお<ruby>持<rt>も</rt></ruby>ち（　　）。",
+    "opts": [
+     "します",
+     "になります",
+     "なさいます",
+     "なります"
+    ],
+    "a": 0,
+    "e": "내 행동은 겸양 <b>お~する</b>."
+   },
+   {
+    "q": "<ruby>部長<rt>ぶちょう</rt></ruby>、こちらの<ruby>資料<rt>しりょう</rt></ruby>を（　　）ください。",
+    "opts": [
+     "<ruby>拝見<rt>はいけん</rt></ruby>して",
+     "ご<ruby>覧<rt>らん</rt></ruby>になって",
+     "<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げて",
+     "いただいて"
+    ],
+    "a": 1,
+    "e": "상대의 행동은 존경어 <b>ご<ruby>覧<rt>らん</rt></ruby>になる</b>."
+   },
+   {
+    "q": "<ruby>来週<rt>らいしゅう</rt></ruby>、<ruby>先生<rt>せんせい</rt></ruby>のところへ（　　）ます。",
+    "opts": [
+     "いらっしゃい",
+     "おっしゃい",
+     "<ruby>伺<rt>うかが</rt></ruby>い",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり"
+    ],
+    "a": 2,
+    "e": "내가 방문하는 것은 겸양어 <b><ruby>伺<rt>うかが</rt></ruby>う</b>."
+   },
+   {
+    "q": "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>は、もうお<ruby>料理<rt>りょうり</rt></ruby>を（　　）ましたか。",
+    "opts": [
+     "いただき",
+     "<ruby>拝見<rt>はいけん</rt></ruby>し",
+     "いたし",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり"
+    ],
+    "a": 3,
+    "e": "손님의 행동은 존경어 <b><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がる</b>."
+   },
+   {
+    "q": "<ruby>私<rt>わたし</rt></ruby>は<ruby>田中<rt>たなか</rt></ruby>と（　　）。",
+    "opts": [
+     "<ruby>申<rt>もう</rt></ruby>します",
+     "おっしゃいます",
+     "いらっしゃいます",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がります"
+    ],
+    "a": 0,
+    "e": "내가 이름을 말할 때는 겸양어 <b><ruby>申<rt>もう</rt></ruby>す</b>."
+   },
+   {
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>が<ruby>私<rt>わたし</rt></ruby>にこの<ruby>本<rt>ほん</rt></ruby>を（　　）。",
+    "opts": [
+     "さしあげました",
+     "くださいました",
+     "いただきました",
+     "<ruby>拝見<rt>はいけん</rt></ruby>しました"
+    ],
+    "a": 1,
+    "e": "선생님이 나에게 준 것은 <b>くださる</b>."
+   }
+  ],
+  "tasks": [
+   "경어 쌍(존경/겸양) 소리 내어 3번 읽기",
+   "뜻 가리기로 셀프 테스트",
+   "퀴즈 풀기",
+   "1주차 오답노트 전체 훑어보기"
+  ]
+ },
+ {
+  "n": 8,
+  "part": "Part 6",
+  "pl": "P6",
+  "title": "오문 정정: 틀리는 유형",
+  "min": 40,
+  "goal": "밑줄 4곳 중 틀린 곳을 찾는 연습. 출제되는 오류 유형부터 알아 둡니다.",
+  "cards": [
+   {
+    "p": "① 조사 오류",
+    "m": "<ruby>好<rt>す</rt></ruby>き・<ruby>上手<rt>じょうず</rt></ruby>・できる・わかる・ほしい 앞은 を가 아니라 が",
+    "ex": "✗ <ruby>英語<rt>えいご</rt></ruby><b>を</b><ruby>上手<rt>じょうず</rt></ruby>だ → ○ <ruby>英語<rt>えいご</rt></ruby><b>が</b><ruby>上手<rt>じょうず</rt></ruby>だ",
+    "kr": "영어를 잘한다 (が 사용)."
+   },
+   {
+    "p": "② 자동사/타동사",
+    "m": "상태를 말할 땐 자동사+ている",
+    "ex": "✗ <ruby>電気<rt>でんき</rt></ruby><b>を</b>ついている → ○ <ruby>電気<rt>でんき</rt></ruby><b>が</b>ついている",
+    "kr": "불이 켜져 있다."
+   },
+   {
+    "p": "③ あげる·くれる·もらう 방향",
+    "m": "나에게 오는 것은 くれる",
+    "ex": "✗ <ruby>友達<rt>ともだち</rt></ruby>は<ruby>私<rt>わたし</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>を<ruby>貸<rt>か</rt></ruby>して<b>あげた</b> → ○ <ruby>貸<rt>か</rt></ruby>して<b>くれた</b>",
+    "kr": "친구가 나에게 책을 빌려줬다."
+   },
+   {
+    "p": "④ 이중경어·경어 혼용",
+    "m": "존경어에 られる를 또 붙이면 오답",
+    "ex": "✗ <b>おっしゃられた</b> → ○ <b>おっしゃった</b>",
+    "kr": "말씀하셨다.",
+    "tip": "윗사람에게 <ruby>参<rt>まい</rt></ruby>る・<ruby>申<rt>もう</rt></ruby>す도 오답."
+   },
+   {
+    "p": "⑤ 품사 접속",
+    "m": "な형용사+な, 명사+の, 명사+なのに",
+    "ex": "✗ <ruby>静<rt>しず</rt></ruby>か<b>の</b><ruby>部屋<rt>へや</rt></ruby> → ○ <ruby>静<rt>しず</rt></ruby>か<b>な</b><ruby>部屋<rt>へや</rt></ruby> ／ ✗ <ruby>雨<rt>あめ</rt></ruby>だのに → ○ <ruby>雨<rt>あめ</rt></ruby><b>なのに</b>",
+    "kr": "조용한 방 ／ 비가 오는데도."
+   },
+   {
+    "p": "⑥ 활용 형태",
+    "m": "ざるを<ruby>得<rt>え</rt></ruby>ない는 ない형에 붙습니다. する는 せざる.",
+    "ex": "✗ <b>しざる</b>を<ruby>得<rt>え</rt></ruby>ない → ○ <b>せざる</b>を<ruby>得<rt>え</rt></ruby>ない",
+    "kr": "하지 않을 수 없다."
+   },
+   {
+    "p": "푸는 순서",
+    "m": "밑줄을 앞에서 뒤로 보며 ①조사 ②동사 활용·자타동사 ③경어 ④호응 순서로 의심합니다.",
+    "tip": "틀린 곳은 딱 한 곳. 하나 찾으면 바로 다음 문제로."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "(A)<ruby>友達<rt>ともだち</rt></ruby>は　(B)<ruby>私<rt>わたし</rt></ruby>に　(C)<ruby>本<rt>ほん</rt></ruby>を　(D)<ruby>貸<rt>か</rt></ruby>してあげました。",
+    "opts": [
+     "<ruby>友達<rt>ともだち</rt></ruby>は",
+     "<ruby>私<rt>わたし</rt></ruby>に",
+     "<ruby>本<rt>ほん</rt></ruby>を",
+     "<ruby>貸<rt>か</rt></ruby>してあげました"
+    ],
+    "a": 3,
+    "e": "나에게 해 준 것이므로 ‘<ruby>貸<rt>か</rt></ruby>して<b>くれました</b>’가 맞습니다."
+   },
+   {
+    "q": "(A)<ruby>電気<rt>でんき</rt></ruby>を　(B)ついて　(C)いるので　(D)<ruby>消<rt>け</rt></ruby>してください。",
+    "opts": [
+     "<ruby>電気<rt>でんき</rt></ruby>を",
+     "ついて",
+     "いるので",
+     "<ruby>消<rt>け</rt></ruby>してください"
+    ],
+    "a": 0,
+    "e": "‘<ruby>電気<rt>でんき</rt></ruby><b>が</b>ついている’. 자동사 앞에는 が."
+   },
+   {
+    "q": "(A)<ruby>社長<rt>しゃちょう</rt></ruby>が　(B)おっしゃられた　(C)ことを　(D)<ruby>部下<rt>ぶか</rt></ruby>に<ruby>伝<rt>つた</rt></ruby>えた。",
+    "opts": [
+     "<ruby>社長<rt>しゃちょう</rt></ruby>が",
+     "おっしゃられた",
+     "ことを",
+     "<ruby>部下<rt>ぶか</rt></ruby>に<ruby>伝<rt>つた</rt></ruby>えた"
+    ],
+    "a": 1,
+    "e": "이중경어입니다. ‘<b>おっしゃった</b>’가 맞습니다."
+   },
+   {
+    "q": "(A)<ruby>彼<rt>かれ</rt></ruby>は　(B)<ruby>英語<rt>えいご</rt></ruby>を　(C)<ruby>上手<rt>じょうず</rt></ruby>だ　(D)そうです。",
+    "opts": [
+     "<ruby>彼<rt>かれ</rt></ruby>は",
+     "<ruby>英語<rt>えいご</rt></ruby>を",
+     "<ruby>上手<rt>じょうず</rt></ruby>だ",
+     "そうです"
+    ],
+    "a": 1,
+    "e": "‘<ruby>英語<rt>えいご</rt></ruby><b>が</b><ruby>上手<rt>じょうず</rt></ruby>だ’. <ruby>上手<rt>じょうず</rt></ruby> 앞은 が."
+   },
+   {
+    "q": "(A)この　(B)<ruby>部屋<rt>へや</rt></ruby>は　(C)とても　(D)<ruby>静<rt>しず</rt></ruby>かのです。",
+    "opts": [
+     "この",
+     "<ruby>部屋<rt>へや</rt></ruby>は",
+     "とても",
+     "<ruby>静<rt>しず</rt></ruby>かのです"
+    ],
+    "a": 3,
+    "e": "な형용사는 ‘<ruby>静<rt>しず</rt></ruby>か<b>な</b>のです’ 또는 ‘<ruby>静<rt>しず</rt></ruby>かです’."
+   },
+   {
+    "q": "(A)<ruby>彼<rt>かれ</rt></ruby>は　(B)サッカーを　(C)<ruby>上手<rt>じょうず</rt></ruby>ですが、　(D)<ruby>野球<rt>やきゅう</rt></ruby>は<ruby>苦手<rt>にがて</rt></ruby>です。",
+    "opts": [
+     "<ruby>彼<rt>かれ</rt></ruby>は",
+     "サッカーを",
+     "<ruby>上手<rt>じょうず</rt></ruby>ですが、",
+     "<ruby>野球<rt>やきゅう</rt></ruby>は<ruby>苦手<rt>にがて</rt></ruby>です。"
+    ],
+    "a": 1,
+    "e": "‘サッカー<b>が</b><ruby>上手<rt>じょうず</rt></ruby>’. <ruby>上手<rt>じょうず</rt></ruby> 앞은 が."
+   },
+   {
+    "q": "(A)<ruby>電車<rt>でんしゃ</rt></ruby>が　(B)<ruby>止<rt>と</rt></ruby>めて　(C)いるので、　(D)<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れました。",
+    "opts": [
+     "<ruby>電車<rt>でんしゃ</rt></ruby>が",
+     "<ruby>止<rt>と</rt></ruby>めて",
+     "いるので、",
+     "<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れました。"
+    ],
+    "a": 1,
+    "e": "자동사 상태는 ‘<ruby>電車<rt>でんしゃ</rt></ruby>が<b><ruby>止<rt>と</rt></ruby>まって</b>いる’."
+   },
+   {
+    "q": "(A)<ruby>先生<rt>せんせい</rt></ruby>は　(B)<ruby>学生<rt>がくせい</rt></ruby>に　(C)<ruby>本<rt>ほん</rt></ruby>を　(D)<ruby>貸<rt>か</rt></ruby>してもらいました。",
+    "opts": [
+     "<ruby>先生<rt>せんせい</rt></ruby>は",
+     "<ruby>学生<rt>がくせい</rt></ruby>に",
+     "<ruby>本<rt>ほん</rt></ruby>を",
+     "<ruby>貸<rt>か</rt></ruby>してもらいました。"
+    ],
+    "a": 3,
+    "e": "선생님이 학생에게 빌려준 것이라 ‘<ruby>貸<rt>か</rt></ruby>し<b>ました</b>’ 가 맞습니다."
+   },
+   {
+    "q": "(A)<ruby>部長<rt>ぶちょう</rt></ruby>が　(B)<ruby>明日<rt>あした</rt></ruby>　(C)<ruby>会社<rt>かいしゃ</rt></ruby>に　(D)<ruby>参<rt>まい</rt></ruby>ります。",
+    "opts": [
+     "<ruby>部長<rt>ぶちょう</rt></ruby>が",
+     "<ruby>明日<rt>あした</rt></ruby>",
+     "<ruby>会社<rt>かいしゃ</rt></ruby>に",
+     "<ruby>参<rt>まい</rt></ruby>ります。"
+    ],
+    "a": 3,
+    "e": "윗사람 행동에 겸양어 <ruby>参<rt>まい</rt></ruby>る는 오답. ‘<b>いらっしゃいます</b>’."
+   },
+   {
+    "q": "(A)この　(B)<ruby>町<rt>まち</rt></ruby>は　(C)とても　(D)にぎやかのです。",
+    "opts": [
+     "この",
+     "<ruby>町<rt>まち</rt></ruby>は",
+     "とても",
+     "にぎやかのです。"
+    ],
+    "a": 3,
+    "e": "な형용사는 ‘にぎやか<b>な</b>のです’ 또는 ‘にぎやかです’."
+   }
+  ]
+ },
+ {
+  "n": 9,
+  "part": "Part 6",
+  "pl": "P6",
+  "title": "오문 정정: 호응 부사",
+  "min": 40,
+  "goal": "앞 단어가 뒤의 끝맺음을 정해 주는 ‘짝 표현’을 외웁니다.",
+  "cards": [
+   {
+    "p": "<ruby>決<rt>けっ</rt></ruby>して~ない",
+    "m": "결코 ~않다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b><ruby>決<rt>けっ</rt></ruby>して</b><ruby>約束<rt>やくそく</rt></ruby>を<ruby>破<rt>やぶ</rt></ruby>ら<b>ない</b>。",
+    "kr": "그는 결코 약속을 어기지 않는다."
+   },
+   {
+    "p": "<ruby>全然<rt>ぜんぜん</rt></ruby>・ちっとも・<ruby>少<rt>すこ</rt></ruby>しも~ない",
+    "m": "전혀 ~않다",
+    "ex": "この<ruby>映画<rt>えいが</rt></ruby>は<b><ruby>全然<rt>ぜんぜん</rt></ruby></b><ruby>面白<rt>おもしろ</rt></ruby>く<b>ない</b>。",
+    "kr": "이 영화는 전혀 재미없다."
+   },
+   {
+    "p": "めったに~ない",
+    "m": "좀처럼 ~않다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b>めったに</b><ruby>怒<rt>おこ</rt></ruby>ら<b>ない</b>。",
+    "kr": "그는 좀처럼 화내지 않는다."
+   },
+   {
+    "p": "さっぱり・ろくに~ない",
+    "m": "전혀 / 제대로 ~않다",
+    "ex": "<ruby>説明<rt>せつめい</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いても<b>さっぱり</b>わから<b>ない</b>。",
+    "kr": "설명을 들어도 전혀 모르겠다."
+   },
+   {
+    "p": "まるで~ようだ",
+    "m": "마치 ~같다",
+    "ex": "<b>まるで</b><ruby>夢<rt>ゆめ</rt></ruby>の<b>ようだ</b>。",
+    "kr": "마치 꿈 같다."
+   },
+   {
+    "p": "<ruby>今<rt>いま</rt></ruby>にも~そうだ",
+    "m": "금방이라도 ~할 것 같다",
+    "ex": "<b><ruby>今<rt>いま</rt></ruby>にも</b><ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>り<ruby>出<rt>だ</rt></ruby>し<b>そうだ</b>。",
+    "kr": "금방이라도 비가 내릴 것 같다."
+   },
+   {
+    "p": "たとえ~ても",
+    "m": "설령 ~해도",
+    "ex": "<b>たとえ</b><ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っ<b>ても</b>、<ruby>行<rt>い</rt></ruby>く。",
+    "kr": "설령 비가 와도 간다."
+   },
+   {
+    "p": "もし~たら・ば",
+    "m": "만약 ~하면",
+    "ex": "<b>もし</b><ruby>時間<rt>じかん</rt></ruby>があっ<b>たら</b>、<ruby>来<rt>き</rt></ruby>てください。",
+    "kr": "만약 시간이 있으면 와 주세요."
+   },
+   {
+    "p": "なぜなら~からだ",
+    "m": "왜냐하면 ~이기 때문이다",
+    "ex": "<ruby>行<rt>い</rt></ruby>けない。<b>なぜなら</b>、<ruby>熱<rt>ねつ</rt></ruby>がある<b>からだ</b>。",
+    "kr": "갈 수 없다. 열이 있기 때문이다."
+   },
+   {
+    "p": "まさか~とは<ruby>思<rt>おも</rt></ruby>わなかった",
+    "m": "설마 ~일 줄은 몰랐다",
+    "ex": "<b>まさか</b><ruby>彼<rt>かれ</rt></ruby>が<ruby>負<rt>ま</rt></ruby>ける<b>とは</b><ruby>思<rt>おも</rt></ruby>わなかった。",
+    "kr": "설마 그가 질 줄은 몰랐다."
+   },
+   {
+    "p": "おそらく~だろう",
+    "m": "아마 ~일 것이다",
+    "ex": "<b>おそらく</b><ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby><b>だろう</b>。",
+    "kr": "아마 내일은 비일 것이다."
+   },
+   {
+    "p": "ぜひ~たい・てください",
+    "m": "꼭 ~하고 싶다 / ~해 주세요",
+    "ex": "<b>ぜひ</b><ruby>遊<rt>あそ</rt></ruby>びに<ruby>来<rt>き</rt></ruby><b>てください</b>。",
+    "kr": "꼭 놀러 오세요."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は（　　）<ruby>約束<rt>やくそく</rt></ruby>を<ruby>破<rt>やぶ</rt></ruby>らない<ruby>人<rt>ひと</rt></ruby>だ。",
+    "opts": [
+     "たとえ",
+     "まるで",
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "もし"
+    ],
+    "a": 2,
+    "e": "뒤가 ~ない이므로 <b><ruby>決<rt>けっ</rt></ruby>して</b>."
+   },
+   {
+    "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は（　　）<ruby>人形<rt>にんぎょう</rt></ruby>のようにきれいだ。",
+    "opts": [
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "たとえ",
+     "めったに",
+     "まるで"
+    ],
+    "a": 3,
+    "e": "~ようだ와 짝인 것은 <b>まるで</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は（　　）<ruby>怒<rt>おこ</rt></ruby>らない。",
+    "opts": [
+     "めったに",
+     "まるで",
+     "ぜひ",
+     "たとえ"
+    ],
+    "a": 0,
+    "e": "‘좀처럼 ~않다’는 <b>めったに~ない</b>."
+   },
+   {
+    "q": "（　　）<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っても、<ruby>試合<rt>しあい</rt></ruby>は<ruby>行<rt>おこな</rt></ruby>われる。",
+    "opts": [
+     "まるで",
+     "たとえ",
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "ぜひ"
+    ],
+    "a": 1,
+    "e": "~ても 와 짝인 것은 <b>たとえ</b>."
+   },
+   {
+    "q": "（　　）<ruby>彼<rt>かれ</rt></ruby>が<ruby>優勝<rt>ゆうしょう</rt></ruby>するとは<ruby>思<rt>おも</rt></ruby>わなかった。",
+    "opts": [
+     "ぜひ",
+     "めったに",
+     "まさか",
+     "たとえ"
+    ],
+    "a": 2,
+    "e": "~とは<ruby>思<rt>おも</rt></ruby>わなかった 와 짝인 것은 <b>まさか</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>が（　　）わからない。",
+    "opts": [
+     "たとえ",
+     "ぜひ",
+     "おそらく",
+     "<ruby>全然<rt>ぜんぜん</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "뒤가 ~ない이므로 <b><ruby>全然<rt>ぜんぜん</rt></ruby></b>."
+   },
+   {
+    "q": "（　　）<ruby>時間<rt>じかん</rt></ruby>があったら、ぜひ<ruby>遊<rt>あそ</rt></ruby>びに<ruby>来<rt>き</rt></ruby>てください。",
+    "opts": [
+     "もし",
+     "まるで",
+     "めったに",
+     "まさか"
+    ],
+    "a": 0,
+    "e": "가정은 <b>もし~たら</b>."
+   },
+   {
+    "q": "（　　）<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るだろう。",
+    "opts": [
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "おそらく",
+     "まさか",
+     "さっぱり"
+    ],
+    "a": 1,
+    "e": "‘아마 ~일 것이다’ 는 <b>おそらく~だろう</b>."
+   },
+   {
+    "q": "<ruby>説明<rt>せつめい</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いたが、（　　）わからなかった。",
+    "opts": [
+     "たとえ",
+     "ぜひ",
+     "さっぱり",
+     "もし"
+    ],
+    "a": 2,
+    "e": "‘전혀 ~않다’ 는 <b>さっぱり~ない</b>."
+   },
+   {
+    "q": "<ruby>私<rt>わたし</rt></ruby>は<ruby>肉<rt>にく</rt></ruby>を<ruby>食<rt>た</rt></ruby>べない。（　　）、アレルギーがあるからだ。",
+    "opts": [
+     "たとえ",
+     "まさか",
+     "ぜひ",
+     "なぜなら"
+    ],
+    "a": 3,
+    "e": "‘~からだ’ 와 짝인 <b>なぜなら</b>."
+   }
+  ]
+ },
+ {
+  "n": 10,
+  "part": "Part 7",
+  "pl": "P7",
+  "title": "접속사 완전 정리",
+  "min": 40,
+  "goal": "공란 독해의 열쇠인 접속사를 역할별로 묶어서 외웁니다.",
+  "cards": [
+   {
+    "p": "だから・したがって・そのため",
+    "m": "그래서 (순접·결과)",
+    "ex": "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>った。<b>そのため</b>、<ruby>試合<rt>しあい</rt></ruby>は<ruby>中止<rt>ちゅうし</rt></ruby>になった。",
+    "kr": "비가 왔다. 그 때문에 경기는 취소됐다."
+   },
+   {
+    "p": "しかし・ところが・だが",
+    "m": "그러나 (역접)",
+    "ex": "<ruby>勉強<rt>べんきょう</rt></ruby>した。<b>ところが</b>、<ruby>不<rt>ふ</rt></ruby><ruby>合格<rt>ごうかく</rt></ruby>だった。",
+    "kr": "공부했다. 그런데 불합격이었다.",
+    "tip": "ところが는 뜻밖의 결과 앞에 온다."
+   },
+   {
+    "p": "さらに・そのうえ・しかも・それに",
+    "m": "게다가 (추가)",
+    "ex": "<ruby>安<rt>やす</rt></ruby>い。<b>しかも</b>、おいしい。",
+    "kr": "싸다. 게다가 맛있다."
+   },
+   {
+    "p": "<ruby>一方<rt>いっぽう</rt></ruby>・それとも・あるいは・または",
+    "m": "한편 / 아니면 (대비·선택)",
+    "ex": "A<ruby>案<rt>あん</rt></ruby>は<ruby>安<rt>やす</rt></ruby>い。<b><ruby>一方<rt>いっぽう</rt></ruby></b>、B<ruby>案<rt>あん</rt></ruby>は<ruby>品質<rt>ひんしつ</rt></ruby>が<ruby>高<rt>たか</rt></ruby>い。",
+    "kr": "A안은 싸다. 한편 B안은 품질이 높다."
+   },
+   {
+    "p": "つまり・すなわち・たとえば",
+    "m": "즉 / 예를 들면 (바꿔 말하기·예시)",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>父<rt>ちち</rt></ruby>の<ruby>弟<rt>おとうと</rt></ruby>、<b>つまり</b><ruby>叔父<rt>おじ</rt></ruby>です。",
+    "kr": "그는 아버지의 남동생, 즉 삼촌입니다."
+   },
+   {
+    "p": "ところで・さて・ちなみに・なお・ただし",
+    "m": "그런데 / 덧붙이면 / 단 (전환·보충)",
+    "ex": "<ruby>料金<rt>りょうきん</rt></ruby>は500<ruby>円<rt>えん</rt></ruby>です。<b>ただし</b>、<ruby>子供<rt>こども</rt></ruby>は<ruby>半額<rt>はんがく</rt></ruby>です。",
+    "kr": "요금은 500엔입니다. 단 어린이는 반값입니다."
+   },
+   {
+    "p": "むしろ",
+    "m": "오히려",
+    "ex": "<ruby>好<rt>す</rt></ruby>きというより、<b>むしろ</b><ruby>尊敬<rt>そんけい</rt></ruby>している。",
+    "kr": "좋아한다기보다 오히려 존경한다."
+   },
+   {
+    "p": "もっとも",
+    "m": "하긴 / 다만 (앞말에 예외를 단다)",
+    "ex": "<ruby>夏<rt>なつ</rt></ruby>は<ruby>暑<rt>あつ</rt></ruby>い。<b>もっとも</b>、<ruby>山<rt>やま</rt></ruby>の<ruby>中<rt>なか</rt></ruby>は<ruby>涼<rt>すず</rt></ruby>しい。",
+    "kr": "여름은 덥다. 하긴 산속은 시원하다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>勉強<rt>べんきょう</rt></ruby>した。（　　）、<ruby>不<rt>ふ</rt></ruby><ruby>合格<rt>ごうかく</rt></ruby>だった。",
+    "opts": [
+     "ところが",
+     "しかも",
+     "したがって",
+     "つまり"
+    ],
+    "a": 0,
+    "e": "예상과 반대 결과이므로 <b>ところが</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>頭<rt>あたま</rt></ruby>が<ruby>良<rt>よ</rt></ruby>い。（　　）、<ruby>性格<rt>せいかく</rt></ruby>も<ruby>優<rt>やさ</rt></ruby>しい。",
+    "opts": [
+     "ところが",
+     "しかも",
+     "つまり",
+     "ただし"
+    ],
+    "a": 1,
+    "e": "좋은 점을 더하는 것이므로 <b>しかも</b>."
+   },
+   {
+    "q": "<ruby>運賃<rt>うんちん</rt></ruby>は500<ruby>円<rt>えん</rt></ruby>です。（　　）、<ruby>子供<rt>こども</rt></ruby>は<ruby>半額<rt>はんがく</rt></ruby>です。",
+    "opts": [
+     "すると",
+     "だから",
+     "ただし",
+     "それとも"
+    ],
+    "a": 2,
+    "e": "조건을 덧붙일 때는 <b>ただし</b>."
+   },
+   {
+    "q": "<ruby>今日<rt>きょう</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>は<ruby>以上<rt>いじょう</rt></ruby>です。（　　）、<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>予定<rt>よてい</rt></ruby>ですが、<ruby>変更<rt>へんこう</rt></ruby>はありますか。",
+    "opts": [
+     "ところが",
+     "したがって",
+     "むしろ",
+     "ところで"
+    ],
+    "a": 3,
+    "e": "화제를 바꿀 때는 <b>ところで</b>."
+   },
+   {
+    "q": "<ruby>運動<rt>うんどう</rt></ruby>は<ruby>健康<rt>けんこう</rt></ruby>にいい。（　　）、やりすぎは<ruby>体<rt>からだ</rt></ruby>に<ruby>悪<rt>わる</rt></ruby>い。",
+    "opts": [
+     "もっとも",
+     "したがって",
+     "すなわち",
+     "それで"
+    ],
+    "a": 0,
+    "e": "앞말에 예외를 덧붙이는 <b>もっとも</b>."
+   },
+   {
+    "q": "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っている。（　　）、<ruby>試合<rt>しあい</rt></ruby>は<ruby>行<rt>おこな</rt></ruby>われる。",
+    "opts": [
+     "そのため",
+     "しかし",
+     "つまり",
+     "しかも"
+    ],
+    "a": 1,
+    "e": "역접은 <b>しかし</b>."
+   },
+   {
+    "q": "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れた。（　　）、<ruby>会議<rt>かいぎ</rt></ruby>に<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わなかった。",
+    "opts": [
+     "しかも",
+     "むしろ",
+     "そのため",
+     "ところで"
+    ],
+    "a": 2,
+    "e": "원인→결과는 <b>そのため</b>."
+   },
+   {
+    "q": "この<ruby>部屋<rt>へや</rt></ruby>は<ruby>広<rt>ひろ</rt></ruby>い。（　　）、<ruby>日当<rt>ひあ</rt></ruby>たりもいい。",
+    "opts": [
+     "ところが",
+     "そのため",
+     "つまり",
+     "しかも"
+    ],
+    "a": 3,
+    "e": "좋은 점을 더할 때는 <b>しかも</b>."
+   },
+   {
+    "q": "<ruby>田中<rt>たなか</rt></ruby>さんは<ruby>私<rt>わたし</rt></ruby>の<ruby>姉<rt>あね</rt></ruby>の<ruby>夫<rt>おっと</rt></ruby>、（　　）<ruby>義理<rt>ぎり</rt></ruby>の<ruby>兄<rt>あに</rt></ruby>です。",
+    "opts": [
+     "つまり",
+     "ところが",
+     "しかも",
+     "ただし"
+    ],
+    "a": 0,
+    "e": "바꿔 말할 때는 <b>つまり</b>."
+   },
+   {
+    "q": "<ruby>会議<rt>かいぎ</rt></ruby>は3<ruby>時<rt>じ</rt></ruby>からです。（　　）、<ruby>場所<rt>ばしょ</rt></ruby>は<ruby>第<rt>だい</rt></ruby><ruby>二<rt>に</rt></ruby><ruby>会議<rt>かいぎ</rt></ruby><ruby>室<rt>しつ</rt></ruby>です。",
+    "opts": [
+     "ところが",
+     "なお",
+     "したがって",
+     "むしろ"
+    ],
+    "a": 1,
+    "e": "정보를 덧붙일 때는 <b>なお</b>."
+   }
+  ]
+ },
+ {
+  "n": 11,
+  "part": "Part 7",
+  "pl": "P7",
+  "title": "공란 독해 풀이법 + 연어",
+  "min": 40,
+  "goal": "빈칸 앞뒤 관계를 보는 순서를 익히고, 자주 쓰는 ‘동사 짝’을 외웁니다.",
+  "cards": [
+   {
+    "p": "풀이 순서",
+    "m": "①빈칸 앞뒤 1문장 읽기 → ②접속사·어휘·문법 중 무엇인지 판단 → ③앞뒤 관계(순접·역접·추가) 확인 → ④소거",
+    "tip": "전체를 처음부터 읽지 말고 빈칸 주변부터."
+   },
+   {
+    "p": "<ruby>影響<rt>えいきょう</rt></ruby>を<ruby>与<rt>あた</rt></ruby>える",
+    "m": "영향을 주다",
+    "ex": "<ruby>天気<rt>てんき</rt></ruby>は<ruby>気分<rt>きぶん</rt></ruby>に<b><ruby>影響<rt>えいきょう</rt></ruby>を<ruby>与<rt>あた</rt></ruby>える</b>。",
+    "kr": "날씨는 기분에 영향을 준다."
+   },
+   {
+    "p": "<ruby>注意<rt>ちゅうい</rt></ruby>を<ruby>払<rt>はら</rt></ruby>う",
+    "m": "주의를 기울이다",
+    "ex": "<ruby>細<rt>こま</rt></ruby>かい<ruby>点<rt>てん</rt></ruby>にも<b><ruby>注意<rt>ちゅうい</rt></ruby>を<ruby>払<rt>はら</rt></ruby>う</b>。",
+    "kr": "세세한 점에도 주의를 기울인다."
+   },
+   {
+    "p": "<ruby>責任<rt>せきにん</rt></ruby>を<ruby>取<rt>と</rt></ruby>る",
+    "m": "책임을 지다",
+    "ex": "<ruby>失敗<rt>しっぱい</rt></ruby>の<b><ruby>責任<rt>せきにん</rt></ruby>を<ruby>取<rt>と</rt></ruby>る</b>。",
+    "kr": "실패의 책임을 진다."
+   },
+   {
+    "p": "<ruby>結果<rt>けっか</rt></ruby>を<ruby>出<rt>だ</rt></ruby>す",
+    "m": "결과를 내다",
+    "ex": "<ruby>短<rt>みじか</rt></ruby>い<ruby>期間<rt>きかん</rt></ruby>で<b><ruby>結果<rt>けっか</rt></ruby>を<ruby>出<rt>だ</rt></ruby>す</b>。",
+    "kr": "짧은 기간에 결과를 낸다."
+   },
+   {
+    "p": "<ruby>期待<rt>きたい</rt></ruby>に<ruby>応<rt>こた</rt></ruby>える",
+    "m": "기대에 부응하다",
+    "ex": "<ruby>皆<rt>みな</rt></ruby>の<b><ruby>期待<rt>きたい</rt></ruby>に<ruby>応<rt>こた</rt></ruby>える</b>。",
+    "kr": "모두의 기대에 부응한다."
+   },
+   {
+    "p": "<ruby>迷惑<rt>めいわく</rt></ruby>をかける",
+    "m": "폐를 끼치다",
+    "ex": "<ruby>周<rt>まわ</rt></ruby>りの<ruby>人<rt>ひと</rt></ruby>に<b><ruby>迷惑<rt>めいわく</rt></ruby>をかける</b>。",
+    "kr": "주변 사람에게 폐를 끼친다."
+   },
+   {
+    "p": "<ruby>約束<rt>やくそく</rt></ruby>を<ruby>守<rt>まも</rt></ruby>る / <ruby>破<rt>やぶ</rt></ruby>る",
+    "m": "약속을 지키다 / 어기다",
+    "ex": "<ruby>時間<rt>じかん</rt></ruby>の<b><ruby>約束<rt>やくそく</rt></ruby>を<ruby>守<rt>まも</rt></ruby>る</b>。",
+    "kr": "시간 약속을 지킨다."
+   },
+   {
+    "p": "<ruby>時間<rt>じかん</rt></ruby>をかける",
+    "m": "시간을 들이다",
+    "ex": "<ruby>準備<rt>じゅんび</rt></ruby>に<b><ruby>時間<rt>じかん</rt></ruby>をかける</b>。",
+    "kr": "준비에 시간을 들인다."
+   }
+  ],
+  "quiz": [
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>多<rt>おお</rt></ruby>くの<ruby>会社<rt>かいしゃ</rt></ruby>でテレワークが<ruby>広<rt>ひろ</rt></ruby>がっている。（1）、<ruby>通勤<rt>つうきん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>がなくなり、<ruby>自分<rt>じぶん</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えたという<ruby>声<rt>こえ</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い。（2）、<ruby>同僚<rt>どうりょう</rt></ruby>と<ruby>話<rt>はな</rt></ruby>す<ruby>機会<rt>きかい</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>孤独<rt>こどく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>もいる。",
+    "q": "（1）に<ruby>入<rt>はい</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>は？",
+    "opts": [
+     "ところが",
+     "つまり",
+     "<ruby>実際<rt>じっさい</rt></ruby>",
+     "むしろ"
+    ],
+    "a": 2,
+    "e": "앞 문장의 내용을 실제 사례로 받는 <b><ruby>実際<rt>じっさい</rt></ruby></b>."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>多<rt>おお</rt></ruby>くの<ruby>会社<rt>かいしゃ</rt></ruby>でテレワークが<ruby>広<rt>ひろ</rt></ruby>がっている。（1）、<ruby>通勤<rt>つうきん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>がなくなり、<ruby>自分<rt>じぶん</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えたという<ruby>声<rt>こえ</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い。（2）、<ruby>同僚<rt>どうりょう</rt></ruby>と<ruby>話<rt>はな</rt></ruby>す<ruby>機会<rt>きかい</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>孤独<rt>こどく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>もいる。",
+    "q": "（2）に<ruby>入<rt>はい</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>は？",
+    "opts": [
+     "だから",
+     "すなわち",
+     "<ruby>実際<rt>じっさい</rt></ruby>",
+     "<ruby>一方<rt>いっぽう</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "좋은 점과 나쁜 점을 대비하므로 <b><ruby>一方<rt>いっぽう</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>周<rt>まわ</rt></ruby>りの<ruby>人<rt>ひと</rt></ruby>に（　　）ないように、<ruby>静<rt>しず</rt></ruby>かにしてください。",
+    "opts": [
+     "<ruby>迷惑<rt>めいわく</rt></ruby>をかけ",
+     "<ruby>責任<rt>せきにん</rt></ruby>を<ruby>取<rt>と</rt></ruby>ら",
+     "<ruby>期待<rt>きたい</rt></ruby>に<ruby>応<rt>こた</rt></ruby>え",
+     "<ruby>約束<rt>やくそく</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ら"
+    ],
+    "a": 0,
+    "e": "‘폐를 끼치지 않도록’ 이므로 <b><ruby>迷惑<rt>めいわく</rt></ruby>をかける</b>."
+   },
+   {
+    "q": "<ruby>新<rt>しん</rt></ruby><ruby>製品<rt>せいひん</rt></ruby>の<ruby>発売<rt>はつばい</rt></ruby>は、<ruby>会社<rt>かいしゃ</rt></ruby>の<ruby>売<rt>う</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げに<ruby>大<rt>おお</rt></ruby>きな（　　）を<ruby>与<rt>あた</rt></ruby>えた。",
+    "opts": [
+     "<ruby>責任<rt>せきにん</rt></ruby>",
+     "<ruby>影響<rt>えいきょう</rt></ruby>",
+     "<ruby>約束<rt>やくそく</rt></ruby>",
+     "<ruby>結果<rt>けっか</rt></ruby>"
+    ],
+    "a": 1,
+    "e": "‘영향을 주다’ 는 <b><ruby>影響<rt>えいきょう</rt></ruby>を<ruby>与<rt>あた</rt></ruby>える</b>."
+   },
+   {
+    "q": "<ruby>失敗<rt>しっぱい</rt></ruby>した<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>私<rt>わたし</rt></ruby>が（　　）を<ruby>取<rt>と</rt></ruby>ります。",
+    "opts": [
+     "<ruby>影響<rt>えいきょう</rt></ruby>",
+     "<ruby>期待<rt>きたい</rt></ruby>",
+     "<ruby>責任<rt>せきにん</rt></ruby>",
+     "<ruby>迷惑<rt>めいわく</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘책임을 지다’ 는 <b><ruby>責任<rt>せきにん</rt></ruby>を<ruby>取<rt>と</rt></ruby>る</b>."
+   },
+   {
+    "ctx": "ある<ruby>会社<rt>かいしゃ</rt></ruby>では、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>意見<rt>いけん</rt></ruby>をもとに<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>した。（1）、<ruby>残業<rt>ざんぎょう</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>満足<rt>まんぞく</rt></ruby><ruby>度<rt>ど</rt></ruby>も<ruby>上<rt>あ</rt></ruby>がったそうだ。（2）、<ruby>制度<rt>せいど</rt></ruby>を<ruby>変<rt>か</rt></ruby>えるだけでなく、<ruby>社員<rt>しゃいん</rt></ruby>が<ruby>意見<rt>いけん</rt></ruby>を<ruby>言<rt>い</rt></ruby>いやすい<ruby>雰囲気<rt>ふんいき</rt></ruby>をつくることも<ruby>大切<rt>たいせつ</rt></ruby>である。",
+    "q": "（1）に<ruby>入<rt>はい</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>は？",
+    "opts": [
+     "むしろ",
+     "すなわち",
+     "ところで",
+     "<ruby>実際<rt>じっさい</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "앞 문장을 실제 결과로 받는 <b><ruby>実際<rt>じっさい</rt></ruby></b>."
+   },
+   {
+    "ctx": "ある<ruby>会社<rt>かいしゃ</rt></ruby>では、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>意見<rt>いけん</rt></ruby>をもとに<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>した。（1）、<ruby>残業<rt>ざんぎょう</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>満足<rt>まんぞく</rt></ruby><ruby>度<rt>ど</rt></ruby>も<ruby>上<rt>あ</rt></ruby>がったそうだ。（2）、<ruby>制度<rt>せいど</rt></ruby>を<ruby>変<rt>か</rt></ruby>えるだけでなく、<ruby>社員<rt>しゃいん</rt></ruby>が<ruby>意見<rt>いけん</rt></ruby>を<ruby>言<rt>い</rt></ruby>いやすい<ruby>雰囲気<rt>ふんいき</rt></ruby>をつくることも<ruby>大切<rt>たいせつ</rt></ruby>である。",
+    "q": "（2）に<ruby>入<rt>はい</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>は？",
+    "opts": [
+     "さらに",
+     "ところが",
+     "すなわち",
+     "したがって"
+    ],
+    "a": 0,
+    "e": "앞 내용에 더하는 <b>さらに</b>."
+   },
+   {
+    "q": "<ruby>運転<rt>うんてん</rt></ruby><ruby>中<rt>ちゅう</rt></ruby>は、<ruby>周<rt>まわ</rt></ruby>りの<ruby>車<rt>くるま</rt></ruby>に（　　）を<ruby>払<rt>はら</rt></ruby>って<ruby>走<rt>はし</rt></ruby>ってください。",
+    "opts": [
+     "<ruby>責任<rt>せきにん</rt></ruby>",
+     "<ruby>注意<rt>ちゅうい</rt></ruby>",
+     "<ruby>約束<rt>やくそく</rt></ruby>",
+     "<ruby>期待<rt>きたい</rt></ruby>"
+    ],
+    "a": 1,
+    "e": "‘주의를 기울이다’ 는 <b><ruby>注意<rt>ちゅうい</rt></ruby>を<ruby>払<rt>はら</rt></ruby>う</b>."
+   },
+   {
+    "q": "<ruby>約束<rt>やくそく</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れて、<ruby>友達<rt>ともだち</rt></ruby>に（　　）をかけてしまった。",
+    "opts": [
+     "<ruby>影響<rt>えいきょう</rt></ruby>",
+     "<ruby>注意<rt>ちゅうい</rt></ruby>",
+     "<ruby>迷惑<rt>めいわく</rt></ruby>",
+     "<ruby>責任<rt>せきにん</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘폐를 끼치다’ 는 <b><ruby>迷惑<rt>めいわく</rt></ruby>をかける</b>."
+   },
+   {
+    "q": "みんなの（　　）に<ruby>応<rt>こた</rt></ruby>えるために、<ruby>毎日<rt>まいにち</rt></ruby><ruby>練習<rt>れんしゅう</rt></ruby>している。",
+    "opts": [
+     "<ruby>迷惑<rt>めいわく</rt></ruby>",
+     "<ruby>影響<rt>えいきょう</rt></ruby>",
+     "<ruby>結果<rt>けっか</rt></ruby>",
+     "<ruby>期待<rt>きたい</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "‘기대에 부응하다’ 는 <b><ruby>期待<rt>きたい</rt></ruby>に<ruby>応<rt>こた</rt></ruby>える</b>."
+   }
+  ]
+ },
+ {
+  "n": 12,
+  "part": "Part 8",
+  "pl": "P8",
+  "title": "독해: 주제 찾기와 지시어",
+  "min": 40,
+  "goal": "긴 글에서 필자의 주장이 어디 있는지, ‘この·その’가 무엇인지 찾습니다.",
+  "cards": [
+   {
+    "p": "주제문 위치",
+    "m": "첫 단락, 마지막 단락, 그리고 しかし 뒤에 있는 경우가 많습니다.",
+    "tip": "예시(たとえば) 문장은 가볍게 건너뛰기."
+   },
+   {
+    "p": "필자 의견 표지",
+    "m": "~と<ruby>思<rt>おも</rt></ruby>う ／ ~べきだ ／ ~ではないだろうか ／ ~なければならない ／ ~のである",
+    "tip": "이런 말이 붙은 문장이 필자의 주장."
+   },
+   {
+    "p": "こそあど (この·その)",
+    "m": "바로 앞 문장의 내용을 가리킵니다. 대부분 앞 1~2문장 안에 답이 있어요.",
+    "tip": "밑줄 친 ‘この~’는 앞 문장을 대입해 보기."
+   },
+   {
+    "p": "부정 → 긍정 패턴",
+    "m": "~ではなく、~だ ／ ~だけでなく ／ <ruby>確<rt>たし</rt></ruby>かに~が、しかし~",
+    "tip": "뒤쪽(긍정)이 진짜 하고 싶은 말."
+   },
+   {
+    "p": "‘왜?’ 문제",
+    "m": "밑줄 바로 앞에서 ~ため / ~から / ~ので를 찾습니다.",
+    "tip": "이유는 대개 밑줄 앞쪽에 있다."
+   },
+   {
+    "p": "내용 일치 문제",
+    "m": "선택지를 먼저 읽고 본문에서 확인합니다. <ruby>必<rt>かなら</rt></ruby>ず・すべて・<ruby>決<rt>けっ</rt></ruby>して・だけ 같은 극단 표현은 의심하세요."
+   }
+  ],
+  "quiz": [
+   {
+    "ctx": "<ruby>確<rt>たし</rt></ruby>かに、インターネットは<ruby>便利<rt>べんり</rt></ruby>だ。しかし、<ruby>便利<rt>べんり</rt></ruby>さに<ruby>頼<rt>たよ</rt></ruby>りすぎると、<ruby>自分<rt>じぶん</rt></ruby>で<ruby>考<rt>かんが</rt></ruby>える<ruby>力<rt>ちから</rt></ruby>が<ruby>弱<rt>よわ</rt></ruby>くなるのではないだろうか。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>主張<rt>しゅちょう</rt></ruby>は？",
+    "opts": [
+     "<ruby>便利<rt>べんり</rt></ruby>さに<ruby>頼<rt>たよ</rt></ruby>りすぎると、<ruby>考<rt>かんが</rt></ruby>える<ruby>力<rt>ちから</rt></ruby>が<ruby>弱<rt>よわ</rt></ruby>くなるかもしれない",
+     "インターネットは<ruby>便利<rt>べんり</rt></ruby>なので、もっと<ruby>使<rt>つか</rt></ruby>うべきだ",
+     "インターネットは<ruby>危険<rt>きけん</rt></ruby>なので<ruby>使<rt>つか</rt></ruby>うべきではない",
+     "インターネットを<ruby>使<rt>つか</rt></ruby>うか<ruby>使<rt>つか</rt></ruby>わないかは<ruby>個人<rt>こじん</rt></ruby>の<ruby>自由<rt>じゆう</rt></ruby>だ"
+    ],
+    "a": 0,
+    "e": "‘<ruby>確<rt>たし</rt></ruby>かに~、しかし~’ 에서 뒤쪽이 주장입니다."
+   },
+   {
+    "ctx": "<ruby>日本<rt>にほん</rt></ruby>では、<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。この<ruby>現象<rt>げんしょう</rt></ruby>は「<ruby>少子<rt>しょうし</rt></ruby><ruby>高齢<rt>こうれい</rt></ruby><ruby>化<rt>か</rt></ruby>」と<ruby>呼<rt>よ</rt></ruby>ばれる。",
+    "q": "「この<ruby>現象<rt>げんしょう</rt></ruby>」が<ruby>指<rt>さ</rt></ruby>すものは？",
+    "opts": [
+     "<ruby>日本<rt>にほん</rt></ruby>に<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えていること",
+     "<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えていること",
+     "<ruby>少子<rt>しょうし</rt></ruby><ruby>高齢<rt>こうれい</rt></ruby><ruby>化<rt>か</rt></ruby>という<ruby>言葉<rt>ことば</rt></ruby>",
+     "<ruby>日本<rt>にほん</rt></ruby>で<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>減<rt>へ</rt></ruby>っていること"
+    ],
+    "a": 1,
+    "e": "‘この’는 바로 앞 문장의 내용을 가리킵니다."
+   },
+   {
+    "ctx": "<ruby>子供<rt>こども</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>時間<rt>じかん</rt></ruby>が<ruby>減<rt>へ</rt></ruby>っている。スマートフォンの<ruby>普及<rt>ふきゅう</rt></ruby>がその<ruby>一因<rt>いちいん</rt></ruby>だと<ruby>考<rt>かんが</rt></ruby>えられる。",
+    "q": "「その」が<ruby>指<rt>さ</rt></ruby>すものは？",
+    "opts": [
+     "スマートフォンが<ruby>普及<rt>ふきゅう</rt></ruby>したこと",
+     "<ruby>一因<rt>いちいん</rt></ruby>",
+     "<ruby>子供<rt>こども</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>時間<rt>じかん</rt></ruby>が<ruby>減<rt>へ</rt></ruby>っていること",
+     "<ruby>考<rt>かんが</rt></ruby>えられていること"
+    ],
+    "a": 2,
+    "e": "‘その<ruby>一因<rt>いちいん</rt></ruby>’은 ‘독서 시간이 줄어든 것’의 원인 중 하나."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>のホームで<ruby>歩<rt>ある</rt></ruby>きながらスマートフォンを<ruby>見<rt>み</rt></ruby>る<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。この<ruby>行動<rt>こうどう</rt></ruby>は、とても<ruby>危険<rt>きけん</rt></ruby>である。ホームから<ruby>落<rt>お</rt></ruby>ちたり、ほかの<ruby>人<rt>ひと</rt></ruby>にぶつかったりするおそれがあるからだ。<ruby>画面<rt>がめん</rt></ruby>を<ruby>見<rt>み</rt></ruby>たいときは、<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うようにしたい。",
+    "q": "「この<ruby>行動<rt>こうどう</rt></ruby>」が<ruby>指<rt>さ</rt></ruby>すものは？",
+    "opts": [
+     "<ruby>駅<rt>えき</rt></ruby>のホームから<ruby>落<rt>お</rt></ruby>ちること",
+     "スマートフォンを<ruby>買<rt>か</rt></ruby>うこと",
+     "<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うこと",
+     "<ruby>駅<rt>えき</rt></ruby>のホームで<ruby>歩<rt>ある</rt></ruby>きながらスマートフォンを<ruby>見<rt>み</rt></ruby>ること"
+    ],
+    "a": 3,
+    "e": "‘この’ 는 바로 앞 문장의 내용을 가리킵니다."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>のホームで<ruby>歩<rt>ある</rt></ruby>きながらスマートフォンを<ruby>見<rt>み</rt></ruby>る<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。この<ruby>行動<rt>こうどう</rt></ruby>は、とても<ruby>危険<rt>きけん</rt></ruby>である。ホームから<ruby>落<rt>お</rt></ruby>ちたり、ほかの<ruby>人<rt>ひと</rt></ruby>にぶつかったりするおそれがあるからだ。<ruby>画面<rt>がめん</rt></ruby>を<ruby>見<rt>み</rt></ruby>たいときは、<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うようにしたい。",
+    "q": "なぜ<ruby>危険<rt>きけん</rt></ruby>だと<ruby>言<rt>い</rt></ruby>っているか？",
+    "opts": [
+     "ホームから<ruby>落<rt>お</rt></ruby>ちたり、<ruby>人<rt>ひと</rt></ruby>にぶつかったりするおそれがあるから",
+     "スマートフォンが<ruby>壊<rt>こわ</rt></ruby>れるから",
+     "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れるから",
+     "<ruby>画面<rt>がめん</rt></ruby>が<ruby>見<rt>み</rt></ruby>えにくくなるから"
+    ],
+    "a": 0,
+    "e": "이유는 ‘~からだ’ 앞에 있습니다."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>のホームで<ruby>歩<rt>ある</rt></ruby>きながらスマートフォンを<ruby>見<rt>み</rt></ruby>る<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。この<ruby>行動<rt>こうどう</rt></ruby>は、とても<ruby>危険<rt>きけん</rt></ruby>である。ホームから<ruby>落<rt>お</rt></ruby>ちたり、ほかの<ruby>人<rt>ひと</rt></ruby>にぶつかったりするおそれがあるからだ。<ruby>画面<rt>がめん</rt></ruby>を<ruby>見<rt>み</rt></ruby>たいときは、<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うようにしたい。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>主張<rt>しゅちょう</rt></ruby>は？",
+    "opts": [
+     "<ruby>歩<rt>ある</rt></ruby>きながら<ruby>使<rt>つか</rt></ruby>うほうが<ruby>時間<rt>じかん</rt></ruby>を<ruby>節約<rt>せつやく</rt></ruby>できる",
+     "<ruby>画面<rt>がめん</rt></ruby>を<ruby>見<rt>み</rt></ruby>たいときは<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うべきだ",
+     "<ruby>駅<rt>えき</rt></ruby>のホームを<ruby>広<rt>ひろ</rt></ruby>くするべきだ",
+     "スマートフォンを<ruby>使<rt>つか</rt></ruby>うのをやめるべきだ"
+    ],
+    "a": 1,
+    "e": "마지막 문장 ‘<ruby>立<rt>た</rt></ruby>ち<ruby>止<rt>ど</rt></ruby>まって<ruby>使<rt>つか</rt></ruby>うようにしたい’ 가 주장."
+   },
+   {
+    "ctx": "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>ほど、<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまいとは<ruby>限<rt>かぎ</rt></ruby>らない。むしろ、<ruby>忙<rt>いそが</rt></ruby>しさを<ruby>理由<rt>りゆう</rt></ruby>にして、<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>後回<rt>あとまわ</rt></ruby>しにしている<ruby>場合<rt>ばあい</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いのではないだろうか。<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>なのは、<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことではなく、<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするかを<ruby>決<rt>き</rt></ruby>めることである。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>主張<rt>しゅちょう</rt></ruby>は？",
+    "opts": [
+     "<ruby>忙<rt>いそが</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>は<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまい",
+     "<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことが<ruby>一番<rt>いちばん</rt></ruby><ruby>大切<rt>たいせつ</rt></ruby>だ",
+     "<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするかを<ruby>決<rt>き</rt></ruby>めることが<ruby>必要<rt>ひつよう</rt></ruby>だ",
+     "<ruby>大切<rt>たいせつ</rt></ruby>なことは<ruby>後回<rt>あとまわ</rt></ruby>しにすべきだ"
+    ],
+    "a": 2,
+    "e": "‘~ではなく、~である’ 의 뒤쪽이 주장."
+   },
+   {
+    "ctx": "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>ほど、<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまいとは<ruby>限<rt>かぎ</rt></ruby>らない。むしろ、<ruby>忙<rt>いそが</rt></ruby>しさを<ruby>理由<rt>りゆう</rt></ruby>にして、<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>後回<rt>あとまわ</rt></ruby>しにしている<ruby>場合<rt>ばあい</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いのではないだろうか。<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>なのは、<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことではなく、<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするかを<ruby>決<rt>き</rt></ruby>めることである。",
+    "q": "「むしろ」の<ruby>後<rt>あと</rt></ruby>で<ruby>述<rt>の</rt></ruby>べていることは？",
+    "opts": [
+     "<ruby>忙<rt>いそが</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>はみんな<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまい",
+     "<ruby>時間<rt>じかん</rt></ruby>は<ruby>簡単<rt>かんたん</rt></ruby>に<ruby>増<rt>ふ</rt></ruby>やせる",
+     "<ruby>後回<rt>あとまわ</rt></ruby>しにするのは<ruby>良<rt>よ</rt></ruby>いことだ",
+     "<ruby>忙<rt>いそが</rt></ruby>しさを<ruby>理由<rt>りゆう</rt></ruby>に<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>後回<rt>あとまわ</rt></ruby>しにする<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い"
+    ],
+    "a": 3,
+    "e": "‘むしろ’ 뒤가 필자가 하고 싶은 말."
+   },
+   {
+    "ctx": "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>ほど、<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまいとは<ruby>限<rt>かぎ</rt></ruby>らない。むしろ、<ruby>忙<rt>いそが</rt></ruby>しさを<ruby>理由<rt>りゆう</rt></ruby>にして、<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>後回<rt>あとまわ</rt></ruby>しにしている<ruby>場合<rt>ばあい</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いのではないだろうか。<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>なのは、<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことではなく、<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするかを<ruby>決<rt>き</rt></ruby>めることである。",
+    "q": "<ruby>本文<rt>ほんぶん</rt></ruby>の<ruby>内容<rt>ないよう</rt></ruby>に<ruby>合<rt>あ</rt></ruby>うものは？",
+    "opts": [
+     "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が、<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまいとは<ruby>限<rt>かぎ</rt></ruby>らない",
+     "<ruby>忙<rt>いそが</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>は<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>必<rt>かなら</rt></ruby>ず<ruby>先<rt>さき</rt></ruby>にする",
+     "<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やせば<ruby>問題<rt>もんだい</rt></ruby>は<ruby>解決<rt>かいけつ</rt></ruby>する",
+     "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>はいない"
+    ],
+    "a": 0,
+    "e": "첫 문장 ‘~とは<ruby>限<rt>かぎ</rt></ruby>らない’ 와 일치."
+   },
+   {
+    "ctx": "「<ruby>忙<rt>いそが</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>ほど、<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がうまいとは<ruby>限<rt>かぎ</rt></ruby>らない。むしろ、<ruby>忙<rt>いそが</rt></ruby>しさを<ruby>理由<rt>りゆう</rt></ruby>にして、<ruby>大切<rt>たいせつ</rt></ruby>なことを<ruby>後回<rt>あとまわ</rt></ruby>しにしている<ruby>場合<rt>ばあい</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いのではないだろうか。<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>なのは、<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことではなく、<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするかを<ruby>決<rt>き</rt></ruby>めることである。",
+    "q": "この<ruby>文章<rt>ぶんしょう</rt></ruby>のテーマとして<ruby>最<rt>もっと</rt></ruby>も<ruby>合<rt>あ</rt></ruby>うものは？",
+    "opts": [
+     "<ruby>忙<rt>いそが</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>の<ruby>健康<rt>けんこう</rt></ruby>",
+     "<ruby>時間<rt>じかん</rt></ruby>の<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>と<ruby>優先<rt>ゆうせん</rt></ruby><ruby>順位<rt>じゅんい</rt></ruby>",
+     "<ruby>仕事<rt>しごと</rt></ruby>を<ruby>早<rt>はや</rt></ruby>く<ruby>終<rt>お</rt></ruby>わらせる<ruby>方法<rt>ほうほう</rt></ruby>",
+     "<ruby>時間<rt>じかん</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やす<ruby>技術<rt>ぎじゅつ</rt></ruby>"
+    ],
+    "a": 1,
+    "e": "마지막 문장 ‘<ruby>何<rt>なん</rt></ruby>を<ruby>先<rt>さき</rt></ruby>にするか’ 가 핵심."
+   }
+  ]
+ },
+ {
+  "n": 13,
+  "part": "Part 8",
+  "pl": "P8",
+  "title": "실전 혼합 연습",
+  "min": 45,
+  "goal": "문법, 오문 정정, 접속사, 독해를 섞어서 풉니다. 시간 감각도 익힙니다.",
+  "cards": [
+   {
+    "p": "시간 배분",
+    "m": "Part 5·6은 빠르게 끝내고, 남긴 시간을 Part 7·8 독해에 씁니다.",
+    "tip": "문항 수와 시간은 접수 안내의 공식 정보로 확인하세요."
+   },
+   {
+    "p": "모르면 표시",
+    "m": "오래 고민하지 말고 표시한 뒤 넘어갔다가, 마지막에 돌아옵니다."
+   },
+   {
+    "p": "소거법",
+    "m": "4개 중 확실히 아닌 것 2개를 먼저 지우면 정답률이 크게 올라갑니다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>約束<rt>やくそく</rt></ruby>した（　　）、<ruby>守<rt>まも</rt></ruby>らなければならない。",
+    "opts": [
+     "くせに",
+     "ものの",
+     "からには",
+     "ばかりに"
+    ],
+    "a": 2,
+    "e": "‘~한 이상은’ 은 <b>からには</b>."
+   },
+   {
+    "q": "(A)この<ruby>仕事<rt>しごと</rt></ruby>は　(B)<ruby>明日<rt>あした</rt></ruby>までに　(C)しざるを　(D)<ruby>得<rt>え</rt></ruby>ない。",
+    "opts": [
+     "この<ruby>仕事<rt>しごと</rt></ruby>は",
+     "<ruby>明日<rt>あした</rt></ruby>までに",
+     "しざるを",
+     "<ruby>得<rt>え</rt></ruby>ない"
+    ],
+    "a": 2,
+    "e": "する는 <b>せざるを<ruby>得<rt>え</rt></ruby>ない</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>日本<rt>にほん</rt></ruby>に<ruby>来<rt>き</rt></ruby>た（　　）で、まだ<ruby>慣<rt>な</rt></ruby>れていない。",
+    "opts": [
+     "とたん",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "ばかり"
+    ],
+    "a": 3,
+    "e": "‘막 ~했다’는 <b>たばかり</b>."
+   },
+   {
+    "q": "(A)<ruby>社長<rt>しゃちょう</rt></ruby>が　(B)<ruby>会議<rt>かいぎ</rt></ruby><ruby>室<rt>しつ</rt></ruby>に　(C)<ruby>参<rt>まい</rt></ruby>られました　(D)よ。",
+    "opts": [
+     "<ruby>社長<rt>しゃちょう</rt></ruby>が",
+     "<ruby>会議<rt>かいぎ</rt></ruby><ruby>室<rt>しつ</rt></ruby>に",
+     "<ruby>参<rt>まい</rt></ruby>られました",
+     "よ"
+    ],
+    "a": 2,
+    "e": "사장님의 행동에 겸양어 <ruby>参<rt>まい</rt></ruby>る를 쓰면 오답. ‘<b>いらっしゃいました</b>’."
+   },
+   {
+    "q": "<ruby>熱<rt>ねつ</rt></ruby>がある。（　　）、<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>休<rt>やす</rt></ruby>んだ。",
+    "opts": [
+     "そのため",
+     "ところが",
+     "しかも",
+     "つまり"
+    ],
+    "a": 0,
+    "e": "원인→결과이므로 <b>そのため</b>."
+   },
+   {
+    "ctx": "Aは<ruby>便利<rt>べんり</rt></ruby>だが、<ruby>環境<rt>かんきょう</rt></ruby>に<ruby>悪<rt>わる</rt></ruby>い。Bは<ruby>少<rt>すこ</rt></ruby>し<ruby>高<rt>たか</rt></ruby>いが、<ruby>環境<rt>かんきょう</rt></ruby>に<ruby>優<rt>やさ</rt></ruby>しい。<ruby>私<rt>わたし</rt></ruby>は、<ruby>長<rt>なが</rt></ruby>い<ruby>目<rt>め</rt></ruby>で<ruby>見<rt>み</rt></ruby>ればBを<ruby>選<rt>えら</rt></ruby>ぶべきだと<ruby>思<rt>おも</rt></ruby>う。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>が<ruby>勧<rt>すす</rt></ruby>めているのは？",
+    "opts": [
+     "A",
+     "B",
+     "どちらも<ruby>選<rt>えら</rt></ruby>ばない",
+     "Bは<ruby>高<rt>たか</rt></ruby>いので<ruby>選<rt>えら</rt></ruby>ばない"
+    ],
+    "a": 1,
+    "e": "‘~べきだと<ruby>思<rt>おも</rt></ruby>う’ 앞의 B가 필자의 의견."
+   },
+   {
+    "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は（　　）<ruby>泣<rt>な</rt></ruby>きそうな<ruby>顔<rt>かお</rt></ruby>で<ruby>電話<rt>でんわ</rt></ruby>をかけてきた。",
+    "opts": [
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "たとえ",
+     "<ruby>今<rt>いま</rt></ruby>にも",
+     "めったに"
+    ],
+    "a": 2,
+    "e": "<b><ruby>今<rt>いま</rt></ruby>にも~そうだ</b> 짝."
+   },
+   {
+    "q": "(A)<ruby>彼<rt>かれ</rt></ruby>は　(B)<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>を　(C)<ruby>話<rt>はな</rt></ruby>すのが　(D)<ruby>上手<rt>じょうず</rt></ruby>なそうです。",
+    "opts": [
+     "<ruby>彼<rt>かれ</rt></ruby>は",
+     "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>を",
+     "<ruby>話<rt>はな</rt></ruby>すのが",
+     "<ruby>上手<rt>じょうず</rt></ruby>なそうです。"
+    ],
+    "a": 3,
+    "e": "전문은 ‘<ruby>上手<rt>じょうず</rt></ruby><b>だ</b>そうです’."
+   },
+   {
+    "q": "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>った。（　　）、<ruby>試合<rt>しあい</rt></ruby>は<ruby>中止<rt>ちゅうし</rt></ruby>にならなかった。",
+    "opts": [
+     "そのため",
+     "しかも",
+     "つまり",
+     "しかし"
+    ],
+    "a": 3,
+    "e": "역접은 <b>しかし</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>医者<rt>いしゃ</rt></ruby>だ。（　　）、とても<ruby>親切<rt>しんせつ</rt></ruby>だ。",
+    "opts": [
+     "しかも",
+     "ところが",
+     "ただし",
+     "したがって"
+    ],
+    "a": 0,
+    "e": "좋은 점을 더하는 <b>しかも</b>."
+   }
+  ]
+ },
+ {
+  "n": 14,
+  "part": "총정리",
+  "pl": "끝",
+  "title": "총복습 + 시험 당일 요령",
+  "min": 60,
+  "goal": "약점 파트를 마지막으로 점검하고, 12월 시험에서 쓸 요령을 정리합니다.",
+  "cards": [
+   {
+    "p": "약점 점검",
+    "m": "Day 1~6 문법 / Day 7 경어 / Day 8~9 오문 정정 / Day 10~11 접속사·연어 / Day 12~13 독해. 가장 많이 틀린 날의 카드를 다시 봅니다."
+   },
+   {
+    "p": "오답노트 복습",
+    "m": "지난 2주 동안 적은 오답만 모아서 소리 내어 읽습니다. 새 자료는 보지 않아요.",
+    "tip": "시험 직전에는 새로 외우기보다 이미 본 것을 굳히는 쪽이 점수가 오릅니다."
+   },
+   {
+    "p": "시험 당일",
+    "m": "쉬운 문제부터 풀고, 헷갈리는 문제는 표시하고 넘어갑니다. 마킹 시간을 따로 남겨 두세요."
+   },
+   {
+    "p": "이후 계획",
+    "m": "하루 30분씩 오답노트 반복 + 기출 1회분을 시험 전 주에 풉니다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "A：<ruby>昨日<rt>きのう</rt></ruby>は<ruby>徹夜<rt>てつや</rt></ruby>でした。\nB：それで<ruby>眠<rt>ねむ</rt></ruby>そうな（　　）ですね。",
+    "opts": [
+     "ため",
+     "わけ",
+     "ばかり",
+     "べき"
+    ],
+    "a": 1,
+    "e": "이유를 듣고 납득하는 말은 <b>わけ</b>."
+   },
+   {
+    "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は（　　）<ruby>泣<rt>な</rt></ruby>き<ruby>出<rt>だ</rt></ruby>しそうな<ruby>顔<rt>かお</rt></ruby>をしている。",
+    "opts": [
+     "まるで",
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "<ruby>今<rt>いま</rt></ruby>にも",
+     "たとえ"
+    ],
+    "a": 2,
+    "e": "<b><ruby>今<rt>いま</rt></ruby>にも~そうだ</b> 짝."
+   },
+   {
+    "q": "<ruby>部長<rt>ぶちょう</rt></ruby>が<ruby>資料<rt>しりょう</rt></ruby>を（　　）ました。",
+    "opts": [
+     "<ruby>拝見<rt>はいけん</rt></ruby>し",
+     "<ruby>拝見<rt>はいけん</rt></ruby>になり",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり",
+     "ご<ruby>覧<rt>らん</rt></ruby>になり"
+    ],
+    "a": 3,
+    "e": "부장님의 행동이므로 존경어 <b>ご<ruby>覧<rt>らん</rt></ruby>になる</b>."
+   },
+   {
+    "q": "<ruby>安<rt>やす</rt></ruby>い。（　　）、<ruby>味<rt>あじ</rt></ruby>もいい。",
+    "opts": [
+     "しかも",
+     "ところが",
+     "ただし",
+     "したがって"
+    ],
+    "a": 0,
+    "e": "좋은 점을 더하므로 <b>しかも</b>."
+   },
+   {
+    "ctx": "<ruby>子供<rt>こども</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>時間<rt>じかん</rt></ruby>が<ruby>減<rt>へ</rt></ruby>っている。スマートフォンの<ruby>普及<rt>ふきゅう</rt></ruby>がその<ruby>一因<rt>いちいん</rt></ruby>だと<ruby>考<rt>かんが</rt></ruby>えられる。",
+    "q": "「その」が<ruby>指<rt>さ</rt></ruby>すものは？",
+    "opts": [
+     "スマートフォンが<ruby>普及<rt>ふきゅう</rt></ruby>したこと",
+     "<ruby>子供<rt>こども</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>時間<rt>じかん</rt></ruby>が<ruby>減<rt>へ</rt></ruby>っていること",
+     "<ruby>一因<rt>いちいん</rt></ruby>",
+     "<ruby>普及<rt>ふきゅう</rt></ruby>が<ruby>一因<rt>いちいん</rt></ruby>であること"
+    ],
+    "a": 1,
+    "e": "바로 앞 문장의 내용을 가리킵니다."
+   },
+   {
+    "q": "<ruby>約束<rt>やくそく</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れた（　　）、<ruby>謝<rt>あやま</rt></ruby>ろうともしない。",
+    "opts": [
+     "おかげで",
+     "たびに",
+     "くせに",
+     "<ruby>以上<rt>いじょう</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "비난하는 말투는 <b>くせに</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>が<ruby>犯人<rt>はんにん</rt></ruby>（　　）。",
+    "opts": [
+     "べきだ",
+     "ことだ",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "に<ruby>違<rt>ちが</rt></ruby>いない"
+    ],
+    "a": 3,
+    "e": "‘틀림없이’ 는 <b>に<ruby>違<rt>ちが</rt></ruby>いない</b>."
+   },
+   {
+    "q": "<ruby>社長<rt>しゃちょう</rt></ruby>が<ruby>会議<rt>かいぎ</rt></ruby><ruby>室<rt>しつ</rt></ruby>に（　　）。",
+    "opts": [
+     "いらっしゃいます",
+     "<ruby>参<rt>まい</rt></ruby>ります",
+     "おります",
+     "<ruby>伺<rt>うかが</rt></ruby>います"
+    ],
+    "a": 0,
+    "e": "윗사람 행동은 존경어 <b>いらっしゃる</b>."
+   },
+   {
+    "q": "(A)<ruby>母<rt>はは</rt></ruby>が　(B)<ruby>私<rt>わたし</rt></ruby>に　(C)お<ruby>弁当<rt>べんとう</rt></ruby>を　(D)<ruby>作<rt>つく</rt></ruby>ってあげました。",
+    "opts": [
+     "<ruby>母<rt>はは</rt></ruby>が",
+     "<ruby>私<rt>わたし</rt></ruby>に",
+     "お<ruby>弁当<rt>べんとう</rt></ruby>を",
+     "<ruby>作<rt>つく</rt></ruby>ってあげました。"
+    ],
+    "a": 3,
+    "e": "나에게 해 준 것이므로 ‘<ruby>作<rt>つく</rt></ruby>って<b>くれました</b>’."
+   },
+   {
+    "q": "この<ruby>店<rt>みせ</rt></ruby>は<ruby>安<rt>やす</rt></ruby>い。（　　）、サービスも<ruby>丁寧<rt>ていねい</rt></ruby>だ。",
+    "opts": [
+     "ところが",
+     "しかも",
+     "ただし",
+     "したがって"
+    ],
+    "a": 1,
+    "e": "좋은 점을 더하는 <b>しかも</b>."
+   }
+  ],
+  "tasks": [
+   "약점이었던 날의 카드 다시 읽기",
+   "오답노트 전체 소리 내어 읽기",
+   "퀴즈 풀기",
+   "시험 당일 요령 3가지 소리 내어 읽기"
+  ]
+ },
+ {
+  "n": 15,
+  "part": "Part 5·7",
+  "pl": "어휘",
+  "title": "어휘 카드 (Part 5·7 대비)",
+  "min": 30,
+  "goal": "공란 문제와 독해 속도에 도움이 되는 어휘를 읽는 법과 함께 외웁니다.",
+  "cards": [
+   {
+    "p": "維持（いじ）",
+    "m": "유지",
+    "ex": "<ruby>健康<rt>けんこう</rt></ruby>を<b><ruby>維持<rt>いじ</rt></ruby></b>するために<ruby>運動<rt>うんどう</rt></ruby>する。",
+    "kr": "건강을 유지하기 위해 운동한다."
+   },
+   {
+    "p": "改善（かいぜん）",
+    "m": "개선",
+    "ex": "<ruby>職場<rt>しょくば</rt></ruby>の<ruby>環境<rt>かんきょう</rt></ruby>を<b><ruby>改善<rt>かいぜん</rt></ruby></b>する。",
+    "kr": "직장 환경을 개선한다."
+   },
+   {
+    "p": "傾向（けいこう）",
+    "m": "경향",
+    "ex": "<ruby>若者<rt>わかもの</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>量<rt>りょう</rt></ruby>は<ruby>減<rt>へ</rt></ruby>る<b><ruby>傾向<rt>けいこう</rt></ruby></b>にある。",
+    "kr": "젊은이의 독서량은 줄어드는 경향이 있다."
+   },
+   {
+    "p": "需要（じゅよう）",
+    "m": "수요",
+    "ex": "<ruby>夏<rt>なつ</rt></ruby>はエアコンの<b><ruby>需要<rt>じゅよう</rt></ruby></b>が<ruby>高<rt>たか</rt></ruby>まる。",
+    "kr": "여름에는 에어컨 수요가 높아진다."
+   },
+   {
+    "p": "検討（けんとう）",
+    "m": "검토",
+    "ex": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>計画<rt>けいかく</rt></ruby>を<b><ruby>検討<rt>けんとう</rt></ruby></b>している。",
+    "kr": "새 계획을 검토하고 있다."
+   },
+   {
+    "p": "延期（えんき）",
+    "m": "연기",
+    "ex": "<ruby>雨<rt>あめ</rt></ruby>のため、<ruby>試合<rt>しあい</rt></ruby>は<b><ruby>延期<rt>えんき</rt></ruby></b>された。",
+    "kr": "비 때문에 경기가 연기되었다."
+   },
+   {
+    "p": "解決（かいけつ）",
+    "m": "해결",
+    "ex": "<ruby>問題<rt>もんだい</rt></ruby>を<b><ruby>解決<rt>かいけつ</rt></ruby></b>する。",
+    "kr": "문제를 해결한다."
+   },
+   {
+    "p": "あいにく",
+    "m": "공교롭게도, 아쉽게도",
+    "ex": "<b>あいにく</b>、<ruby>今日<rt>きょう</rt></ruby>は<ruby>都合<rt>つごう</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>い。",
+    "kr": "공교롭게도 오늘은 사정이 안 좋다."
+   },
+   {
+    "p": "たまたま",
+    "m": "우연히",
+    "ex": "<b>たまたま</b><ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>った。",
+    "kr": "우연히 친구를 만났다."
+   },
+   {
+    "p": "ほぼ",
+    "m": "거의",
+    "ex": "<ruby>作業<rt>さぎょう</rt></ruby>は<b>ほぼ</b><ruby>終<rt>お</rt></ruby>わった。",
+    "kr": "작업은 거의 끝났다."
+   },
+   {
+    "p": "<ruby>相<rt>あい</rt></ruby><ruby>変<rt>か</rt></ruby>わらず",
+    "m": "변함없이",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b><ruby>相<rt>あい</rt></ruby><ruby>変<rt>か</rt></ruby>わらず</b><ruby>元気<rt>げんき</rt></ruby>だ。",
+    "kr": "그는 변함없이 건강하다."
+   },
+   {
+    "p": "徐々に（じょじょに）",
+    "m": "서서히",
+    "ex": "<b><ruby>徐々<rt>じょじょ</rt></ruby>に</b><ruby>慣<rt>な</rt></ruby>れてきた。",
+    "kr": "서서히 익숙해졌다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "（　　）、<ruby>今日<rt>きょう</rt></ruby>は<ruby>都合<rt>つごう</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>くて<ruby>行<rt>い</rt></ruby>けません。",
+    "opts": [
+     "さっそく",
+     "たまたま",
+     "あいにく",
+     "ほぼ"
+    ],
+    "a": 2,
+    "e": "‘공교롭게도’ 는 <b>あいにく</b>."
+   },
+   {
+    "q": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>計画<rt>けいかく</rt></ruby>をチームで（　　）している。",
+    "opts": [
+     "<ruby>延期<rt>えんき</rt></ruby>",
+     "<ruby>維持<rt>いじ</rt></ruby>",
+     "<ruby>需要<rt>じゅよう</rt></ruby>",
+     "<ruby>検討<rt>けんとう</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "계획을 ‘검토’ 하므로 <b><ruby>検討<rt>けんとう</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>雨<rt>あめ</rt></ruby>のため、<ruby>運動<rt>うんどう</rt></ruby><ruby>会<rt>かい</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>に（　　）された。",
+    "opts": [
+     "<ruby>延期<rt>えんき</rt></ruby>",
+     "<ruby>提出<rt>ていしゅつ</rt></ruby>",
+     "<ruby>改善<rt>かいぜん</rt></ruby>",
+     "<ruby>維持<rt>いじ</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘연기되었다’ 는 <b><ruby>延期<rt>えんき</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>作業<rt>さぎょう</rt></ruby>は（　　）<ruby>終<rt>お</rt></ruby>わったので、あと<ruby>10分<rt>じゅっぷん</rt></ruby>で<ruby>帰<rt>かえ</rt></ruby>れる。",
+    "opts": [
+     "たまたま",
+     "ほぼ",
+     "<ruby>相<rt>あい</rt></ruby><ruby>変<rt>か</rt></ruby>わらず",
+     "あいにく"
+    ],
+    "a": 1,
+    "e": "‘거의 끝났다’ 는 <b>ほぼ</b>."
+   },
+   {
+    "q": "<ruby>健康<rt>けんこう</rt></ruby>を（　　）するために、<ruby>毎日<rt>まいにち</rt></ruby><ruby>運動<rt>うんどう</rt></ruby>している。",
+    "opts": [
+     "<ruby>延期<rt>えんき</rt></ruby>",
+     "<ruby>需要<rt>じゅよう</rt></ruby>",
+     "<ruby>維持<rt>いじ</rt></ruby>",
+     "<ruby>検討<rt>けんとう</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘건강을 유지하다’ 는 <b><ruby>維持<rt>いじ</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>職場<rt>しょくば</rt></ruby>の<ruby>環境<rt>かんきょう</rt></ruby>を（　　）するために、<ruby>意見<rt>いけん</rt></ruby>を<ruby>集<rt>あつ</rt></ruby>めた。",
+    "opts": [
+     "<ruby>延期<rt>えんき</rt></ruby>",
+     "<ruby>需要<rt>じゅよう</rt></ruby>",
+     "<ruby>傾向<rt>けいこう</rt></ruby>",
+     "<ruby>改善<rt>かいぜん</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "‘개선하다’ 는 <b><ruby>改善<rt>かいぜん</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>若者<rt>わかもの</rt></ruby>の<ruby>読書<rt>どくしょ</rt></ruby><ruby>量<rt>りょう</rt></ruby>は、<ruby>減<rt>へ</rt></ruby>る（　　）にある。",
+    "opts": [
+     "<ruby>傾向<rt>けいこう</rt></ruby>",
+     "<ruby>需要<rt>じゅよう</rt></ruby>",
+     "<ruby>解決<rt>かいけつ</rt></ruby>",
+     "<ruby>検討<rt>けんとう</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘~하는 경향이 있다’ 는 <b><ruby>傾向<rt>けいこう</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>夏<rt>なつ</rt></ruby>はエアコンの（　　）が<ruby>高<rt>たか</rt></ruby>まる。",
+    "opts": [
+     "<ruby>傾向<rt>けいこう</rt></ruby>",
+     "<ruby>需要<rt>じゅよう</rt></ruby>",
+     "<ruby>検討<rt>けんとう</rt></ruby>",
+     "<ruby>延期<rt>えんき</rt></ruby>"
+    ],
+    "a": 1,
+    "e": "‘수요가 높아지다’ 는 <b><ruby>需要<rt>じゅよう</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>久<rt>ひさ</rt></ruby>しぶりに<ruby>会<rt>あ</rt></ruby>ったが、<ruby>彼<rt>かれ</rt></ruby>は（　　）<ruby>元気<rt>げんき</rt></ruby>そうだった。",
+    "opts": [
+     "あいにく",
+     "たまたま",
+     "<ruby>相<rt>あい</rt></ruby><ruby>変<rt>か</rt></ruby>わらず",
+     "<ruby>徐々<rt>じょじょ</rt></ruby>に"
+    ],
+    "a": 2,
+    "e": "‘변함없이’ 는 <b><ruby>相<rt>あい</rt></ruby><ruby>変<rt>か</rt></ruby>わらず</b>."
+   },
+   {
+    "q": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>生活<rt>せいかつ</rt></ruby>に（　　）<ruby>慣<rt>な</rt></ruby>れてきた。",
+    "opts": [
+     "あいにく",
+     "たまたま",
+     "<ruby>延期<rt>えんき</rt></ruby>",
+     "<ruby>徐々<rt>じょじょ</rt></ruby>に"
+    ],
+    "a": 3,
+    "e": "‘서서히’ 는 <b><ruby>徐々<rt>じょじょ</rt></ruby>に</b>."
+   }
+  ]
+ },
+ {
+  "n": 16,
+  "part": "Part 8",
+  "pl": "독해",
+  "title": "장문 독해 2편",
+  "min": 40,
+  "goal": "긴 글을 읽고 이유, 지시어, 필자의 주장을 찾는 연습을 합니다.",
+  "cards": [
+   {
+    "p": "읽는 순서",
+    "m": "①질문 먼저 훑기 → ②첫 단락과 마지막 단락 → ③しかし·<ruby>一方<rt>いっぽう</rt></ruby> 앞뒤 → ④선택지 소거",
+    "tip": "본문을 처음부터 끝까지 꼼꼼히 읽기보다, 질문이 묻는 곳을 찾아 읽습니다."
+   }
+  ],
+  "quiz": [
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>やコンビニで<ruby>無人<rt>むじん</rt></ruby>のレジを<ruby>見<rt>み</rt></ruby>かけることが<ruby>増<rt>ふ</rt></ruby>えた。<ruby>店<rt>みせ</rt></ruby>にとっては、<ruby>人手<rt>ひとで</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>えるうえ、<ruby>人件<rt>じんけん</rt></ruby><ruby>費<rt>ひ</rt></ruby>も<ruby>減<rt>へ</rt></ruby>らせるという<ruby>利点<rt>りてん</rt></ruby>がある。<ruby>一方<rt>いっぽう</rt></ruby>、<ruby>機械<rt>きかい</rt></ruby>の<ruby>操作<rt>そうさ</rt></ruby>に<ruby>慣<rt>な</rt></ruby>れていない<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>には、<ruby>使<rt>つか</rt></ruby>いにくいと<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>も<ruby>少<rt>すく</rt></ruby>なくない。<ruby>便利<rt>べんり</rt></ruby>な<ruby>技術<rt>ぎじゅつ</rt></ruby>であっても、<ruby>誰<rt>だれ</rt></ruby>もが<ruby>使<rt>つか</rt></ruby>いやすいように<ruby>工夫<rt>くふう</rt></ruby>することが<ruby>大切<rt>たいせつ</rt></ruby>ではないだろうか。",
+    "q": "<ruby>店<rt>みせ</rt></ruby>にとっての<ruby>利点<rt>りてん</rt></ruby>は？",
+    "opts": [
+     "<ruby>人手<rt>ひとで</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>い、<ruby>人件<rt>じんけん</rt></ruby><ruby>費<rt>ひ</rt></ruby>を<ruby>減<rt>へ</rt></ruby>らせること",
+     "<ruby>客<rt>きゃく</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えること",
+     "<ruby>商品<rt>しょうひん</rt></ruby>が<ruby>安<rt>やす</rt></ruby>くなること",
+     "<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>使<rt>つか</rt></ruby>いやすくなること"
+    ],
+    "a": 0,
+    "e": "본문의 ‘<ruby>人手<rt>ひとで</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>えるうえ、<ruby>人件<rt>じんけん</rt></ruby><ruby>費<rt>ひ</rt></ruby>も<ruby>減<rt>へ</rt></ruby>らせる’."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>やコンビニで<ruby>無人<rt>むじん</rt></ruby>のレジを<ruby>見<rt>み</rt></ruby>かけることが<ruby>増<rt>ふ</rt></ruby>えた。<ruby>店<rt>みせ</rt></ruby>にとっては、<ruby>人手<rt>ひとで</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>えるうえ、<ruby>人件<rt>じんけん</rt></ruby><ruby>費<rt>ひ</rt></ruby>も<ruby>減<rt>へ</rt></ruby>らせるという<ruby>利点<rt>りてん</rt></ruby>がある。<ruby>一方<rt>いっぽう</rt></ruby>、<ruby>機械<rt>きかい</rt></ruby>の<ruby>操作<rt>そうさ</rt></ruby>に<ruby>慣<rt>な</rt></ruby>れていない<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>には、<ruby>使<rt>つか</rt></ruby>いにくいと<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>も<ruby>少<rt>すく</rt></ruby>なくない。<ruby>便利<rt>べんり</rt></ruby>な<ruby>技術<rt>ぎじゅつ</rt></ruby>であっても、<ruby>誰<rt>だれ</rt></ruby>もが<ruby>使<rt>つか</rt></ruby>いやすいように<ruby>工夫<rt>くふう</rt></ruby>することが<ruby>大切<rt>たいせつ</rt></ruby>ではないだろうか。",
+    "q": "<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>について<ruby>正<rt>ただ</rt></ruby>しいものは？",
+    "opts": [
+     "<ruby>全員<rt>ぜんいん</rt></ruby>が<ruby>無人<rt>むじん</rt></ruby>レジを<ruby>好<rt>この</rt></ruby>んでいる",
+     "<ruby>操作<rt>そうさ</rt></ruby>に<ruby>慣<rt>な</rt></ruby>れず、<ruby>使<rt>つか</rt></ruby>いにくいと<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>もいる",
+     "<ruby>無人<rt>むじん</rt></ruby>レジは<ruby>絶対<rt>ぜったい</rt></ruby>に<ruby>使<rt>つか</rt></ruby>えない",
+     "<ruby>機械<rt>きかい</rt></ruby>の<ruby>操作<rt>そうさ</rt></ruby>が<ruby>得意<rt>とくい</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い"
+    ],
+    "a": 1,
+    "e": "‘<ruby>少<rt>すく</rt></ruby>なくない’ 는 ‘꽤 많다’ 는 뜻. 극단적인 표현의 선택지는 오답."
+   },
+   {
+    "ctx": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>やコンビニで<ruby>無人<rt>むじん</rt></ruby>のレジを<ruby>見<rt>み</rt></ruby>かけることが<ruby>増<rt>ふ</rt></ruby>えた。<ruby>店<rt>みせ</rt></ruby>にとっては、<ruby>人手<rt>ひとで</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>えるうえ、<ruby>人件<rt>じんけん</rt></ruby><ruby>費<rt>ひ</rt></ruby>も<ruby>減<rt>へ</rt></ruby>らせるという<ruby>利点<rt>りてん</rt></ruby>がある。<ruby>一方<rt>いっぽう</rt></ruby>、<ruby>機械<rt>きかい</rt></ruby>の<ruby>操作<rt>そうさ</rt></ruby>に<ruby>慣<rt>な</rt></ruby>れていない<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>には、<ruby>使<rt>つか</rt></ruby>いにくいと<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>も<ruby>少<rt>すく</rt></ruby>なくない。<ruby>便利<rt>べんり</rt></ruby>な<ruby>技術<rt>ぎじゅつ</rt></ruby>であっても、<ruby>誰<rt>だれ</rt></ruby>もが<ruby>使<rt>つか</rt></ruby>いやすいように<ruby>工夫<rt>くふう</rt></ruby>することが<ruby>大切<rt>たいせつ</rt></ruby>ではないだろうか。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>主張<rt>しゅちょう</rt></ruby>は？",
+    "opts": [
+     "<ruby>無人<rt>むじん</rt></ruby>レジはやめるべきだ",
+     "<ruby>高齢<rt>こうれい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>は<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えるべきだ",
+     "<ruby>誰<rt>だれ</rt></ruby>もが<ruby>使<rt>つか</rt></ruby>いやすい<ruby>工夫<rt>くふう</rt></ruby>が<ruby>大切<rt>たいせつ</rt></ruby>だ",
+     "<ruby>無人<rt>むじん</rt></ruby>レジを<ruby>増<rt>ふ</rt></ruby>やす<ruby>店<rt>みせ</rt></ruby>を<ruby>応援<rt>おうえん</rt></ruby>すべきだ"
+    ],
+    "a": 2,
+    "e": "‘~ではないだろうか’ 로 끝나는 마지막 문장이 주장."
+   },
+   {
+    "ctx": "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>の「すみません」は、<ruby>謝<rt>あやま</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>だが、<ruby>場面<rt>ばめん</rt></ruby>によっては<ruby>感謝<rt>かんしゃ</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちを<ruby>表<rt>あらわ</rt></ruby>すこともある。たとえば、<ruby>人<rt>ひと</rt></ruby>に<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってもらったとき、「すみません」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い。これは、<ruby>相手<rt>あいて</rt></ruby>に<ruby>手間<rt>てま</rt></ruby>をかけさせたという<ruby>気持<rt>きも</rt></ruby>ちがあるからだ。つまり、<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>では<ruby>感謝<rt>かんしゃ</rt></ruby>と<ruby>謝罪<rt>しゃざい</rt></ruby>が<ruby>近<rt>ちか</rt></ruby>い<ruby>関係<rt>かんけい</rt></ruby>にあると<ruby>言<rt>い</rt></ruby>える。",
+    "q": "「これ」が<ruby>指<rt>さ</rt></ruby>すものは？",
+    "opts": [
+     "「すみません」という<ruby>言葉<rt>ことば</rt></ruby>",
+     "<ruby>相手<rt>あいて</rt></ruby>が<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>つこと",
+     "<ruby>相手<rt>あいて</rt></ruby>に<ruby>手間<rt>てま</rt></ruby>をかけさせたという<ruby>気持<rt>きも</rt></ruby>ち",
+     "<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってもらったとき「すみません」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>いこと"
+    ],
+    "a": 3,
+    "e": "‘これ’ 는 바로 앞 문장의 내용을 가리킵니다."
+   },
+   {
+    "ctx": "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>の「すみません」は、<ruby>謝<rt>あやま</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>だが、<ruby>場面<rt>ばめん</rt></ruby>によっては<ruby>感謝<rt>かんしゃ</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちを<ruby>表<rt>あらわ</rt></ruby>すこともある。たとえば、<ruby>人<rt>ひと</rt></ruby>に<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってもらったとき、「すみません」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い。これは、<ruby>相手<rt>あいて</rt></ruby>に<ruby>手間<rt>てま</rt></ruby>をかけさせたという<ruby>気持<rt>きも</rt></ruby>ちがあるからだ。つまり、<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>では<ruby>感謝<rt>かんしゃ</rt></ruby>と<ruby>謝罪<rt>しゃざい</rt></ruby>が<ruby>近<rt>ちか</rt></ruby>い<ruby>関係<rt>かんけい</rt></ruby>にあると<ruby>言<rt>い</rt></ruby>える。",
+    "q": "なぜ「すみません」と<ruby>言<rt>い</rt></ruby>うのか？",
+    "opts": [
+     "<ruby>相手<rt>あいて</rt></ruby>に<ruby>手間<rt>てま</rt></ruby>をかけさせたと<ruby>思<rt>おも</rt></ruby>うから",
+     "<ruby>荷物<rt>にもつ</rt></ruby>が<ruby>重<rt>おも</rt></ruby>いから",
+     "<ruby>相手<rt>あいて</rt></ruby>が<ruby>怒<rt>おこ</rt></ruby>っているから",
+     "お<ruby>礼<rt>れい</rt></ruby>を<ruby>言<rt>い</rt></ruby>うのが<ruby>恥<rt>は</rt></ruby>ずかしいから"
+    ],
+    "a": 0,
+    "e": "이유는 ‘~からだ’ 앞에 있습니다."
+   },
+   {
+    "ctx": "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>の「すみません」は、<ruby>謝<rt>あやま</rt></ruby>る<ruby>言葉<rt>ことば</rt></ruby>だが、<ruby>場面<rt>ばめん</rt></ruby>によっては<ruby>感謝<rt>かんしゃ</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちを<ruby>表<rt>あらわ</rt></ruby>すこともある。たとえば、<ruby>人<rt>ひと</rt></ruby>に<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってもらったとき、「すみません」と<ruby>言<rt>い</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い。これは、<ruby>相手<rt>あいて</rt></ruby>に<ruby>手間<rt>てま</rt></ruby>をかけさせたという<ruby>気持<rt>きも</rt></ruby>ちがあるからだ。つまり、<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>では<ruby>感謝<rt>かんしゃ</rt></ruby>と<ruby>謝罪<rt>しゃざい</rt></ruby>が<ruby>近<rt>ちか</rt></ruby>い<ruby>関係<rt>かんけい</rt></ruby>にあると<ruby>言<rt>い</rt></ruby>える。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>が<ruby>言<rt>い</rt></ruby>いたいことは？",
+    "opts": [
+     "「すみません」は<ruby>使<rt>つか</rt></ruby>うべきでない",
+     "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>では<ruby>感謝<rt>かんしゃ</rt></ruby>と<ruby>謝罪<rt>しゃざい</rt></ruby>が<ruby>近<rt>ちか</rt></ruby>い<ruby>関係<rt>かんけい</rt></ruby>にある",
+     "「すみません」は<ruby>感謝<rt>かんしゃ</rt></ruby>を<ruby>表<rt>あらわ</rt></ruby>せない",
+     "<ruby>感謝<rt>かんしゃ</rt></ruby>と<ruby>謝罪<rt>しゃざい</rt></ruby>はまったく<ruby>違<rt>ちが</rt></ruby>うものだ"
+    ],
+    "a": 1,
+    "e": "‘つまり’ 뒤가 결론입니다."
+   },
+   {
+    "ctx": "スーパーで<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をするとき、<ruby>自分<rt>じぶん</rt></ruby>のバッグを<ruby>持<rt>も</rt></ruby>っていく<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になったことがきっかけだが、<ruby>今<rt>いま</rt></ruby>では<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い。ただし、バッグを<ruby>忘<rt>わす</rt></ruby>れてしまう<ruby>人<rt>ひと</rt></ruby>もいて、<ruby>結局<rt>けっきょく</rt></ruby>、<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>ってしまうこともある。<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るためには、バッグの<ruby>数<rt>かず</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすより、<ruby>同<rt>おな</rt></ruby>じバッグを<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うことが<ruby>大切<rt>たいせつ</rt></ruby>だろう。",
+    "q": "マイバッグを<ruby>持<rt>も</rt></ruby>つ<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えたきっかけは？",
+    "opts": [
+     "<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>始<rt>はじ</rt></ruby>めたこと",
+     "バッグが<ruby>安<rt>やす</rt></ruby>くなったこと",
+     "レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になったこと",
+     "<ruby>店<rt>みせ</rt></ruby>がバッグをくれること"
+    ],
+    "a": 2,
+    "e": "‘~ことがきっかけだ’ 앞에 있습니다."
+   },
+   {
+    "ctx": "スーパーで<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をするとき、<ruby>自分<rt>じぶん</rt></ruby>のバッグを<ruby>持<rt>も</rt></ruby>っていく<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になったことがきっかけだが、<ruby>今<rt>いま</rt></ruby>では<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い。ただし、バッグを<ruby>忘<rt>わす</rt></ruby>れてしまう<ruby>人<rt>ひと</rt></ruby>もいて、<ruby>結局<rt>けっきょく</rt></ruby>、<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>ってしまうこともある。<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るためには、バッグの<ruby>数<rt>かず</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすより、<ruby>同<rt>おな</rt></ruby>じバッグを<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うことが<ruby>大切<rt>たいせつ</rt></ruby>だろう。",
+    "q": "「ただし」の<ruby>後<rt>あと</rt></ruby>で<ruby>述<rt>の</rt></ruby>べていることは？",
+    "opts": [
+     "<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>い",
+     "レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>無料<rt>むりょう</rt></ruby>になった",
+     "バッグを<ruby>持<rt>も</rt></ruby>つ<ruby>人<rt>ひと</rt></ruby>が<ruby>減<rt>へ</rt></ruby>った",
+     "バッグを<ruby>忘<rt>わす</rt></ruby>れて、<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>ってしまうこともある"
+    ],
+    "a": 3,
+    "e": "‘ただし’ 뒤에 예외·단서가 옵니다."
+   },
+   {
+    "ctx": "スーパーで<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をするとき、<ruby>自分<rt>じぶん</rt></ruby>のバッグを<ruby>持<rt>も</rt></ruby>っていく<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になったことがきっかけだが、<ruby>今<rt>いま</rt></ruby>では<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い。ただし、バッグを<ruby>忘<rt>わす</rt></ruby>れてしまう<ruby>人<rt>ひと</rt></ruby>もいて、<ruby>結局<rt>けっきょく</rt></ruby>、<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>ってしまうこともある。<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るためには、バッグの<ruby>数<rt>かず</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすより、<ruby>同<rt>おな</rt></ruby>じバッグを<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うことが<ruby>大切<rt>たいせつ</rt></ruby>だろう。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>えは？",
+    "opts": [
+     "<ruby>同<rt>おな</rt></ruby>じバッグを<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うことが<ruby>大切<rt>たいせつ</rt></ruby>だ",
+     "バッグをたくさん<ruby>買<rt>か</rt></ruby>うべきだ",
+     "レジ<ruby>袋<rt>ふくろ</rt></ruby>を<ruby>有料<rt>ゆうりょう</rt></ruby>にするべきではない",
+     "スーパーでは<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をしないほうがいい"
+    ],
+    "a": 0,
+    "e": "마지막 문장 ‘~ことが<ruby>大切<rt>たいせつ</rt></ruby>だろう’ 가 주장."
+   },
+   {
+    "ctx": "スーパーで<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をするとき、<ruby>自分<rt>じぶん</rt></ruby>のバッグを<ruby>持<rt>も</rt></ruby>っていく<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。レジ<ruby>袋<rt>ふくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になったことがきっかけだが、<ruby>今<rt>いま</rt></ruby>では<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い。ただし、バッグを<ruby>忘<rt>わす</rt></ruby>れてしまう<ruby>人<rt>ひと</rt></ruby>もいて、<ruby>結局<rt>けっきょく</rt></ruby>、<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>ってしまうこともある。<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るためには、バッグの<ruby>数<rt>かず</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすより、<ruby>同<rt>おな</rt></ruby>じバッグを<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うことが<ruby>大切<rt>たいせつ</rt></ruby>だろう。",
+    "q": "<ruby>本文<rt>ほんぶん</rt></ruby>の<ruby>内容<rt>ないよう</rt></ruby>に<ruby>合<rt>あ</rt></ruby>うものは？",
+    "opts": [
+     "バッグを<ruby>忘<rt>わす</rt></ruby>れる<ruby>人<rt>ひと</rt></ruby>はいない",
+     "<ruby>環境<rt>かんきょう</rt></ruby>のために<ruby>続<rt>つづ</rt></ruby>けている<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>い",
+     "<ruby>店<rt>みせ</rt></ruby>でバッグを<ruby>買<rt>か</rt></ruby>うのは<ruby>環境<rt>かんきょう</rt></ruby>にいい",
+     "レジ<ruby>袋<rt>ふくろ</rt></ruby>はいつも<ruby>無料<rt>むりょう</rt></ruby>だ"
+    ],
+    "a": 1,
+    "e": "둘째 문장과 일치."
+   }
+  ],
+  "tasks": [
+   "지문을 소리 내어 한 번 읽기",
+   "질문 먼저 읽고 본문에서 답 찾기",
+   "퀴즈 풀기",
+   "틀린 이유를 한 줄로 적기"
+  ]
+ },
+ {
+  "n": 17,
+  "part": "Part 5·7",
+  "pl": "어휘",
+  "title": "어휘 2: 한자어와 동사",
+  "min": 35,
+  "goal": "독해 지문과 공란 문제에 자주 나오는 한자어와 ‘~する’ 동사를 읽는 법과 함께 외웁니다.",
+  "cards": [
+   {
+    "p": "普及（ふきゅう）",
+    "m": "보급",
+    "ex": "スマートフォンが<ruby>世界<rt>せかい</rt></ruby><ruby>中<rt>じゅう</rt></ruby>に<b><ruby>普及<rt>ふきゅう</rt></ruby></b>した。",
+    "kr": "스마트폰이 전 세계에 보급되었다."
+   },
+   {
+    "p": "増加（ぞうか）↔ 減少（げんしょう）",
+    "m": "증가 ↔ 감소",
+    "ex": "<ruby>外国<rt>がいこく</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>観光<rt>かんこう</rt></ruby><ruby>客<rt>きゃく</rt></ruby>が<b><ruby>増加<rt>ぞうか</rt></ruby></b>している。",
+    "kr": "외국인 관광객이 증가하고 있다."
+   },
+   {
+    "p": "原因（げんいん）↔ 結果（けっか）",
+    "m": "원인 ↔ 결과",
+    "ex": "<ruby>事故<rt>じこ</rt></ruby>の<b><ruby>原因<rt>げんいん</rt></ruby></b>を<ruby>調<rt>しら</rt></ruby>べている。",
+    "kr": "사고의 원인을 조사하고 있다."
+   },
+   {
+    "p": "効果（こうか）",
+    "m": "효과",
+    "ex": "この<ruby>薬<rt>くすり</rt></ruby>は<ruby>頭痛<rt>ずつう</rt></ruby>に<b><ruby>効果<rt>こうか</rt></ruby></b>がある。",
+    "kr": "이 약은 두통에 효과가 있다."
+   },
+   {
+    "p": "条件（じょうけん）",
+    "m": "조건",
+    "ex": "<ruby>応募<rt>おうぼ</rt></ruby>の<b><ruby>条件<rt>じょうけん</rt></ruby></b>を<ruby>満<rt>み</rt></ruby>たしている。",
+    "kr": "지원 조건을 충족하고 있다."
+   },
+   {
+    "p": "方針（ほうしん）",
+    "m": "방침",
+    "ex": "<ruby>会社<rt>かいしゃ</rt></ruby>の<b><ruby>方針<rt>ほうしん</rt></ruby></b>に<ruby>従<rt>したが</rt></ruby>う。",
+    "kr": "회사의 방침에 따른다."
+   },
+   {
+    "p": "実現（じつげん）",
+    "m": "실현",
+    "ex": "<ruby>長年<rt>ながねん</rt></ruby>の<ruby>夢<rt>ゆめ</rt></ruby>を<b><ruby>実現<rt>じつげん</rt></ruby></b>した。",
+    "kr": "오랜 꿈을 실현했다."
+   },
+   {
+    "p": "応募（おうぼ）",
+    "m": "응모, 지원",
+    "ex": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>に<b><ruby>応募<rt>おうぼ</rt></ruby></b>する。",
+    "kr": "새 일자리에 지원한다."
+   },
+   {
+    "p": "欠席（けっせき）↔ 出席（しゅっせき）",
+    "m": "결석 ↔ 출석",
+    "ex": "<ruby>風邪<rt>かぜ</rt></ruby>で<ruby>授業<rt>じゅぎょう</rt></ruby>を<b><ruby>欠席<rt>けっせき</rt></ruby></b>した。",
+    "kr": "감기로 수업에 결석했다."
+   },
+   {
+    "p": "調整（ちょうせい）",
+    "m": "조정",
+    "ex": "<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>日程<rt>にってい</rt></ruby>を<b><ruby>調整<rt>ちょうせい</rt></ruby></b>する。",
+    "kr": "회의 일정을 조정한다."
+   },
+   {
+    "p": "取り組む（とりくむ）",
+    "m": "몰두하다, 맞붙다",
+    "ex": "<ruby>環境<rt>かんきょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>に<b><ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>む</b>。",
+    "kr": "환경 문제에 몰두한다."
+   },
+   {
+    "p": "見直す（みなおす）",
+    "m": "다시 살펴보다, 재검토하다",
+    "ex": "<ruby>計画<rt>けいかく</rt></ruby>を<b><ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>す</b>。",
+    "kr": "계획을 재검토한다."
+   },
+   {
+    "p": "引き受ける（ひきうける）",
+    "m": "떠맡다",
+    "ex": "<ruby>頼<rt>たの</rt></ruby>まれた<ruby>仕事<rt>しごと</rt></ruby>を<b><ruby>引<rt>ひ</rt></ruby>き<ruby>受<rt>う</rt></ruby>ける</b>。",
+    "kr": "부탁받은 일을 맡는다."
+   },
+   {
+    "p": "申し込む（もうしこむ）",
+    "m": "신청하다",
+    "ex": "<ruby>講座<rt>こうざ</rt></ruby>に<b><ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>む</b>。",
+    "kr": "강좌를 신청한다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "スマートフォンは<ruby>世界<rt>せかい</rt></ruby><ruby>中<rt>じゅう</rt></ruby>に（　　）した。",
+    "opts": [
+     "<ruby>欠席<rt>けっせき</rt></ruby>",
+     "<ruby>調整<rt>ちょうせい</rt></ruby>",
+     "<ruby>普及<rt>ふきゅう</rt></ruby>",
+     "<ruby>検討<rt>けんとう</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘보급되었다’ 는 <b><ruby>普及<rt>ふきゅう</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>風邪<rt>かぜ</rt></ruby>で<ruby>授業<rt>じゅぎょう</rt></ruby>を（　　）した。",
+    "opts": [
+     "<ruby>応募<rt>おうぼ</rt></ruby>",
+     "<ruby>実現<rt>じつげん</rt></ruby>",
+     "<ruby>調整<rt>ちょうせい</rt></ruby>",
+     "<ruby>欠席<rt>けっせき</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "‘결석’ 은 <b><ruby>欠席<rt>けっせき</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>日程<rt>にってい</rt></ruby>を（　　）する。",
+    "opts": [
+     "<ruby>調整<rt>ちょうせい</rt></ruby>",
+     "<ruby>効果<rt>こうか</rt></ruby>",
+     "<ruby>目的<rt>もくてき</rt></ruby>",
+     "<ruby>原因<rt>げんいん</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘일정을 조정하다’ 는 <b><ruby>調整<rt>ちょうせい</rt></ruby></b>."
+   },
+   {
+    "q": "この<ruby>問題<rt>もんだい</rt></ruby>に<ruby>真剣<rt>しんけん</rt></ruby>に（　　）つもりだ。",
+    "opts": [
+     "<ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>む",
+     "<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>む",
+     "<ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>す",
+     "<ruby>欠席<rt>けっせき</rt></ruby>する"
+    ],
+    "a": 1,
+    "e": "‘문제에 몰두하다’ 는 <b><ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>む</b>."
+   },
+   {
+    "q": "<ruby>計画<rt>けいかく</rt></ruby>に<ruby>無理<rt>むり</rt></ruby>があったので、もう<ruby>一度<rt>いちど</rt></ruby>（　　）ことにした。",
+    "opts": [
+     "<ruby>引<rt>ひ</rt></ruby>き<ruby>受<rt>う</rt></ruby>ける",
+     "<ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>む",
+     "<ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>す",
+     "<ruby>実現<rt>じつげん</rt></ruby>する"
+    ],
+    "a": 2,
+    "e": "‘다시 살펴보다’ 는 <b><ruby>見<rt>み</rt></ruby><ruby>直<rt>なお</rt></ruby>す</b>."
+   },
+   {
+    "q": "この<ruby>薬<rt>くすり</rt></ruby>は<ruby>頭痛<rt>ずつう</rt></ruby>に（　　）がある。",
+    "opts": [
+     "<ruby>原因<rt>げんいん</rt></ruby>",
+     "<ruby>条件<rt>じょうけん</rt></ruby>",
+     "<ruby>方針<rt>ほうしん</rt></ruby>",
+     "<ruby>効果<rt>こうか</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "‘효과가 있다’ 는 <b><ruby>効果<rt>こうか</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>事故<rt>じこ</rt></ruby>の（　　）を<ruby>調<rt>しら</rt></ruby>べている。",
+    "opts": [
+     "<ruby>原因<rt>げんいん</rt></ruby>",
+     "<ruby>方針<rt>ほうしん</rt></ruby>",
+     "<ruby>実現<rt>じつげん</rt></ruby>",
+     "<ruby>調整<rt>ちょうせい</rt></ruby>"
+    ],
+    "a": 0,
+    "e": "‘원인을 조사하다’ 는 <b><ruby>原因<rt>げんいん</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>頼<rt>たの</rt></ruby>まれた<ruby>仕事<rt>しごと</rt></ruby>を（　　）ことにした。",
+    "opts": [
+     "<ruby>欠席<rt>けっせき</rt></ruby>する",
+     "<ruby>引<rt>ひ</rt></ruby>き<ruby>受<rt>う</rt></ruby>ける",
+     "<ruby>応募<rt>おうぼ</rt></ruby>する",
+     "<ruby>実現<rt>じつげん</rt></ruby>する"
+    ],
+    "a": 1,
+    "e": "‘부탁받은 일을 떠맡다’ 는 <b><ruby>引<rt>ひ</rt></ruby>き<ruby>受<rt>う</rt></ruby>ける</b>."
+   },
+   {
+    "q": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>に（　　）するために、<ruby>履歴<rt>りれき</rt></ruby><ruby>書<rt>しょ</rt></ruby>を<ruby>書<rt>か</rt></ruby>いた。",
+    "opts": [
+     "<ruby>欠席<rt>けっせき</rt></ruby>",
+     "<ruby>調整<rt>ちょうせい</rt></ruby>",
+     "<ruby>応募<rt>おうぼ</rt></ruby>",
+     "<ruby>普及<rt>ふきゅう</rt></ruby>"
+    ],
+    "a": 2,
+    "e": "‘지원하다’ 는 <b><ruby>応募<rt>おうぼ</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>会社<rt>かいしゃ</rt></ruby>の（　　）に<ruby>従<rt>したが</rt></ruby>って、<ruby>仕事<rt>しごと</rt></ruby>を<ruby>進<rt>すす</rt></ruby>める。",
+    "opts": [
+     "<ruby>効果<rt>こうか</rt></ruby>",
+     "<ruby>原因<rt>げんいん</rt></ruby>",
+     "<ruby>欠席<rt>けっせき</rt></ruby>",
+     "<ruby>方針<rt>ほうしん</rt></ruby>"
+    ],
+    "a": 3,
+    "e": "‘방침에 따르다’ 는 <b><ruby>方針<rt>ほうしん</rt></ruby></b>."
+   }
+  ]
+ },
+ {
+  "n": 18,
+  "part": "Part 5·7",
+  "pl": "어휘",
+  "title": "어휘 3: 부사와 표현",
+  "min": 35,
+  "goal": "문장 분위기를 정하는 부사를 외웁니다. 공란 문제에서 뜻 구분이 중요합니다.",
+  "cards": [
+   {
+    "p": "次第に（しだいに）",
+    "m": "점점, 차츰",
+    "ex": "<ruby>空<rt>そら</rt></ruby>が<b><ruby>次第<rt>しだい</rt></ruby>に</b><ruby>暗<rt>くら</rt></ruby>くなってきた。",
+    "kr": "하늘이 점점 어두워졌다."
+   },
+   {
+    "p": "<ruby>思<rt>おも</rt></ruby>わず",
+    "m": "엉겁결에",
+    "ex": "<ruby>面白<rt>おもしろ</rt></ruby>い<ruby>話<rt>はなし</rt></ruby>に、<b><ruby>思<rt>おも</rt></ruby>わず</b><ruby>笑<rt>わら</rt></ruby>ってしまった。",
+    "kr": "재미있는 이야기에 엉겁결에 웃고 말았다."
+   },
+   {
+    "p": "わざわざ",
+    "m": "일부러, 수고스럽게",
+    "ex": "<b>わざわざ</b><ruby>届<rt>とど</rt></ruby>けてくださって、ありがとうございます。",
+    "kr": "일부러 가져다주셔서 감사합니다."
+   },
+   {
+    "p": "一応（いちおう）",
+    "m": "일단, 만일을 위해",
+    "ex": "<b><ruby>一応<rt>いちおう</rt></ruby></b>、<ruby>準備<rt>じゅんび</rt></ruby>はできています。",
+    "kr": "일단 준비는 되어 있습니다."
+   },
+   {
+    "p": "結局（けっきょく）",
+    "m": "결국",
+    "ex": "<b><ruby>結局<rt>けっきょく</rt></ruby></b>、<ruby>行<rt>い</rt></ruby>かないことにした。",
+    "kr": "결국 가지 않기로 했다."
+   },
+   {
+    "p": "ようやく",
+    "m": "겨우, 마침내 (오래 걸려서)",
+    "ex": "<b>ようやく</b><ruby>仕事<rt>しごと</rt></ruby>が<ruby>終<rt>お</rt></ruby>わった。",
+    "kr": "겨우 일이 끝났다."
+   },
+   {
+    "p": "とっくに",
+    "m": "벌써, 진작에",
+    "ex": "<ruby>会議<rt>かいぎ</rt></ruby>は<b>とっくに</b><ruby>終<rt>お</rt></ruby>わっていた。",
+    "kr": "회의는 진작에 끝나 있었다."
+   },
+   {
+    "p": "案外（あんがい）",
+    "m": "의외로",
+    "ex": "<ruby>難<rt>むずか</rt></ruby>しいと<ruby>聞<rt>き</rt></ruby>いたが、<b><ruby>案外<rt>あんがい</rt></ruby></b><ruby>簡単<rt>かんたん</rt></ruby>だった。",
+    "kr": "어렵다고 들었는데 의외로 쉬웠다."
+   },
+   {
+    "p": "<ruby>少<rt>すく</rt></ruby>なくとも",
+    "m": "적어도",
+    "ex": "<b><ruby>少<rt>すく</rt></ruby>なくとも</b>3<ruby>時間<rt>じかん</rt></ruby>はかかる。",
+    "kr": "적어도 3시간은 걸린다."
+   },
+   {
+    "p": "<ruby>必<rt>かなら</rt></ruby>ずしも~ない",
+    "m": "반드시 ~인 것은 아니다",
+    "ex": "<ruby>高<rt>たか</rt></ruby>い<ruby>物<rt>もの</rt></ruby>が<b><ruby>必<rt>かなら</rt></ruby>ずしも</b><ruby>良<rt>よ</rt></ruby>い<b>とは<ruby>限<rt>かぎ</rt></ruby>らない</b>。",
+    "kr": "비싼 물건이 반드시 좋은 것은 아니다.",
+    "tip": "뒤에 とは<ruby>限<rt>かぎ</rt></ruby>らない가 자주 붙는다."
+   },
+   {
+    "p": "相当（そうとう）",
+    "m": "상당히",
+    "ex": "<b><ruby>相当<rt>そうとう</rt></ruby></b><ruby>疲<rt>つか</rt></ruby>れているようだ。",
+    "kr": "상당히 피곤한 것 같다."
+   },
+   {
+    "p": "ちょうど",
+    "m": "마침, 딱",
+    "ex": "<b>ちょうど</b><ruby>今<rt>いま</rt></ruby>、<ruby>出<rt>で</rt></ruby>かけるところだ。",
+    "kr": "마침 지금 나가려던 참이다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>何<rt>なん</rt></ruby><ruby>度<rt>ど</rt></ruby>も<ruby>試<rt>ため</rt></ruby>して、（　　）<ruby>成功<rt>せいこう</rt></ruby>した。",
+    "opts": [
+     "ようやく",
+     "とっくに",
+     "<ruby>案外<rt>あんがい</rt></ruby>",
+     "わざわざ"
+    ],
+    "a": 0,
+    "e": "오래 걸려 겨우 이루었으므로 <b>ようやく</b>."
+   },
+   {
+    "q": "<ruby>面白<rt>おもしろ</rt></ruby>い<ruby>話<rt>はなし</rt></ruby>に、（　　）<ruby>笑<rt>わら</rt></ruby>ってしまった。",
+    "opts": [
+     "わざわざ",
+     "<ruby>思<rt>おも</rt></ruby>わず",
+     "<ruby>一応<rt>いちおう</rt></ruby>",
+     "とっくに"
+    ],
+    "a": 1,
+    "e": "의도하지 않은 행동은 <b><ruby>思<rt>おも</rt></ruby>わず</b>."
+   },
+   {
+    "q": "<ruby>難<rt>むずか</rt></ruby>しいと<ruby>聞<rt>き</rt></ruby>いていたが、（　　）<ruby>簡単<rt>かんたん</rt></ruby>だった。",
+    "opts": [
+     "<ruby>必<rt>かなら</rt></ruby>ずしも",
+     "<ruby>少<rt>すく</rt></ruby>なくとも",
+     "<ruby>案外<rt>あんがい</rt></ruby>",
+     "<ruby>思<rt>おも</rt></ruby>わず"
+    ],
+    "a": 2,
+    "e": "기대와 다른 의외의 결과는 <b><ruby>案外<rt>あんがい</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>高<rt>たか</rt></ruby>い<ruby>物<rt>もの</rt></ruby>が（　　）<ruby>良<rt>よ</rt></ruby>いとは<ruby>限<rt>かぎ</rt></ruby>らない。",
+    "opts": [
+     "とっくに",
+     "ようやく",
+     "わざわざ",
+     "<ruby>必<rt>かなら</rt></ruby>ずしも"
+    ],
+    "a": 3,
+    "e": "<b><ruby>必<rt>かなら</rt></ruby>ずしも~とは<ruby>限<rt>かぎ</rt></ruby>らない</b> 짝."
+   },
+   {
+    "q": "<ruby>忙<rt>いそが</rt></ruby>しいのに、（　　）<ruby>届<rt>とど</rt></ruby>けてくださって、ありがとうございます。",
+    "opts": [
+     "わざわざ",
+     "<ruby>思<rt>おも</rt></ruby>わず",
+     "<ruby>次第<rt>しだい</rt></ruby>に",
+     "とっくに"
+    ],
+    "a": 0,
+    "e": "수고를 들여 해 준 것은 <b>わざわざ</b>."
+   },
+   {
+    "q": "<ruby>空<rt>そら</rt></ruby>が（　　）<ruby>暗<rt>くら</rt></ruby>くなってきた。",
+    "opts": [
+     "わざわざ",
+     "<ruby>次第<rt>しだい</rt></ruby>に",
+     "<ruby>必<rt>かなら</rt></ruby>ずしも",
+     "<ruby>一応<rt>いちおう</rt></ruby>"
+    ],
+    "a": 1,
+    "e": "변화가 조금씩 진행되면 <b><ruby>次第<rt>しだい</rt></ruby>に</b>."
+   },
+   {
+    "q": "その<ruby>仕事<rt>しごと</rt></ruby>は、（　　）3<ruby>時間<rt>じかん</rt></ruby>はかかるだろう。",
+    "opts": [
+     "とっくに",
+     "<ruby>思<rt>おも</rt></ruby>わず",
+     "<ruby>少<rt>すく</rt></ruby>なくとも",
+     "<ruby>必<rt>かなら</rt></ruby>ずしも"
+    ],
+    "a": 2,
+    "e": "‘적어도’ 는 <b><ruby>少<rt>すく</rt></ruby>なくとも</b>."
+   },
+   {
+    "q": "<ruby>会議<rt>かいぎ</rt></ruby>は（　　）<ruby>終<rt>お</rt></ruby>わっていて、<ruby>誰<rt>だれ</rt></ruby>もいなかった。",
+    "opts": [
+     "ようやく",
+     "<ruby>案外<rt>あんがい</rt></ruby>",
+     "<ruby>必<rt>かなら</rt></ruby>ずしも",
+     "とっくに"
+    ],
+    "a": 3,
+    "e": "‘진작에’ 는 <b>とっくに</b>."
+   },
+   {
+    "q": "（　　）、<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>って<ruby>行<rt>い</rt></ruby>くことにした。",
+    "opts": [
+     "<ruby>一応<rt>いちおう</rt></ruby>",
+     "<ruby>思<rt>おも</rt></ruby>わず",
+     "とっくに",
+     "ようやく"
+    ],
+    "a": 0,
+    "e": "‘만일을 위해’ 는 <b><ruby>一応<rt>いちおう</rt></ruby></b>."
+   },
+   {
+    "q": "いろいろ<ruby>考<rt>かんが</rt></ruby>えたが、（　　）<ruby>行<rt>い</rt></ruby>かないことにした。",
+    "opts": [
+     "わざわざ",
+     "<ruby>結局<rt>けっきょく</rt></ruby>",
+     "<ruby>案外<rt>あんがい</rt></ruby>",
+     "<ruby>思<rt>おも</rt></ruby>わず"
+    ],
+    "a": 1,
+    "e": "‘결국’ 은 <b><ruby>結局<rt>けっきょく</rt></ruby></b>."
+   }
+  ]
+ },
+ {
+  "n": 19,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "추가 문법 (Part 7 빈출)",
+  "min": 40,
+  "goal": "앞 코스에서 다루지 못한 문법 패턴을 보충합니다.",
+  "cards": [
+   {
+    "p": "~ばかりか",
+    "m": "~뿐만 아니라",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>英語<rt>えいご</rt></ruby><b>ばかりか</b>、<ruby>中国<rt>ちゅうごく</rt></ruby><ruby>語<rt>ご</rt></ruby>も<ruby>話<rt>はな</rt></ruby>せる。",
+    "kr": "그는 영어뿐만 아니라 중국어도 한다."
+   },
+   {
+    "p": "~に<ruby>決<rt>き</rt></ruby>まっている",
+    "m": "틀림없이 ~이다",
+    "ex": "そんなの、うそ<b>に<ruby>決<rt>き</rt></ruby>まっている</b>。",
+    "kr": "그런 건 틀림없이 거짓말이다."
+   },
+   {
+    "p": "~てたまらない",
+    "m": "~해서 견딜 수 없다",
+    "ex": "<ruby>眠<rt>ねむ</rt></ruby>く<b>てたまらない</b>。",
+    "kr": "졸려서 견딜 수 없다."
+   },
+   {
+    "p": "~かわりに",
+    "m": "~대신에",
+    "ex": "<ruby>現金<rt>げんきん</rt></ruby>の<b>かわりに</b>、カードで<ruby>払<rt>はら</rt></ruby>う。",
+    "kr": "현금 대신 카드로 지불한다."
+   },
+   {
+    "p": "~<ruby>反面<rt>はんめん</rt></ruby>",
+    "m": "~한 반면",
+    "ex": "この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>な<b><ruby>反面<rt>はんめん</rt></ruby></b>、やりがいがある。",
+    "kr": "이 일은 힘든 반면 보람이 있다."
+   },
+   {
+    "p": "~とともに",
+    "m": "~와 함께 / ~함에 따라",
+    "ex": "<ruby>年<rt>とし</rt></ruby>を<ruby>取<rt>と</rt></ruby>る<b>とともに</b>、<ruby>体力<rt>たいりょく</rt></ruby>が<ruby>落<rt>お</rt></ruby>ちる。",
+    "kr": "나이를 먹음에 따라 체력이 떨어진다."
+   },
+   {
+    "p": "~に<ruby>応<rt>おう</rt></ruby>じて",
+    "m": "~에 따라",
+    "ex": "<ruby>収入<rt>しゅうにゅう</rt></ruby><b>に<ruby>応<rt>おう</rt></ruby>じて</b>、<ruby>税金<rt>ぜいきん</rt></ruby>が<ruby>決<rt>き</rt></ruby>まる。",
+    "kr": "수입에 따라 세금이 정해진다."
+   },
+   {
+    "p": "~に<ruby>基<rt>もと</rt></ruby>づいて",
+    "m": "~에 근거해",
+    "ex": "<ruby>調査<rt>ちょうさ</rt></ruby><b>に<ruby>基<rt>もと</rt></ruby>づいて</b><ruby>報告<rt>ほうこく</rt></ruby>する。",
+    "kr": "조사에 근거해 보고한다."
+   },
+   {
+    "p": "~というより",
+    "m": "~라기보다",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>歌手<rt>かしゅ</rt></ruby><b>というより</b>、<ruby>俳優<rt>はいゆう</rt></ruby>だ。",
+    "kr": "그는 가수라기보다 배우다."
+   },
+   {
+    "p": "~さえ~ば",
+    "m": "~만 ~하면",
+    "ex": "<ruby>時間<rt>じかん</rt></ruby><b>さえ</b>あれ<b>ば</b>、<ruby>行<rt>い</rt></ruby>きたい。",
+    "kr": "시간만 있으면 가고 싶다."
+   },
+   {
+    "p": "~ないではいられない",
+    "m": "~하지 않고는 못 배긴다",
+    "ex": "<ruby>面白<rt>おもしろ</rt></ruby>くて、<ruby>笑<rt>わら</rt></ruby>わ<b>ないではいられない</b>。",
+    "kr": "너무 재밌어서 웃지 않을 수 없다."
+   },
+   {
+    "p": "~ことだ",
+    "m": "~해야 한다 (충고)",
+    "ex": "<ruby>健康<rt>けんこう</rt></ruby>のためには、よく<ruby>寝<rt>ね</rt></ruby>る<b>ことだ</b>。",
+    "kr": "건강을 위해서는 잘 자는 것이 중요하다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>英語<rt>えいご</rt></ruby>（　　）、<ruby>中国<rt>ちゅうごく</rt></ruby><ruby>語<rt>ご</rt></ruby>も<ruby>話<rt>はな</rt></ruby>せる。",
+    "opts": [
+     "ばかりに",
+     "に<ruby>決<rt>き</rt></ruby>まっている",
+     "ばかりか",
+     "というより"
+    ],
+    "a": 2,
+    "e": "‘~뿐만 아니라’ 는 <b>ばかりか</b>."
+   },
+   {
+    "q": "<ruby>眠<rt>ねむ</rt></ruby>くて（　　）。",
+    "opts": [
+     "ことだ",
+     "に<ruby>決<rt>き</rt></ruby>まっている",
+     "に<ruby>応<rt>おう</rt></ruby>じて",
+     "たまらない"
+    ],
+    "a": 3,
+    "e": "‘견딜 수 없다’ 는 <b>~てたまらない</b>."
+   },
+   {
+    "q": "<ruby>収入<rt>しゅうにゅう</rt></ruby>（　　）、<ruby>税金<rt>ぜいきん</rt></ruby>が<ruby>決<rt>き</rt></ruby>まる。",
+    "opts": [
+     "に<ruby>応<rt>おう</rt></ruby>じて",
+     "というより",
+     "ばかりか",
+     "かわりに"
+    ],
+    "a": 0,
+    "e": "‘~에 따라’ 는 <b>に<ruby>応<rt>おう</rt></ruby>じて</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>歌手<rt>かしゅ</rt></ruby>（　　）、<ruby>俳優<rt>はいゆう</rt></ruby>だ。",
+    "opts": [
+     "に<ruby>応<rt>おう</rt></ruby>じて",
+     "というより",
+     "に<ruby>決<rt>き</rt></ruby>まっている",
+     "さえ"
+    ],
+    "a": 1,
+    "e": "‘~라기보다’ 는 <b>というより</b>."
+   },
+   {
+    "q": "<ruby>時間<rt>じかん</rt></ruby>（　　）あれば、<ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きたい。",
+    "opts": [
+     "ばかり",
+     "ほど",
+     "さえ",
+     "かわり"
+    ],
+    "a": 2,
+    "e": "<b>さえ~ば</b> 짝."
+   },
+   {
+    "q": "<ruby>健康<rt>けんこう</rt></ruby>のためには、よく<ruby>寝<rt>ね</rt></ruby>る（　　）。",
+    "opts": [
+     "わけだ",
+     "ものか",
+     "<ruby>反面<rt>はんめん</rt></ruby>",
+     "ことだ"
+    ],
+    "a": 3,
+    "e": "충고는 <b>~ことだ</b>."
+   },
+   {
+    "q": "この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>な（　　）、やりがいがある。",
+    "opts": [
+     "<ruby>反面<rt>はんめん</rt></ruby>",
+     "せいで",
+     "ばかりに",
+     "ことだ"
+    ],
+    "a": 0,
+    "e": "좋고 나쁜 두 면을 대비하면 <b><ruby>反面<rt>はんめん</rt></ruby></b>."
+   },
+   {
+    "q": "<ruby>面白<rt>おもしろ</rt></ruby>すぎて、<ruby>笑<rt>わら</rt></ruby>わ（　　）。",
+    "opts": [
+     "わけにはいかない",
+     "ないではいられない",
+     "に<ruby>決<rt>き</rt></ruby>まっている",
+     "たまらない"
+    ],
+    "a": 1,
+    "e": "‘~하지 않고는 못 배긴다’ 는 <b>ないではいられない</b>."
+   },
+   {
+    "q": "<ruby>技術<rt>ぎじゅつ</rt></ruby>の<ruby>進歩<rt>しんぽ</rt></ruby>（　　）、<ruby>生活<rt>せいかつ</rt></ruby>が<ruby>便利<rt>べんり</rt></ruby>になった。",
+    "opts": [
+     "に<ruby>決<rt>き</rt></ruby>まって",
+     "ことだ",
+     "とともに",
+     "さえ"
+    ],
+    "a": 2,
+    "e": "‘~함에 따라’ 는 <b>とともに</b>."
+   },
+   {
+    "q": "<ruby>現金<rt>げんきん</rt></ruby>（　　）、カードで<ruby>払<rt>はら</rt></ruby>った。",
+    "opts": [
+     "に<ruby>応<rt>おう</rt></ruby>じて",
+     "というより",
+     "ことだ",
+     "のかわりに"
+    ],
+    "a": 3,
+    "e": "‘~대신에’ 는 <b>のかわりに</b>."
+   }
+  ]
+ },
+ {
+  "n": 20,
+  "part": "RC 보강",
+  "pl": "Part 6",
+  "title": "오문 정정 집중 연습",
+  "min": 40,
+  "goal": "밑줄 친 곳 중 틀린 곳을 찾는 연습입니다. 틀리는 유형을 먼저 확인하세요.",
+  "cards": [
+   {
+    "p": "자·타동사 쌍",
+    "m": "<ruby>開<rt>あ</rt></ruby>く/<ruby>開<rt>あ</rt></ruby>ける, <ruby>閉<rt>し</rt></ruby>まる/<ruby>閉<rt>し</rt></ruby>める, つく/つける, <ruby>始<rt>はじ</rt></ruby>まる/<ruby>始<rt>はじ</rt></ruby>める, <ruby>消<rt>き</rt></ruby>える/<ruby>消<rt>け</rt></ruby>す, <ruby>止<rt>と</rt></ruby>まる/<ruby>止<rt>と</rt></ruby>める, <ruby>変<rt>か</rt></ruby>わる/<ruby>変<rt>か</rt></ruby>える, <ruby>集<rt>あつ</rt></ruby>まる/<ruby>集<rt>あつ</rt></ruby>める",
+    "ex": "<ruby>窓<rt>まど</rt></ruby><b>が</b><ruby>開<rt>あ</rt></ruby>いて<b>いる</b>。／ <ruby>窓<rt>まど</rt></ruby><b>を</b><ruby>開<rt>あ</rt></ruby>けて<b>ある</b>。",
+    "kr": "창문이 열려 있다. ／ 창문을 열어 두었다.",
+    "tip": "자동사는 が, 타동사는 を."
+   },
+   {
+    "p": "お~する / お~になる",
+    "m": "내가 하는 일은 お~する(겸양), 상대가 하는 일은 お~になる(존경).",
+    "ex": "✗ お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>がお<ruby>待<rt>ま</rt></ruby>ち<b>して</b>いる → ○ お<ruby>待<rt>ま</rt></ruby>ち<b>になって</b>いる",
+    "kr": "손님이 기다리고 계신다."
+   },
+   {
+    "p": "~たところで",
+    "m": "~たところで 는 과거형(た) 뒤에 붙는다.",
+    "ex": "✗ <ruby>急<rt>いそ</rt></ruby>ぐところで → ○ <ruby>急<rt>いそ</rt></ruby>い<b>だ</b>ところで",
+    "kr": "서둘러봤자."
+   },
+   {
+    "p": "명사·な형 + ので",
+    "m": "명사와 な형용사는 ‘~なので’.",
+    "ex": "✗ <ruby>学生<rt>がくせい</rt></ruby>のので → ○ <ruby>学生<rt>がくせい</rt></ruby><b>な</b>ので",
+    "kr": "학생이라서."
+   },
+   {
+    "p": "ざるを<ruby>得<rt>え</rt></ruby>ない",
+    "m": "ない형 + ざるを<ruby>得<rt>え</rt></ruby>ない (する는 せざる).",
+    "ex": "✗ <ruby>行<rt>い</rt></ruby>くざるを<ruby>得<rt>え</rt></ruby>ない → ○ <ruby>行<rt>い</rt></ruby>か<b>ざる</b>を<ruby>得<rt>え</rt></ruby>ない",
+    "kr": "가지 않을 수 없다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "(A)<ruby>私<rt>わたし</rt></ruby>は　(B)<ruby>韓国<rt>かんこく</rt></ruby><ruby>語<rt>ご</rt></ruby>を　(C)わかりますが、(D)<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>は<ruby>苦手<rt>にがて</rt></ruby>です。",
+    "opts": [
+     "<ruby>私<rt>わたし</rt></ruby>は",
+     "<ruby>韓国<rt>かんこく</rt></ruby><ruby>語<rt>ご</rt></ruby>を",
+     "わかりますが",
+     "<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>は<ruby>苦手<rt>にがて</rt></ruby>です"
+    ],
+    "a": 1,
+    "e": "‘<ruby>韓国<rt>かんこく</rt></ruby><ruby>語<rt>ご</rt></ruby><b>が</b>わかる’."
+   },
+   {
+    "q": "(A)<ruby>窓<rt>まど</rt></ruby>が　(B)<ruby>開<rt>あ</rt></ruby>けて　(C)いるので、　(D)<ruby>閉<rt>し</rt></ruby>めてください。",
+    "opts": [
+     "<ruby>窓<rt>まど</rt></ruby>が",
+     "<ruby>開<rt>あ</rt></ruby>けて",
+     "いるので",
+     "<ruby>閉<rt>し</rt></ruby>めてください"
+    ],
+    "a": 1,
+    "e": "‘<ruby>窓<rt>まど</rt></ruby>が<b><ruby>開<rt>あ</rt></ruby>いて</b>いる’. 자동사 상태."
+   },
+   {
+    "q": "(A)<ruby>先生<rt>せんせい</rt></ruby>は　(B)<ruby>私<rt>わたし</rt></ruby>に　(C)<ruby>宿題<rt>しゅくだい</rt></ruby>を　(D)<ruby>出<rt>だ</rt></ruby>してもらいました。",
+    "opts": [
+     "<ruby>先生<rt>せんせい</rt></ruby>は",
+     "<ruby>私<rt>わたし</rt></ruby>に",
+     "<ruby>宿題<rt>しゅくだい</rt></ruby>を",
+     "<ruby>出<rt>だ</rt></ruby>してもらいました"
+    ],
+    "a": 3,
+    "e": "선생님이 한 행동이므로 ‘<ruby>出<rt>だ</rt></ruby>して<b>くださいました</b>’ 가 맞습니다."
+   },
+   {
+    "q": "(A)お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>が　(B)お<ruby>待<rt>ま</rt></ruby>ちして　(C)いらっしゃいます　(D)よ。",
+    "opts": [
+     "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>が",
+     "お<ruby>待<rt>ま</rt></ruby>ちして",
+     "いらっしゃいます",
+     "よ"
+    ],
+    "a": 1,
+    "e": "손님 행동은 ‘お<ruby>待<rt>ま</rt></ruby>ち<b>になって</b>’."
+   },
+   {
+    "q": "(A)<ruby>彼<rt>かれ</rt></ruby>は　(B)<ruby>学生<rt>がくせい</rt></ruby>の　(C)ので、　(D)<ruby>安<rt>やす</rt></ruby>く<ruby>入<rt>い</rt></ruby>れます。",
+    "opts": [
+     "<ruby>彼<rt>かれ</rt></ruby>は",
+     "<ruby>学生<rt>がくせい</rt></ruby>の",
+     "ので",
+     "<ruby>安<rt>やす</rt></ruby>く<ruby>入<rt>い</rt></ruby>れます"
+    ],
+    "a": 1,
+    "e": "‘<ruby>学生<rt>がくせい</rt></ruby><b>な</b>ので’."
+   },
+   {
+    "q": "(A)<ruby>今<rt>いま</rt></ruby>から　(B)<ruby>急<rt>いそ</rt></ruby>ぐ　(C)ところで　(D)<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わない。",
+    "opts": [
+     "<ruby>今<rt>いま</rt></ruby>から",
+     "<ruby>急<rt>いそ</rt></ruby>ぐ",
+     "ところで",
+     "<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わない"
+    ],
+    "a": 1,
+    "e": "‘<ruby>急<rt>いそ</rt></ruby>い<b>だ</b>ところで’."
+   },
+   {
+    "q": "(A)<ruby>彼<rt>かれ</rt></ruby>は　(B)<ruby>決<rt>けっ</rt></ruby>して　(C)うそを　(D)つきます。",
+    "opts": [
+     "<ruby>彼<rt>かれ</rt></ruby>は",
+     "<ruby>決<rt>けっ</rt></ruby>して",
+     "うそを",
+     "つきます"
+    ],
+    "a": 3,
+    "e": "<ruby>決<rt>けっ</rt></ruby>して 는 부정형과 짝. ‘つき<b>ません</b>’."
+   },
+   {
+    "q": "(A)<ruby>雨<rt>あめ</rt></ruby>が　(B)<ruby>降<rt>ふ</rt></ruby>りそうの　(C)ので、　(D)<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>っていく。",
+    "opts": [
+     "<ruby>雨<rt>あめ</rt></ruby>が",
+     "<ruby>降<rt>ふ</rt></ruby>りそうの",
+     "ので",
+     "<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>っていく"
+    ],
+    "a": 1,
+    "e": "‘<ruby>降<rt>ふ</rt></ruby>りそう<b>な</b>ので’."
+   },
+   {
+    "q": "(A)<ruby>上司<rt>じょうし</rt></ruby>に　(B)<ruby>言<rt>い</rt></ruby>われた　(C)ので、　(D)<ruby>行<rt>い</rt></ruby>くざるを<ruby>得<rt>え</rt></ruby>ない。",
+    "opts": [
+     "<ruby>上司<rt>じょうし</rt></ruby>に",
+     "<ruby>言<rt>い</rt></ruby>われた",
+     "ので",
+     "<ruby>行<rt>い</rt></ruby>くざるを<ruby>得<rt>え</rt></ruby>ない"
+    ],
+    "a": 3,
+    "e": "‘<ruby>行<rt>い</rt></ruby>か<b>ざる</b>を<ruby>得<rt>え</rt></ruby>ない’."
+   },
+   {
+    "q": "(A)<ruby>彼女<rt>かのじょ</rt></ruby>は　(B)<ruby>歌<rt>うた</rt></ruby>が　(C)<ruby>上手<rt>じょうず</rt></ruby>の　(D)<ruby>人<rt>ひと</rt></ruby>です。",
+    "opts": [
+     "<ruby>彼女<rt>かのじょ</rt></ruby>は",
+     "<ruby>歌<rt>うた</rt></ruby>が",
+     "<ruby>上手<rt>じょうず</rt></ruby>の",
+     "<ruby>人<rt>ひと</rt></ruby>です。"
+    ],
+    "a": 2,
+    "e": "‘<ruby>上手<rt>じょうず</rt></ruby><b>な</b><ruby>人<rt>ひと</rt></ruby>’. な형용사는 ‘な’ 로 연결."
+   }
+  ]
+ },
+ {
+  "n": 21,
+  "part": "Part 7형",
+  "pl": "P7",
+  "title": "문법·어휘 혼합 연습",
+  "min": 35,
+  "goal": "문법과 경어를 섞어서 풉니다. 한 문제에 20~30초를 목표로 하세요.",
+  "cards": [
+   {
+    "p": "풀이 요령",
+    "m": "보기를 보기 전에 빈칸 앞뒤로 ‘어떤 관계인지’ 먼저 정하세요. 원인, 역접, 목적 중 하나로 대부분 좁혀집니다.",
+    "tip": "틀린 문제는 보기 4개 모두 뜻을 적어 두면 다음에 안 틀립니다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>病気<rt>びょうき</rt></ruby>（　　）、<ruby>毎日<rt>まいにち</rt></ruby><ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>行<rt>い</rt></ruby>っている。",
+    "opts": [
+     "なのに",
+     "だから",
+     "らしく",
+     "ように"
+    ],
+    "a": 0,
+    "e": "뜻밖의 행동이므로 <b>なのに</b>."
+   },
+   {
+    "q": "<ruby>契約<rt>けいやく</rt></ruby><ruby>書<rt>しょ</rt></ruby>にサインする（　　）、<ruby>内容<rt>ないよう</rt></ruby>をよく<ruby>読<rt>よ</rt></ruby>んでください。",
+    "opts": [
+     "うちに",
+     "<ruby>前<rt>まえ</rt></ruby>に",
+     "<ruby>間<rt>あいだ</rt></ruby>に",
+     "とたん"
+    ],
+    "a": 1,
+    "e": "‘~하기 전에’ 는 <b><ruby>前<rt>まえ</rt></ruby>に</b>."
+   },
+   {
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>のお<ruby>宅<rt>たく</rt></ruby>に（　　）ました。",
+    "opts": [
+     "いらっしゃい",
+     "おっしゃい",
+     "<ruby>伺<rt>うかが</rt></ruby>い",
+     "<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり"
+    ],
+    "a": 2,
+    "e": "내가 방문한 것은 겸양어 <b><ruby>伺<rt>うかが</rt></ruby>う</b>."
+   },
+   {
+    "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は<ruby>結婚<rt>けっこん</rt></ruby>して（　　）、<ruby>仕事<rt>しごと</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けている。",
+    "opts": [
+     "てからでないと",
+     "ながらも",
+     "ついでに",
+     "からも"
+    ],
+    "a": 3,
+    "e": "‘결혼하고 나서도’ 는 <b>~てからも</b>."
+   },
+   {
+    "q": "<ruby>予算<rt>よさん</rt></ruby>が<ruby>足<rt>た</rt></ruby>りない（　　）、<ruby>計画<rt>けいかく</rt></ruby>を<ruby>変更<rt>へんこう</rt></ruby>せざるを<ruby>得<rt>え</rt></ruby>ない。",
+    "opts": [
+     "ので",
+     "のに",
+     "ても",
+     "うちに"
+    ],
+    "a": 0,
+    "e": "이유는 <b>ので</b>."
+   },
+   {
+    "q": "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>った（　　）、<ruby>試合<rt>しあい</rt></ruby>は<ruby>予定<rt>よてい</rt></ruby>どおり<ruby>行<rt>おこな</rt></ruby>われた。",
+    "opts": [
+     "おかげで",
+     "にもかかわらず",
+     "ために",
+     "くせに"
+    ],
+    "a": 1,
+    "e": "예상과 다른 결과는 <b>にもかかわらず</b>."
+   },
+   {
+    "q": "そのニュースを<ruby>聞<rt>き</rt></ruby>いた（　　）、<ruby>彼女<rt>かのじょ</rt></ruby>は<ruby>泣<rt>な</rt></ruby>き<ruby>出<rt>だ</rt></ruby>した。",
+    "opts": [
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "ところ",
+     "とたん",
+     "たびに"
+    ],
+    "a": 2,
+    "e": "‘~하자마자’ 는 <b>~たとたん</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>歌手<rt>かしゅ</rt></ruby>（　　）、<ruby>俳優<rt>はいゆう</rt></ruby>としても<ruby>活躍<rt>かつやく</rt></ruby>している。",
+    "opts": [
+     "に<ruby>決<rt>き</rt></ruby>まっている",
+     "たまらない",
+     "ざるを<ruby>得<rt>え</rt></ruby>ない",
+     "ばかりか"
+    ],
+    "a": 3,
+    "e": "‘~뿐만 아니라’ 는 <b>ばかりか</b>."
+   },
+   {
+    "q": "<ruby>出発<rt>しゅっぱつ</rt></ruby>の（　　）、<ruby>窓<rt>まど</rt></ruby>を<ruby>閉<rt>し</rt></ruby>めてください。",
+    "opts": [
+     "<ruby>前<rt>まえ</rt></ruby>に",
+     "とたん",
+     "<ruby>次第<rt>しだい</rt></ruby>",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に"
+    ],
+    "a": 0,
+    "e": "‘~하기 전에’ 는 <b><ruby>前<rt>まえ</rt></ruby>に</b>."
+   },
+   {
+    "q": "<ruby>私<rt>わたし</rt></ruby>は<ruby>先生<rt>せんせい</rt></ruby>に<ruby>作文<rt>さくぶん</rt></ruby>を（　　）。",
+    "opts": [
+     "<ruby>見<rt>み</rt></ruby>てくださいました",
+     "<ruby>見<rt>み</rt></ruby>ていただきました",
+     "<ruby>拝見<rt>はいけん</rt></ruby>になりました",
+     "ご<ruby>覧<rt>らん</rt></ruby>になりました"
+    ],
+    "a": 1,
+    "e": "내가 윗사람에게 받은 행동은 <b>~ていただく</b>."
+   }
+  ]
+ },
+ {
+  "n": 22,
+  "part": "RC 보강",
+  "pl": "Part 8",
+  "title": "장문 독해 3편",
+  "min": 45,
+  "goal": "긴 글을 읽고 이유, 지시, 주장을 정확하게 찾는 연습입니다. 질문부터 읽으세요.",
+  "cards": [
+   {
+    "p": "풀이 순서",
+    "m": "①질문 먼저 → ②첫 단락과 끝 단락 → ③しかし·むしろ 뒤 → ④선택지에서 극단 표현 소거",
+    "tip": "하루 3편을 15분 안에 푸는 연습이 목표입니다."
+   }
+  ],
+  "quiz": [
+   {
+    "ctx": "<ruby>近年<rt>きんねん</rt></ruby>、<ruby>都市<rt>とし</rt></ruby><ruby>部<rt>ぶ</rt></ruby>では<ruby>自転車<rt>じてんしゃ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>って<ruby>通勤<rt>つうきん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>混雑<rt>こんざつ</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けられるうえ、<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>の<ruby>解消<rt>かいしょう</rt></ruby>にもなるからだ。ところが、<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>道<rt>みち</rt></ruby>が<ruby>少<rt>すく</rt></ruby>ないため、<ruby>事故<rt>じこ</rt></ruby>も<ruby>増<rt>ふ</rt></ruby>えている。<ruby>安全<rt>あんぜん</rt></ruby>に<ruby>走<rt>はし</rt></ruby>れる<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>整<rt>ととの</rt></ruby>えることが、<ruby>今後<rt>こんご</rt></ruby>の<ruby>課題<rt>かだい</rt></ruby>だろう。",
+    "q": "<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>通勤<rt>つうきん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている<ruby>理由<rt>りゆう</rt></ruby>は？",
+    "opts": [
+     "<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>料金<rt>りょうきん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>くなったから",
+     "<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>道<rt>みち</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えたから",
+     "<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>混雑<rt>こんざつ</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けられ、<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>も<ruby>解消<rt>かいしょう</rt></ruby>できるから",
+     "<ruby>事故<rt>じこ</rt></ruby>が<ruby>減<rt>へ</rt></ruby>ったから"
+    ],
+    "a": 2,
+    "e": "‘~からだ’ 앞에 이유가 있습니다."
+   },
+   {
+    "ctx": "<ruby>近年<rt>きんねん</rt></ruby>、<ruby>都市<rt>とし</rt></ruby><ruby>部<rt>ぶ</rt></ruby>では<ruby>自転車<rt>じてんしゃ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>って<ruby>通勤<rt>つうきん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>混雑<rt>こんざつ</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けられるうえ、<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>の<ruby>解消<rt>かいしょう</rt></ruby>にもなるからだ。ところが、<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>道<rt>みち</rt></ruby>が<ruby>少<rt>すく</rt></ruby>ないため、<ruby>事故<rt>じこ</rt></ruby>も<ruby>増<rt>ふ</rt></ruby>えている。<ruby>安全<rt>あんぜん</rt></ruby>に<ruby>走<rt>はし</rt></ruby>れる<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>整<rt>ととの</rt></ruby>えることが、<ruby>今後<rt>こんご</rt></ruby>の<ruby>課題<rt>かだい</rt></ruby>だろう。",
+    "q": "<ruby>事故<rt>じこ</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている<ruby>原因<rt>げんいん</rt></ruby>は？",
+    "opts": [
+     "<ruby>通勤<rt>つうきん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>が<ruby>減<rt>へ</rt></ruby>ったから",
+     "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>混<rt>こ</rt></ruby>んでいるから",
+     "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>止<rt>と</rt></ruby>まったから",
+     "<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>道<rt>みち</rt></ruby>が<ruby>少<rt>すく</rt></ruby>ないから"
+    ],
+    "a": 3,
+    "e": "‘~ため’ 앞이 원인."
+   },
+   {
+    "ctx": "<ruby>近年<rt>きんねん</rt></ruby>、<ruby>都市<rt>とし</rt></ruby><ruby>部<rt>ぶ</rt></ruby>では<ruby>自転車<rt>じてんしゃ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>って<ruby>通勤<rt>つうきん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>混雑<rt>こんざつ</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けられるうえ、<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>の<ruby>解消<rt>かいしょう</rt></ruby>にもなるからだ。ところが、<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>専用<rt>せんよう</rt></ruby>の<ruby>道<rt>みち</rt></ruby>が<ruby>少<rt>すく</rt></ruby>ないため、<ruby>事故<rt>じこ</rt></ruby>も<ruby>増<rt>ふ</rt></ruby>えている。<ruby>安全<rt>あんぜん</rt></ruby>に<ruby>走<rt>はし</rt></ruby>れる<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>整<rt>ととの</rt></ruby>えることが、<ruby>今後<rt>こんご</rt></ruby>の<ruby>課題<rt>かだい</rt></ruby>だろう。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>えは？",
+    "opts": [
+     "<ruby>安全<rt>あんぜん</rt></ruby>に<ruby>走<rt>はし</rt></ruby>れる<ruby>環境<rt>かんきょう</rt></ruby>を<ruby>整<rt>ととの</rt></ruby>えることが<ruby>課題<rt>かだい</rt></ruby>だ",
+     "<ruby>自転車<rt>じてんしゃ</rt></ruby><ruby>通勤<rt>つうきん</rt></ruby>をやめるべきだ",
+     "<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>本数<rt>ほんすう</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすべきだ",
+     "<ruby>事故<rt>じこ</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えるのは<ruby>仕方<rt>しかた</rt></ruby>ない"
+    ],
+    "a": 0,
+    "e": "마지막 문장이 필자의 의견."
+   },
+   {
+    "ctx": "「<ruby>読書<rt>どくしょ</rt></ruby><ruby>離<rt>はな</rt></ruby>れ」と<ruby>言<rt>い</rt></ruby>われて<ruby>久<rt>ひさ</rt></ruby>しいが、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>まない<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているというより、<ruby>読<rt>よ</rt></ruby>む<ruby>場所<rt>ばしょ</rt></ruby>が<ruby>変<rt>か</rt></ruby>わったと<ruby>考<rt>かんが</rt></ruby>えるほうが<ruby>正<rt>ただ</rt></ruby>しいかもしれない。<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>の<ruby>代<rt>か</rt></ruby>わりに、スマートフォンで<ruby>小説<rt>しょうせつ</rt></ruby>やニュースを<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているからだ。とはいえ、<ruby>画面<rt>がめん</rt></ruby>で<ruby>読<rt>よ</rt></ruby>むと<ruby>内容<rt>ないよう</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えにくいという<ruby>研究<rt>けんきゅう</rt></ruby><ruby>結果<rt>けっか</rt></ruby>もある。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>は「<ruby>読書<rt>どくしょ</rt></ruby><ruby>離<rt>はな</rt></ruby>れ」をどう<ruby>考<rt>かんが</rt></ruby>えているか？",
+    "opts": [
+     "<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>は<ruby>全<rt>まった</rt></ruby>くいなくなった",
+     "<ruby>読<rt>よ</rt></ruby>む<ruby>場所<rt>ばしょ</rt></ruby>が<ruby>変<rt>か</rt></ruby>わったと<ruby>考<rt>かんが</rt></ruby>えるほうが<ruby>正<rt>ただ</rt></ruby>しいかもしれない",
+     "<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>は<ruby>増<rt>ふ</rt></ruby>えている",
+     "<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>を<ruby>買<rt>か</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えた"
+    ],
+    "a": 1,
+    "e": "‘~というより’ 뒤가 필자의 생각."
+   },
+   {
+    "ctx": "「<ruby>読書<rt>どくしょ</rt></ruby><ruby>離<rt>はな</rt></ruby>れ」と<ruby>言<rt>い</rt></ruby>われて<ruby>久<rt>ひさ</rt></ruby>しいが、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>まない<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているというより、<ruby>読<rt>よ</rt></ruby>む<ruby>場所<rt>ばしょ</rt></ruby>が<ruby>変<rt>か</rt></ruby>わったと<ruby>考<rt>かんが</rt></ruby>えるほうが<ruby>正<rt>ただ</rt></ruby>しいかもしれない。<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>の<ruby>代<rt>か</rt></ruby>わりに、スマートフォンで<ruby>小説<rt>しょうせつ</rt></ruby>やニュースを<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているからだ。とはいえ、<ruby>画面<rt>がめん</rt></ruby>で<ruby>読<rt>よ</rt></ruby>むと<ruby>内容<rt>ないよう</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えにくいという<ruby>研究<rt>けんきゅう</rt></ruby><ruby>結果<rt>けっか</rt></ruby>もある。",
+    "q": "「とはいえ」の<ruby>後<rt>あと</rt></ruby>で<ruby>述<rt>の</rt></ruby>べていることは？",
+    "opts": [
+     "<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>は<ruby>高<rt>たか</rt></ruby>い",
+     "<ruby>小説<rt>しょうせつ</rt></ruby>は<ruby>面白<rt>おもしろ</rt></ruby>くない",
+     "<ruby>画面<rt>がめん</rt></ruby>で<ruby>読<rt>よ</rt></ruby>むと<ruby>内容<rt>ないよう</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えにくいという<ruby>研究<rt>けんきゅう</rt></ruby><ruby>結果<rt>けっか</rt></ruby>もある",
+     "スマートフォンは<ruby>便利<rt>べんり</rt></ruby>だ"
+    ],
+    "a": 2,
+    "e": "‘とはいえ’ 뒤에 반대 정보가 옵니다."
+   },
+   {
+    "ctx": "「<ruby>読書<rt>どくしょ</rt></ruby><ruby>離<rt>はな</rt></ruby>れ」と<ruby>言<rt>い</rt></ruby>われて<ruby>久<rt>ひさ</rt></ruby>しいが、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>まない<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているというより、<ruby>読<rt>よ</rt></ruby>む<ruby>場所<rt>ばしょ</rt></ruby>が<ruby>変<rt>か</rt></ruby>わったと<ruby>考<rt>かんが</rt></ruby>えるほうが<ruby>正<rt>ただ</rt></ruby>しいかもしれない。<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>の<ruby>代<rt>か</rt></ruby>わりに、スマートフォンで<ruby>小説<rt>しょうせつ</rt></ruby>やニュースを<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているからだ。とはいえ、<ruby>画面<rt>がめん</rt></ruby>で<ruby>読<rt>よ</rt></ruby>むと<ruby>内容<rt>ないよう</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えにくいという<ruby>研究<rt>けんきゅう</rt></ruby><ruby>結果<rt>けっか</rt></ruby>もある。",
+    "q": "<ruby>本文<rt>ほんぶん</rt></ruby>の<ruby>内容<rt>ないよう</rt></ruby>に<ruby>合<rt>あ</rt></ruby>うものは？",
+    "opts": [
+     "<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>の<ruby>売<rt>う</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げが<ruby>伸<rt>の</rt></ruby>びている",
+     "<ruby>研究<rt>けんきゅう</rt></ruby>では<ruby>画面<rt>がめん</rt></ruby>のほうが<ruby>覚<rt>おぼ</rt></ruby>えやすいとされている",
+     "<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>は<ruby>一人<rt>ひとり</rt></ruby>もいない",
+     "スマートフォンで<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている"
+    ],
+    "a": 3,
+    "e": "‘スマートフォンで~<ruby>読<rt>よ</rt></ruby>む<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている’ 와 일치."
+   },
+   {
+    "ctx": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めるとき、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>は「<ruby>失敗<rt>しっぱい</rt></ruby>したらどうしよう」と<ruby>不安<rt>ふあん</rt></ruby>になる。しかし、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで、<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い。むしろ、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けてばかりいる<ruby>人<rt>ひと</rt></ruby>のほうが、<ruby>成長<rt>せいちょう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>を<ruby>逃<rt>のが</rt></ruby>してしまうのではないだろうか。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>失敗<rt>しっぱい</rt></ruby>しないことではなく、<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>何<rt>なん</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶかである。",
+    "q": "「むしろ」の<ruby>後<rt>あと</rt></ruby>の<ruby>内容<rt>ないよう</rt></ruby>は？",
+    "opts": [
+     "<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けてばかりいると<ruby>成長<rt>せいちょう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>を<ruby>逃<rt>のが</rt></ruby>す",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>は<ruby>絶対<rt>ぜったい</rt></ruby>に<ruby>避<rt>さ</rt></ruby>けるべきだ",
+     "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>は<ruby>始<rt>はじ</rt></ruby>めないほうがいい",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>すると<ruby>不安<rt>ふあん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>える"
+    ],
+    "a": 0,
+    "e": "‘むしろ’ 뒤가 필자가 하고 싶은 말."
+   },
+   {
+    "ctx": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めるとき、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>は「<ruby>失敗<rt>しっぱい</rt></ruby>したらどうしよう」と<ruby>不安<rt>ふあん</rt></ruby>になる。しかし、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで、<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い。むしろ、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けてばかりいる<ruby>人<rt>ひと</rt></ruby>のほうが、<ruby>成長<rt>せいちょう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>を<ruby>逃<rt>のが</rt></ruby>してしまうのではないだろうか。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>失敗<rt>しっぱい</rt></ruby>しないことではなく、<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>何<rt>なん</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶかである。",
+    "q": "<ruby>筆者<rt>ひっしゃ</rt></ruby>が<ruby>大切<rt>たいせつ</rt></ruby>だと<ruby>考<rt>かんが</rt></ruby>えることは？",
+    "opts": [
+     "<ruby>失敗<rt>しっぱい</rt></ruby>しないこと",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>何<rt>なん</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶか",
+     "<ruby>不安<rt>ふあん</rt></ruby>にならないこと",
+     "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めること"
+    ],
+    "a": 1,
+    "e": "‘~ではなく、~だ’ 에서 뒤쪽이 진짜 주장."
+   },
+   {
+    "ctx": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めるとき、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>は「<ruby>失敗<rt>しっぱい</rt></ruby>したらどうしよう」と<ruby>不安<rt>ふあん</rt></ruby>になる。しかし、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで、<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い。むしろ、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けてばかりいる<ruby>人<rt>ひと</rt></ruby>のほうが、<ruby>成長<rt>せいちょう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>を<ruby>逃<rt>のが</rt></ruby>してしまうのではないだろうか。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>失敗<rt>しっぱい</rt></ruby>しないことではなく、<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>何<rt>なん</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶかである。",
+    "q": "「<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで、<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い」に<ruby>近<rt>ちか</rt></ruby>い<ruby>意味<rt>いみ</rt></ruby>は？",
+    "opts": [
+     "<ruby>失敗<rt>しっぱい</rt></ruby>しても<ruby>何<rt>なん</rt></ruby>も<ruby>分<rt>わ</rt></ruby>からない",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>は<ruby>少<rt>すく</rt></ruby>ないほうがいい",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>して<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることが<ruby>多<rt>おお</rt></ruby>くある",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>しなければ<ruby>何<rt>なん</rt></ruby>も<ruby>分<rt>わ</rt></ruby>からない"
+    ],
+    "a": 2,
+    "e": "‘<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かる’ = ‘하고 나서야 알게 되다’."
+   },
+   {
+    "ctx": "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めるとき、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>は「<ruby>失敗<rt>しっぱい</rt></ruby>したらどうしよう」と<ruby>不安<rt>ふあん</rt></ruby>になる。しかし、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで、<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い。むしろ、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>避<rt>さ</rt></ruby>けてばかりいる<ruby>人<rt>ひと</rt></ruby>のほうが、<ruby>成長<rt>せいちょう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>を<ruby>逃<rt>のが</rt></ruby>してしまうのではないだろうか。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>失敗<rt>しっぱい</rt></ruby>しないことではなく、<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>何<rt>なん</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶかである。",
+    "q": "「しかし」の<ruby>後<rt>あと</rt></ruby>に<ruby>述<rt>の</rt></ruby>べられている<ruby>内容<rt>ないよう</rt></ruby>は？",
+    "opts": [
+     "<ruby>失敗<rt>しっぱい</rt></ruby>は<ruby>避<rt>さ</rt></ruby>けるべきだ",
+     "<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>は<ruby>不安<rt>ふあん</rt></ruby>になる",
+     "<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>は<ruby>始<rt>はじ</rt></ruby>めないほうがいい",
+     "<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>経験<rt>けいけん</rt></ruby>することで<ruby>初<rt>はじ</rt></ruby>めて<ruby>分<rt>わ</rt></ruby>かることも<ruby>多<rt>おお</rt></ruby>い"
+    ],
+    "a": 3,
+    "e": "‘しかし’ 뒤에 필자의 생각이 옵니다."
+   }
+  ],
+  "tasks": [
+   "지문마다 질문부터 읽기",
+   "15분 안에 풀어 보기",
+   "퀴즈 풀기",
+   "틀린 이유를 한 줄로 적기"
+  ]
+ },
+ {
+  "n": 23,
+  "part": "RC 보강",
+  "pl": "시간",
+  "title": "시간 재고 풀기 10문",
+  "min": 30,
+  "goal": "휴대폰 타이머를 12분에 맞추고 10문제를 풉니다. 시간 안에 끝내는 감각을 만듭니다.",
+  "cards": [
+   {
+    "p": "하는 법",
+    "m": "①타이머 12분 시작 → ②모르는 문제는 표시하고 넘어가기 → ③끝나면 채점하고 틀린 문제를 ‘복’ 탭에서 복습",
+    "tip": "시간이 부족했다면 어휘·문법 문제를 더 빠르게 풀고, 독해에 시간을 남기세요."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>毎日<rt>まいにち</rt></ruby><ruby>練習<rt>れんしゅう</rt></ruby>している。（　　）、<ruby>試合<rt>しあい</rt></ruby>に<ruby>勝<rt>か</rt></ruby>てない。",
+    "opts": [
+     "ところが",
+     "したがって",
+     "つまり",
+     "しかも"
+    ],
+    "a": 0,
+    "e": "예상과 반대이므로 <b>ところが</b>."
+   },
+   {
+    "q": "<ruby>寝<rt>ね</rt></ruby>る（　　）、<ruby>歯<rt>は</rt></ruby>を<ruby>磨<rt>みが</rt></ruby>いてください。",
+    "opts": [
+     "うちに",
+     "<ruby>前<rt>まえ</rt></ruby>に",
+     "<ruby>間<rt>あいだ</rt></ruby>に",
+     "<ruby>最中<rt>さいちゅう</rt></ruby>に"
+    ],
+    "a": 1,
+    "e": "‘~하기 전에’ 는 <b><ruby>前<rt>まえ</rt></ruby>に</b>."
+   },
+   {
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>、<ruby>日本<rt>にほん</rt></ruby>に（　　）そうです。",
+    "opts": [
+     "<ruby>参<rt>まい</rt></ruby>る",
+     "<ruby>伺<rt>うかが</rt></ruby>う",
+     "いらっしゃる",
+     "おっしゃる"
+    ],
+    "a": 2,
+    "e": "선생님 행동은 존경어 <b>いらっしゃる</b>."
+   },
+   {
+    "q": "<ruby>失礼<rt>しつれい</rt></ruby>ですが、お<ruby>名前<rt>なまえ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>と（　　）か。",
+    "opts": [
+     "<ruby>申<rt>もう</rt></ruby>します",
+     "<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げます",
+     "いたします",
+     "おっしゃいます"
+    ],
+    "a": 3,
+    "e": "상대의 이름을 묻는 말이므로 존경어 <b>おっしゃる</b>."
+   },
+   {
+    "q": "<ruby>日本<rt>にほん</rt></ruby>に5<ruby>年<rt>ねん</rt></ruby>も<ruby>住<rt>す</rt></ruby>んでいた（　　）、<ruby>日本<rt>にほん</rt></ruby><ruby>語<rt>ご</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>です。",
+    "opts": [
+     "ので",
+     "のに",
+     "ても",
+     "ながら"
+    ],
+    "a": 0,
+    "e": "‘~했으니까’ 는 <b>ので</b>."
+   },
+   {
+    "q": "(A)<ruby>彼女<rt>かのじょ</rt></ruby>は　(B)<ruby>歌<rt>うた</rt></ruby>が　(C)<ruby>上手<rt>じょうず</rt></ruby>を　(D)そうです。",
+    "opts": [
+     "<ruby>彼女<rt>かのじょ</rt></ruby>は",
+     "<ruby>歌<rt>うた</rt></ruby>が",
+     "<ruby>上手<rt>じょうず</rt></ruby>を",
+     "そうです"
+    ],
+    "a": 2,
+    "e": "‘<ruby>歌<rt>うた</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby><b>だ</b>そうです’."
+   },
+   {
+    "q": "(A)<ruby>友達<rt>ともだち</rt></ruby>に　(B)<ruby>宿題<rt>しゅくだい</rt></ruby>を　(C)<ruby>見<rt>み</rt></ruby>せて　(D)あげられました。",
+    "opts": [
+     "<ruby>友達<rt>ともだち</rt></ruby>に",
+     "<ruby>宿題<rt>しゅくだい</rt></ruby>を",
+     "<ruby>見<rt>み</rt></ruby>せて",
+     "あげられました"
+    ],
+    "a": 3,
+    "e": "‘<ruby>見<rt>み</rt></ruby>せて<b>もらいました</b>’."
+   },
+   {
+    "q": "(A)<ruby>部長<rt>ぶちょう</rt></ruby>は　(B)<ruby>今<rt>いま</rt></ruby>　(C)<ruby>席<rt>せき</rt></ruby>に　(D)おります。",
+    "opts": [
+     "<ruby>部長<rt>ぶちょう</rt></ruby>は",
+     "<ruby>今<rt>いま</rt></ruby>",
+     "<ruby>席<rt>せき</rt></ruby>に",
+     "おります"
+    ],
+    "a": 3,
+    "e": "윗사람에게는 겸양 おる가 아니라 <b>いらっしゃいます</b>."
+   },
+   {
+    "q": "<ruby>最近<rt>さいきん</rt></ruby>、<ruby>運動<rt>うんどう</rt></ruby><ruby>不足<rt>ふそく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。（　　）、<ruby>通勤<rt>つうきん</rt></ruby>も<ruby>車<rt>くるま</rt></ruby>や<ruby>電車<rt>でんしゃ</rt></ruby>に<ruby>頼<rt>たよ</rt></ruby>る<ruby>人<rt>ひと</rt></ruby>が<ruby>多<rt>おお</rt></ruby>いからだ。",
+    "opts": [
+     "ところが",
+     "なぜなら",
+     "もっとも",
+     "したがって"
+    ],
+    "a": 1,
+    "e": "‘~からだ’ 와 짝인 <b>なぜなら</b>."
+   },
+   {
+    "q": "この<ruby>店<rt>みせ</rt></ruby>は<ruby>味<rt>あじ</rt></ruby>がいい。（　　）、<ruby>値段<rt>ねだん</rt></ruby>も<ruby>手<rt>て</rt></ruby>ごろだ。",
+    "opts": [
+     "ところが",
+     "つまり",
+     "しかも",
+     "ただし"
+    ],
+    "a": 2,
+    "e": "좋은 점을 더하므로 <b>しかも</b>."
+   }
+  ]
+ },
+ {
+  "n": 24,
+  "part": "Part 5",
+  "pl": "P5",
+  "title": "정답 찾기 ①: 한자 읽는 법",
+  "min": 40,
+  "goal": "밑줄 친 한자어의 읽는 법을 고릅니다. 탁음(ぶ·ば)과 긴 소리에 속지 않는 연습입니다.",
+  "cards": [
+   {
+    "p": "無口（むくち）",
+    "m": "말수가 적음",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b><ruby>無口<rt>むくち</rt></ruby></b>な<ruby>人<rt>ひと</rt></ruby>だ。",
+    "kr": "그는 말수가 적은 사람이다.",
+    "tip": "<ruby>無<rt>む</rt></ruby>는 む. ぶ로 읽는 오답(ぶこう)에 주의."
+   },
+   {
+    "p": "初日（しょにち）",
+    "m": "첫날",
+    "ex": "<ruby>展覧<rt>てんらん</rt></ruby><ruby>会<rt>かい</rt></ruby>の<b><ruby>初日<rt>しょにち</rt></ruby></b>は<ruby>混<rt>こ</rt></ruby>んでいた。",
+    "kr": "전시회 첫날은 붐볐다.",
+    "tip": "<ruby>初日<rt>はつひ</rt></ruby>の<ruby>出<rt>で</rt></ruby>(새해 첫 해돋이)는 はつひ. 보통 ‘첫날’ 은 しょにち."
+   },
+   {
+    "p": "主に（おもに）",
+    "m": "주로",
+    "ex": "<ruby>週末<rt>しゅうまつ</rt></ruby>は<b><ruby>主<rt>おも</rt></ruby>に</b><ruby>家<rt>いえ</rt></ruby>で<ruby>過<rt>す</rt></ruby>ごす。",
+    "kr": "주말은 주로 집에서 보낸다."
+   },
+   {
+    "p": "費やす（ついやす）",
+    "m": "(시간·돈을) 들이다, 쓰다",
+    "ex": "<ruby>研究<rt>けんきゅう</rt></ruby>に<ruby>十<rt>じゅう</rt></ruby><ruby>年<rt>ねん</rt></ruby>を<b><ruby>費<rt>つい</rt></ruby>やした</b>。",
+    "kr": "연구에 10년을 들였다.",
+    "tip": "<ruby>費<rt>ひ</rt></ruby>는 ひ가 아니라 ついや(す)."
+   },
+   {
+    "p": "用心深い（ようじんぶかい）",
+    "m": "신중한, 조심성이 많은",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b><ruby>用<rt>よう</rt></ruby><ruby>心深<rt>こころふか</rt></ruby>い</b><ruby>性格<rt>せいかく</rt></ruby>だ。",
+    "kr": "그는 조심성 많은 성격이다.",
+    "tip": "앞말 뒤에 오는 <ruby>深<rt>ぶか</rt></ruby>い는 ぶかい로 탁해진다."
+   },
+   {
+    "p": "執念（しゅうねん）",
+    "m": "집념",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>の<b><ruby>執念<rt>しゅうねん</rt></ruby></b>が<ruby>実<rt>みの</rt></ruby>った。",
+    "kr": "그의 집념이 결실을 맺었다.",
+    "tip": "<ruby>執<rt>執</rt></ruby>은 しゅう. しつ·しゅ 로 읽는 오답에 주의."
+   },
+   {
+    "p": "長居（ながい）",
+    "m": "오래 눌러앉음, 오래 머묾",
+    "ex": "<ruby>友達<rt>ともだち</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>で<b><ruby>長居<rt>ながい</rt></ruby></b>してしまった。",
+    "kr": "친구 집에서 오래 머물고 말았다.",
+    "tip": "<ruby>長居<rt>ながい</rt></ruby>는 ながい. ちょうきょ 아님."
+   },
+   {
+    "p": "大黒柱（だいこくばしら）",
+    "m": "집안·조직의 기둥",
+    "ex": "<ruby>父<rt>ちち</rt></ruby>は<ruby>一家<rt>いっか</rt></ruby>の<b><ruby>大黒<rt>だいこく</rt></ruby><ruby>柱<rt>ばしら</rt></ruby></b>だ。",
+    "kr": "아버지는 한 집안의 기둥이다.",
+    "tip": "<ruby>柱<rt>はしら</rt></ruby>는 はしら가 탁해져 ばしら."
+   },
+   {
+    "p": "怠る（おこたる）",
+    "m": "게을리하다",
+    "ex": "<ruby>仕事<rt>しごと</rt></ruby>を<b><ruby>怠<rt>おこた</rt></ruby>る</b>と、<ruby>信用<rt>しんよう</rt></ruby>をなくす。",
+    "kr": "일을 게을리하면 신용을 잃는다.",
+    "tip": "<ruby>怠<rt>なま</rt></ruby>ける(なまける)와 읽는 법이 다르다."
+   },
+   {
+    "p": "敬遠（けいえん）",
+    "m": "경원, 꺼리어 멀리함",
+    "ex": "<ruby>面倒<rt>めんどう</rt></ruby>な<ruby>付<rt>つ</rt></ruby>き<ruby>合<rt>あ</rt></ruby>いを<b><ruby>敬遠<rt>けいえん</rt></ruby></b>する。",
+    "kr": "번거로운 교제를 꺼린다."
+   },
+   {
+    "p": "手軽（てがる）",
+    "m": "손쉬움, 간편함",
+    "ex": "<b><ruby>手軽<rt>てがる</rt></ruby></b>に<ruby>食<rt>た</rt></ruby>べられる<ruby>料理<rt>りょうり</rt></ruby>だ。",
+    "kr": "간편하게 먹을 수 있는 요리다."
+   },
+   {
+    "p": "要望（ようぼう）",
+    "m": "요망, 바라는 것",
+    "ex": "<ruby>客<rt>きゃく</rt></ruby>の<b><ruby>要望<rt>ようぼう</rt></ruby></b>に<ruby>応<rt>こた</rt></ruby>える。",
+    "kr": "손님의 요구에 부응한다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n彼女は<u>無口</u>な人で、ほとんど話さない。",
+    "opts": [
+     "ぶこう",
+     "むくち",
+     "ぶぐち",
+     "むこう"
+    ],
+    "a": 1,
+    "e": "<ruby>無<rt>む</rt></ruby>는 む. <b>むくち</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n展覧会の<u>初日</u>は朝から混んでいた。",
+    "opts": [
+     "はつひ",
+     "しょじつ",
+     "しょにち",
+     "はつにち"
+    ],
+    "a": 2,
+    "e": "첫날은 <b>しょにち</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\nこの店のお客は<u>主に</u>学生です。",
+    "opts": [
+     "おもに",
+     "しゅに",
+     "ぬしに",
+     "じゅに"
+    ],
+    "a": 0,
+    "e": "<ruby>主<rt>おも</rt></ruby>に = <b>おもに</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n勉強に多くの時間を<u>費やした</u>。",
+    "opts": [
+     "ひやした",
+     "ふやした",
+     "たがやした",
+     "ついやした"
+    ],
+    "a": 3,
+    "e": "<ruby>費<rt>つい</rt></ruby>やす = <b>ついやす</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n彼は<u>用心深い</u>ので、簡単には人を信じない。",
+    "opts": [
+     "ようしんふかい",
+     "ようじんふかい",
+     "ようじんぶかい",
+     "ようしんぶかい"
+    ],
+    "a": 2,
+    "e": "<ruby>用心<rt>ようじん</rt></ruby> = ようじん, <ruby>深<rt>ぶか</rt></ruby>い는 탁음화되어 <b>ぶかい</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n彼女の<u>執念</u>には驚かされる。",
+    "opts": [
+     "しつねん",
+     "しゅうねん",
+     "しゅねん",
+     "しつれん"
+    ],
+    "a": 1,
+    "e": "<ruby>執念<rt>しゅうねん</rt></ruby> = <b>しゅうねん</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n友達の家で<u>長居</u>してしまった。",
+    "opts": [
+     "ながい",
+     "ちょうきょ",
+     "ちょうい",
+     "ながきょ"
+    ],
+    "a": 0,
+    "e": "<ruby>長居<rt>ながい</rt></ruby> = <b>ながい</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n父は一家の<u>大黒柱</u>だ。",
+    "opts": [
+     "おおくろばしら",
+     "だいこくちゅう",
+     "たいこくはしら",
+     "だいこくばしら"
+    ],
+    "a": 3,
+    "e": "<ruby>大黒<rt>だいこく</rt></ruby><ruby>柱<rt>ばしら</rt></ruby> = <b>だいこくばしら</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n仕事を<u>怠る</u>と、信用をなくす。",
+    "opts": [
+     "なまる",
+     "おこなる",
+     "おこたる",
+     "ことたる"
+    ],
+    "a": 2,
+    "e": "<ruby>怠<rt>おこた</rt></ruby>る = <b>おこたる</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい読み方を、(A)から(D)の中で一つ選びなさい。\n彼は面倒な付き合いを<u>敬遠</u>している。",
+    "opts": [
+     "けいえい",
+     "けいえん",
+     "きょうえん",
+     "けいおん"
+    ],
+    "a": 1,
+    "e": "<ruby>敬遠<rt>けいえん</rt></ruby> = <b>けいえん</b>."
+   }
+  ]
+ },
+ {
+  "n": 25,
+  "part": "Part 5",
+  "pl": "P5",
+  "title": "정답 찾기 ②: 한자 표기",
+  "min": 40,
+  "goal": "히라가나로 쓴 말을 올바른 한자로 고릅니다. 소리가 같은 한자어를 뜻으로 구분합니다.",
+  "cards": [
+   {
+    "p": "いじょう → 以上 / 異常 / 移譲",
+    "m": "이상(~이상) / 이상(정상이 아님) / 양도",
+    "ex": "<ruby>体<rt>からだ</rt></ruby>に<b><ruby>異常<rt>いじょう</rt></ruby></b>はなかった。",
+    "kr": "몸에 이상은 없었다.",
+    "tip": "‘정상이 아님’ 은 <ruby>異常<rt>いじょう</rt></ruby>."
+   },
+   {
+    "p": "かんしん → 感心 / 関心",
+    "m": "감탄 / 관심",
+    "ex": "<ruby>環境<rt>かんきょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>に<b><ruby>関心<rt>かんしん</rt></ruby></b>がある。",
+    "kr": "환경 문제에 관심이 있다.",
+    "tip": "‘~에 관심’ 은 <ruby>関心<rt>かんしん</rt></ruby>, ‘감탄하다’ 는 <ruby>感心<rt>かんしん</rt></ruby>."
+   },
+   {
+    "p": "こうえん → 公園 / 講演 / 公演",
+    "m": "공원 / 강연 / 공연",
+    "ex": "<ruby>大学<rt>だいがく</rt></ruby>で<ruby>作家<rt>さっか</rt></ruby>の<b><ruby>講演<rt>こうえん</rt></ruby></b>を<ruby>聞<rt>き</rt></ruby>いた。",
+    "kr": "대학에서 작가의 강연을 들었다.",
+    "tip": "듣는 것은 <ruby>講演<rt>こうえん</rt></ruby>, 보는 것은 <ruby>公演<rt>こうえん</rt></ruby>."
+   },
+   {
+    "p": "せいかく → 正確 / 性格",
+    "m": "정확 / 성격",
+    "ex": "<ruby>時間<rt>じかん</rt></ruby>を<b><ruby>正確<rt>せいかく</rt></ruby></b>に<ruby>測<rt>はか</rt></ruby>る。",
+    "kr": "시간을 정확하게 잰다."
+   },
+   {
+    "p": "きかい → 機会 / 機械",
+    "m": "기회 / 기계",
+    "ex": "<ruby>留学<rt>りゅうがく</rt></ruby>の<b><ruby>機会<rt>きかい</rt></ruby></b>を<ruby>得<rt>え</rt></ruby>た。",
+    "kr": "유학할 기회를 얻었다."
+   },
+   {
+    "p": "たいしょう → 対象 / 対照 / 対称",
+    "m": "대상 / 대조 / 대칭",
+    "ex": "<ruby>子供<rt>こども</rt></ruby>を<b><ruby>対象<rt>たいしょう</rt></ruby></b>にした<ruby>調査<rt>ちょうさ</rt></ruby>だ。",
+    "kr": "어린이를 대상으로 한 조사다."
+   },
+   {
+    "p": "いどう → 移動 / 異動",
+    "m": "이동 / (인사) 이동",
+    "ex": "<ruby>来月<rt>らいげつ</rt></ruby>、<ruby>東京<rt>とうきょう</rt></ruby>へ<b><ruby>異動<rt>いどう</rt></ruby></b>になる。",
+    "kr": "다음 달 도쿄로 인사 이동이 된다.",
+    "tip": "회사의 발령은 <ruby>異動<rt>いどう</rt></ruby>."
+   },
+   {
+    "p": "かてい → 家庭 / 過程 / 仮定",
+    "m": "가정(집) / 과정 / 가정(가설)",
+    "ex": "<ruby>結果<rt>けっか</rt></ruby>より<b><ruby>過程<rt>かてい</rt></ruby></b>が<ruby>大事<rt>だいじ</rt></ruby>だ。",
+    "kr": "결과보다 과정이 중요하다."
+   },
+   {
+    "p": "はかる → 計る / 測る / 図る",
+    "m": "(시간·수량) 재다 / (길이·넓이) 재다 / 꾀하다",
+    "ex": "<ruby>問題<rt>もんだい</rt></ruby>の<ruby>解決<rt>かいけつ</rt></ruby>を<b><ruby>図<rt>はか</rt></ruby>る</b>。",
+    "kr": "문제의 해결을 꾀한다.",
+    "tip": "‘꾀하다’ 는 <ruby>図<rt>はか</rt></ruby>る."
+   },
+   {
+    "p": "しゅうかん → 習慣 / 週間",
+    "m": "습관 / 주간",
+    "ex": "<ruby>早起<rt>はやお</rt></ruby>きの<b><ruby>習慣<rt>しゅうかん</rt></ruby></b>を<ruby>身<rt>み</rt></ruby>につけた。",
+    "kr": "일찍 일어나는 습관을 들였다."
+   },
+   {
+    "p": "はれぎ → 晴れ着",
+    "m": "나들이옷",
+    "ex": "<ruby>成人<rt>せいじん</rt></ruby><ruby>式<rt>しき</rt></ruby>で<b><ruby>晴<rt>は</rt></ruby>れ<ruby>着<rt>ぎ</rt></ruby></b>を<ruby>着<rt>き</rt></ruby>た。",
+    "kr": "성인식에서 나들이옷을 입었다."
+   },
+   {
+    "p": "めど → 目処 / 目途",
+    "m": "전망, 목표",
+    "ex": "<ruby>完成<rt>かんせい</rt></ruby>の<b><ruby>目処<rt>めど</rt></ruby></b>が<ruby>立<rt>た</rt></ruby>った。",
+    "kr": "완성의 전망이 섰다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n医者は「体に<u>いじょう</u>はありません」と言った。",
+    "opts": [
+     "以上",
+     "異常",
+     "移譲",
+     "偉上"
+    ],
+    "a": 1,
+    "e": "정상이 아닌 상태는 <b><ruby>異常<rt>いじょう</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n環境問題に<u>かんしん</u>を持つ人が増えている。",
+    "opts": [
+     "関心",
+     "感心",
+     "歓心",
+     "官心"
+    ],
+    "a": 0,
+    "e": "‘~에 관심’ 은 <b><ruby>関心<rt>かんしん</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n市民ホールで有名な作家の<u>こうえん</u>を聞いた。",
+    "opts": [
+     "公園",
+     "公演",
+     "後演",
+     "講演"
+    ],
+    "a": 3,
+    "e": "들려주는 이야기는 <b><ruby>講演<rt>こうえん</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n子供を<u>たいしょう</u>にした本を出版した。",
+    "opts": [
+     "対照",
+     "対称",
+     "対象",
+     "対症"
+    ],
+    "a": 2,
+    "e": "‘~을 대상으로’ 는 <b><ruby>対象<rt>たいしょう</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n来月、大阪支店へ<u>いどう</u>になった。",
+    "opts": [
+     "移動",
+     "異動",
+     "異童",
+     "以動"
+    ],
+    "a": 1,
+    "e": "회사의 발령은 <b><ruby>異動<rt>いどう</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n留学の<u>きかい</u>を大切にしたい。",
+    "opts": [
+     "機会",
+     "機械",
+     "期会",
+     "機界"
+    ],
+    "a": 0,
+    "e": "‘기회’ 는 <b><ruby>機会<rt>きかい</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n結果ではなく、<u>かてい</u>が大切だ。",
+    "opts": [
+     "家庭",
+     "仮定",
+     "加程",
+     "過程"
+    ],
+    "a": 3,
+    "e": "결과의 반대말은 <b><ruby>過程<rt>かてい</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n問題の解決を<u>はかる</u>。",
+    "opts": [
+     "計る",
+     "測る",
+     "図る",
+     "量る"
+    ],
+    "a": 2,
+    "e": "‘꾀하다’ 는 <b><ruby>図<rt>はか</rt></ruby>る</b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n早起きの<u>しゅうかん</u>を身につけた。",
+    "opts": [
+     "週間",
+     "習慣",
+     "習間",
+     "週慣"
+    ],
+    "a": 1,
+    "e": "‘습관’ 은 <b><ruby>習慣<rt>しゅうかん</rt></ruby></b>."
+   },
+   {
+    "q": "下の線の言葉の正しい表記を、(A)から(D)の中で一つ選びなさい。\n新製品の<u>せいかく</u>な情報を知りたい。",
+    "opts": [
+     "正確",
+     "性格",
+     "星格",
+     "製確"
+    ],
+    "a": 0,
+    "e": "‘정확한 정보’ 는 <b><ruby>正確<rt>せいかく</rt></ruby></b>."
+   }
+  ]
+ },
+ {
+  "n": 26,
+  "part": "Part 5",
+  "pl": "P5",
+  "title": "정답 찾기 ③: 같은 뜻·같은 용법",
+  "min": 40,
+  "goal": "밑줄 친 표현을 바꿔 말한 문장, 같은 쓰임으로 쓰인 문장을 고릅니다.",
+  "cards": [
+   {
+    "p": "がっかりする",
+    "m": "실망해서 기운이 없다",
+    "ex": "<ruby>試験<rt>しけん</rt></ruby>に<ruby>落<rt>お</rt></ruby>ちて<b>がっかりした</b>。",
+    "kr": "시험에 떨어져 실망했다.",
+    "tip": "= <ruby>失望<rt>しつぼう</rt></ruby>して<ruby>元気<rt>げんき</rt></ruby>がない."
+   },
+   {
+    "p": "気が進まない",
+    "m": "그럴 마음이 내키지 않는다",
+    "ex": "その<ruby>誘<rt>さそ</rt></ruby>いには<b><ruby>気<rt>き</rt></ruby>が<ruby>進<rt>すす</rt></ruby>まない</b>。",
+    "kr": "그 권유에는 마음이 내키지 않는다."
+   },
+   {
+    "p": "要望にこたえる",
+    "m": "요구에 부응하다",
+    "ex": "<ruby>客<rt>きゃく</rt></ruby>の<b><ruby>希望<rt>きぼう</rt></ruby>にこたえる</b>サービス。",
+    "kr": "손님의 희망에 부응하는 서비스.",
+    "tip": "= <ruby>希望<rt>きぼう</rt></ruby>に<ruby>合<rt>あ</rt></ruby>う / <ruby>沿<rt>そ</rt></ruby>う."
+   },
+   {
+    "p": "~ないことには~ない",
+    "m": "~하지 않고서는 ~못 한다",
+    "ex": "<ruby>先生<rt>せんせい</rt></ruby>に<b><ruby>聞<rt>き</rt></ruby>かないことには</b>わからない。",
+    "kr": "선생님께 묻지 않고서는 모른다.",
+    "tip": "= ~なければ."
+   },
+   {
+    "p": "いやがおうでも",
+    "m": "싫든 좋든, 어떻게든",
+    "ex": "<b>いやがおうでも</b><ruby>参加<rt>さんか</rt></ruby>させられる。",
+    "kr": "싫든 좋든 참가하게 된다.",
+    "tip": "= <ruby>好<rt>す</rt></ruby>き<ruby>嫌<rt>きら</rt></ruby>いにかかわらず."
+   },
+   {
+    "p": "ばかり (3가지)",
+    "m": "한정 / 정도(약) / 막 ~했다",
+    "ex": "<ruby>漫画<rt>まんが</rt></ruby><b>ばかり</b><ruby>読<rt>よ</rt></ruby>む。／ 30<ruby>分<rt>ふん</rt></ruby><b>ばかり</b><ruby>待<rt>ま</rt></ruby>つ。／ <ruby>来<rt>き</rt></ruby>た<b>ばかり</b>だ。",
+    "kr": "만화만 읽는다. ／ 30분쯤 기다린다. ／ 막 왔다.",
+    "tip": "같은 말이라도 어떤 뜻인지 구분."
+   },
+   {
+    "p": "ところ (3가지)",
+    "m": "장소 / 막 ~하려는 참 / ~했더니",
+    "ex": "<ruby>駅<rt>えき</rt></ruby>に<ruby>近<rt>ちか</rt></ruby>い<b>ところ</b>。／ <ruby>出<rt>で</rt></ruby>る<b>ところ</b>だ。／ <ruby>聞<rt>き</rt></ruby>いた<b>ところ</b>、<ruby>留守<rt>るす</rt></ruby>だった。",
+    "kr": "역에서 가까운 곳. ／ 나가려는 참이다. ／ 물었더니 부재중이었다."
+   },
+   {
+    "p": "ように (3가지)",
+    "m": "목적 / 비유 / 전문·추측",
+    "ex": "<ruby>忘<rt>わす</rt></ruby>れない<b>ように</b>。／ <ruby>子供<rt>こども</rt></ruby>の<b>ように</b><ruby>笑<rt>わら</rt></ruby>う。／ <ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る<b>ようだ</b>。",
+    "kr": "잊지 않도록. ／ 아이처럼 웃는다. ／ 비가 올 것 같다."
+   },
+   {
+    "p": "に (용법)",
+    "m": "시간 / 대상 / 도착점 / 결과",
+    "ex": "7<ruby>時<rt>じ</rt></ruby><b>に</b><ruby>出<rt>で</rt></ruby>る。／ <ruby>母<rt>はは</rt></ruby><b>に</b><ruby>書<rt>か</rt></ruby>く。／ <ruby>医者<rt>いしゃ</rt></ruby><b>に</b>なる。",
+    "kr": "7시에 나간다. ／ 어머니께 쓴다. ／ 의사가 된다."
+   },
+   {
+    "p": "で (용법)",
+    "m": "장소 / 수단 / 원인 / 기한",
+    "ex": "<ruby>図書<rt>としょ</rt></ruby><ruby>館<rt>かん</rt></ruby><b>で</b><ruby>勉強<rt>べんきょう</rt></ruby>。／ <ruby>電車<rt>でんしゃ</rt></ruby><b>で</b><ruby>行<rt>い</rt></ruby>く。／ <ruby>風邪<rt>かぜ</rt></ruby><b>で</b><ruby>休<rt>やす</rt></ruby>む。",
+    "kr": "도서관에서 공부. ／ 전철로 간다. ／ 감기로 쉰다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "下の線の言葉と同じ意味のはたらきをしているものを、(A)から(D)の中で一つ選びなさい。\n試験に落ちて、彼は<u>がっかりしている</u>。",
+    "opts": [
+     "とても怒っている",
+     "喜んでいる",
+     "失望して元気がない",
+     "疲れて眠っている"
+    ],
+    "a": 2,
+    "e": "がっかり = <b><ruby>失望<rt>しつぼう</rt></ruby>して<ruby>元気<rt>げんき</rt></ruby>がない</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ意味のはたらきをしているものを、(A)から(D)の中で一つ選びなさい。\nその誘いには、どうも<u>気が進まない</u>。",
+    "opts": [
+     "そうしようという気持ちになれない",
+     "時間がなくて行けない",
+     "誰かに頼みたい",
+     "もう断ってしまった"
+    ],
+    "a": 0,
+    "e": "<ruby>気<rt>き</rt></ruby>が<ruby>進<rt>すす</rt></ruby>まない = <b>そうしようという<ruby>気持<rt>きも</rt></ruby>ちになれない</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ意味のはたらきをしているものを、(A)から(D)の中で一つ選びなさい。\n客の<u>希望にこたえる</u>サービスを始めた。",
+    "opts": [
+     "希望に反するサービスを始めた",
+     "希望を聞かないサービスを始めた",
+     "希望より高いサービスを始めた",
+     "希望に合ったサービスを始めた"
+    ],
+    "a": 3,
+    "e": "こたえる = <b><ruby>合<rt>あ</rt></ruby>う・<ruby>沿<rt>そ</rt></ruby>う</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ意味のはたらきをしているものを、(A)から(D)の中で一つ選びなさい。\n先生に<u>聞かないことには</u>、答えがわからない。",
+    "opts": [
+     "聞いても",
+     "聞かなければ",
+     "聞いては",
+     "聞かなくても"
+    ],
+    "a": 1,
+    "e": "~ないことには = <b>~なければ</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ意味のはたらきをしているものを、(A)から(D)の中で一つ選びなさい。\n彼は<u>いやがおうでも</u>参加させられるだろう。",
+    "opts": [
+     "嫌がったらすぐに",
+     "嫌だと言わずに喜んで",
+     "好き嫌いにかかわらず",
+     "嫌になって"
+    ],
+    "a": 2,
+    "e": "いやがおうでも = <b><ruby>好<rt>す</rt></ruby>き<ruby>嫌<rt>きら</rt></ruby>いにかかわらず</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ使い方をしているものを、(A)から(D)の中で一つ選びなさい。\n彼は毎日ゲーム<u>ばかり</u>している。",
+    "opts": [
+     "先月、仕事を始めた<u>ばかり</u>だ。",
+     "30分<u>ばかり</u>待った。",
+     "油断した<u>ばかり</u>に、負けてしまった。",
+     "兄は漫画<u>ばかり</u>読んでいる。"
+    ],
+    "a": 3,
+    "e": "한정의 ばかり는 <b><ruby>漫画<rt>まんが</rt></ruby>ばかり</b>."
+   },
+   {
+    "q": "下の線の言葉と同じ使い方をしているものを、(A)から(D)の中で一つ選びなさい。\n今、ちょうど家を出る<u>ところ</u>だ。",
+    "opts": [
+     "駅の近くの<u>ところ</u>に住んでいる。",
+     "今、電車に乗る<u>ところ</u>だ。",
+     "電話をかけた<u>ところ</u>、留守だった。",
+     "彼の悪い<u>ところ</u>を直したい。"
+    ],
+    "a": 1,
+    "e": "‘막 ~하려는 참’ 의 ところ."
+   },
+   {
+    "q": "下の線の言葉と同じ使い方をしているものを、(A)から(D)の中で一つ選びなさい。\n忘れない<u>ように</u>、メモをとる。",
+    "opts": [
+     "風邪をひかない<u>ように</u>気をつける。",
+     "彼は子供の<u>ように</u>笑う。",
+     "先生が言った<u>ように</u>、やってみた。",
+     "明日は雨が降る<u>ようだ</u>。"
+    ],
+    "a": 0,
+    "e": "목적의 ように."
+   },
+   {
+    "q": "下の線の言葉と同じ使い方をしているものを、(A)から(D)の中で一つ選びなさい。\n毎朝7時<u>に</u>家を出る。",
+    "opts": [
+     "母<u>に</u>手紙を書いた。",
+     "公園<u>に</u>行く。",
+     "来年、医者<u>に</u>なる。",
+     "朝6時<u>に</u>起きる。"
+    ],
+    "a": 3,
+    "e": "시간을 나타내는 に."
+   },
+   {
+    "q": "下の線の言葉と同じ使い方をしているものを、(A)から(D)の中で一つ選びなさい。\n風邪<u>で</u>学校を休んだ。",
+    "opts": [
+     "図書館<u>で</u>勉強する。",
+     "電車<u>で</u>行く。",
+     "地震<u>で</u>電車が止まった。",
+     "三日<u>で</u>終わる。"
+    ],
+    "a": 2,
+    "e": "원인의 で."
+   }
+  ]
+ },
+ {
+  "n": 27,
+  "part": "Part 7",
+  "pl": "P7",
+  "title": "공란 메우기: 고급 문법",
+  "min": 40,
+  "goal": "실제 기출에 나오는 수준의 문법(~ものなら, ~あげく 등)을 익힙니다.",
+  "cards": [
+   {
+    "p": "~ものなら",
+    "m": "~할 수 있다면 / ~했다가는",
+    "ex": "<ruby>行<rt>い</rt></ruby>ける<b>ものなら</b>、<ruby>行<rt>い</rt></ruby>ってみたい。",
+    "kr": "갈 수 있다면 가 보고 싶다.",
+    "tip": "앞에 가능형 또는 의지형(<ruby>言<rt>い</rt></ruby>おう)이 온다."
+   },
+   {
+    "p": "~あげく(に)",
+    "m": "~한 끝에 (좋지 않은 결과)",
+    "ex": "<ruby>悩<rt>なや</rt></ruby>んだ<b>あげく</b>、<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>辞<rt>や</rt></ruby>めた。",
+    "kr": "고민한 끝에 회사를 그만뒀다.",
+    "tip": "앞은 た형 또는 명사+の."
+   },
+   {
+    "p": "~にいたらない",
+    "m": "~에 이르지 않다",
+    "ex": "<ruby>小<rt>ちい</rt></ruby>さな<ruby>問題<rt>もんだい</rt></ruby>で、<ruby>裁判<rt>さいばん</rt></ruby>になる<b>にいたらなかった</b>。",
+    "kr": "작은 문제라 재판까지 가지 않았다."
+   },
+   {
+    "p": "~てからというもの",
+    "m": "~한 이후로 줄곧",
+    "ex": "<ruby>結婚<rt>けっこん</rt></ruby>して<b>からというもの</b>、<ruby>毎日<rt>まいにち</rt></ruby>が<ruby>楽<rt>たの</rt></ruby>しい。",
+    "kr": "결혼한 이후로 매일이 즐겁다."
+   },
+   {
+    "p": "~ずにはすまない",
+    "m": "~하지 않고는 끝나지 않는다",
+    "ex": "<ruby>約束<rt>やくそく</rt></ruby>を<ruby>破<rt>やぶ</rt></ruby>ったのだから、<ruby>謝<rt>あやま</rt></ruby>ら<b>ずにはすまない</b>。",
+    "kr": "약속을 어겼으니 사과하지 않고는 끝나지 않는다.",
+    "tip": "する → せずにはすまない."
+   },
+   {
+    "p": "~まい",
+    "m": "~하지 않겠다 / ~하지 않을 것이다",
+    "ex": "もう<ruby>二<rt>に</rt></ruby><ruby>度<rt>ど</rt></ruby>と<ruby>同<rt>おな</rt></ruby>じ<ruby>失敗<rt>しっぱい</rt></ruby>はする<b>まい</b>。",
+    "kr": "다시는 같은 실수를 하지 않겠다."
+   },
+   {
+    "p": "~きり",
+    "m": "~한 채 (그 뒤로 없음)",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>出<rt>で</rt></ruby>かけた<b>きり</b>、<ruby>帰<rt>かえ</rt></ruby>ってこない。",
+    "kr": "그는 나간 채 돌아오지 않는다."
+   },
+   {
+    "p": "~きりがない",
+    "m": "끝이 없다",
+    "ex": "<ruby>欲<rt>よく</rt></ruby>を<ruby>言<rt>い</rt></ruby>えば<b>きりがない</b>。",
+    "kr": "욕심을 말하자면 끝이 없다."
+   },
+   {
+    "p": "<ruby>何<rt>なん</rt></ruby>かにつけて",
+    "m": "매사에, 걸핏하면",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<b><ruby>何<rt>なん</rt></ruby>かにつけて</b><ruby>文句<rt>もんく</rt></ruby>を<ruby>言<rt>い</rt></ruby>う。",
+    "kr": "그는 매사에 불평을 한다."
+   },
+   {
+    "p": "~ないし",
+    "m": "~내지, 또는",
+    "ex": "3か<ruby>月<rt>げつ</rt></ruby><b>ないし</b><ruby>半年<rt>はんとし</rt></ruby>かかる。",
+    "kr": "3개월 내지 반년 걸린다."
+   },
+   {
+    "p": "~かつ",
+    "m": "그리고 또 (딱딱한 글)",
+    "ex": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>優秀<rt>ゆうしゅう</rt></ruby><b>かつ</b><ruby>誠実<rt>せいじつ</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>だ。",
+    "kr": "그는 우수하고 또 성실한 사람이다."
+   }
+  ],
+  "quiz": [
+   {
+    "q": "<ruby>行<rt>い</rt></ruby>ける（　　）、<ruby>今<rt>いま</rt></ruby>すぐ<ruby>行<rt>い</rt></ruby>きたいが、<ruby>時間<rt>じかん</rt></ruby>がない。",
+    "opts": [
+     "ものなら",
+     "ものか",
+     "ものを",
+     "ものの"
+    ],
+    "a": 0,
+    "e": "가능형+<b>ものなら</b> (~할 수 있다면)."
+   },
+   {
+    "q": "<ruby>悩<rt>なや</rt></ruby>んだ（　　）、<ruby>彼<rt>かれ</rt></ruby>は<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>辞<rt>や</rt></ruby>めることにした。",
+    "opts": [
+     "とたん",
+     "たびに",
+     "あげく",
+     "くせに"
+    ],
+    "a": 2,
+    "e": "‘고민한 끝에’ 는 <b>あげく</b>."
+   },
+   {
+    "q": "<ruby>小<rt>ちい</rt></ruby>さな<ruby>問題<rt>もんだい</rt></ruby>だったので、<ruby>裁判<rt>さいばん</rt></ruby>になる（　　）。",
+    "opts": [
+     "にあたらなかった",
+     "にいたらなかった",
+     "にそわなかった",
+     "にかぎらなかった"
+    ],
+    "a": 1,
+    "e": "‘~에 이르지 않았다’ 는 <b>にいたらなかった</b>."
+   },
+   {
+    "q": "<ruby>結婚<rt>けっこん</rt></ruby>して（　　）、<ruby>毎日<rt>まいにち</rt></ruby>が<ruby>楽<rt>たの</rt></ruby>しい。",
+    "opts": [
+     "からといって",
+     "からには",
+     "からこそ",
+     "からというもの"
+    ],
+    "a": 3,
+    "e": "‘~한 이후로 줄곧’ 은 <b>てからというもの</b>."
+   },
+   {
+    "q": "<ruby>約束<rt>やくそく</rt></ruby>を<ruby>破<rt>やぶ</rt></ruby>ったのだから、<ruby>彼<rt>かれ</rt></ruby>に<ruby>謝<rt>あやま</rt></ruby>ら（　　）。",
+    "opts": [
+     "ずにはすまない",
+     "ずにもすむ",
+     "ずじまい",
+     "ずくめ"
+    ],
+    "a": 0,
+    "e": "‘~하지 않고는 끝나지 않는다’ 는 <b>ずにはすまない</b>."
+   },
+   {
+    "q": "もう<ruby>二<rt>に</rt></ruby><ruby>度<rt>ど</rt></ruby>と<ruby>同<rt>おな</rt></ruby>じ<ruby>失敗<rt>しっぱい</rt></ruby>はする（　　）と<ruby>心<rt>こころ</rt></ruby>に<ruby>決<rt>き</rt></ruby>めた。",
+    "opts": [
+     "ない",
+     "はず",
+     "まい",
+     "べき"
+    ],
+    "a": 2,
+    "e": "‘~하지 않겠다’ 는 <b>まい</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は「ちょっと<ruby>出<rt>で</rt></ruby>かける」と<ruby>言<rt>い</rt></ruby>った（　　）、<ruby>帰<rt>かえ</rt></ruby>ってこない。",
+    "opts": [
+     "ばかり",
+     "きり",
+     "だけ",
+     "ほど"
+    ],
+    "a": 1,
+    "e": "‘~한 채’ 는 <b>きり</b>."
+   },
+   {
+    "q": "<ruby>欲<rt>よく</rt></ruby>を<ruby>言<rt>い</rt></ruby>えば（　　）が、<ruby>今<rt>いま</rt></ruby>の<ruby>生活<rt>せいかつ</rt></ruby>に<ruby>満足<rt>まんぞく</rt></ruby>している。",
+    "opts": [
+     "きれない",
+     "きりもない",
+     "きるまい",
+     "きりがない"
+    ],
+    "a": 3,
+    "e": "‘끝이 없다’ 는 <b>きりがない</b>."
+   },
+   {
+    "q": "<ruby>彼<rt>かれ</rt></ruby>は（　　）<ruby>文句<rt>もんく</rt></ruby>を<ruby>言<rt>い</rt></ruby>うので、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>仕事<rt>しごと</rt></ruby>をしにくい。",
+    "opts": [
+     "<ruby>何<rt>なん</rt></ruby>かにつけて",
+     "<ruby>何<rt>なん</rt></ruby>にもまして",
+     "<ruby>何<rt>なん</rt></ruby>はともあれ",
+     "<ruby>何<rt>なん</rt></ruby>といっても"
+    ],
+    "a": 0,
+    "e": "‘매사에’ 는 <b><ruby>何<rt>なん</rt></ruby>かにつけて</b>."
+   },
+   {
+    "q": "この<ruby>工事<rt>こうじ</rt></ruby>には3か<ruby>月<rt>げつ</rt></ruby>（　　）<ruby>半年<rt>はんとし</rt></ruby>かかる。",
+    "opts": [
+     "かつ",
+     "ただし",
+     "ないし",
+     "しかも"
+    ],
+    "a": 2,
+    "e": "‘~내지’ 는 <b>ないし</b>."
+   }
+  ]
+ }
+];
+
+var DEFAULT_TASKS = ["카드 읽고 예문 소리 내어 3번 읽기","‘뜻 가리기’로 셀프 테스트","퀴즈 풀기","틀린 것 오답노트에 적기"];
+var KEY = "jpt14-v1";
+var state = {};
+function load(){ try{ state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }catch(e){ state = {}; } if(!state.done) state.done = {}; if(!state.wrong) state.wrong = {}; }
+function wrongCount(){ return Object.keys(state.wrong).length; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+load();
+
+var cur = 1;
+var CORE = 14;
+function tasksOf(d){ return d.tasks || DEFAULT_TASKS; }
+function isDayDone(d){ var t = tasksOf(d); for(var i=0;i<t.length;i++){ if(!state.done[d.n+"-"+i]) return false; } return true; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function renderNav(){
+  var h = "";
+  DAYS.forEach(function(d){
+    var c = (d.n===cur ? " cur" : "") + (isDayDone(d) ? " done" : "");
+    h += '<button type="button" class="dbtn'+c+'" role="tab" aria-selected="'+(d.n===cur)+'" data-day="'+d.n+'" aria-label="'+d.n+'일차 '+d.title+'"><b>'+d.n+'</b><i>'+d.pl+'</i></button>';
+  });
+  h += '<button type="button" class="dbtn'+(cur===0?' cur':'')+'" role="tab" aria-selected="'+(cur===0)+'" data-day="0" aria-label="오답 복습"><b>복</b><i id="wcnt">'+wrongCount()+'개</i></button>';
+  var box = document.getElementById("days");
+  box.innerHTML = h;
+  var active = box.querySelector(".cur");
+  if(active){ try{ box.scrollTo({left: active.offsetLeft - box.clientWidth/2 + active.offsetWidth/2}); }catch(e){} }
+}
+
+function renderProgress(){
+  var n = DAYS.filter(function(d){ return d.n<=CORE && isDayDone(d); }).length;
+  document.getElementById("pcount").textContent = n;
+  document.getElementById("barfill").style.width = (n/14*100)+"%";
+}
+
+function renderPanel(){
+  var d = DAYS[cur-1];
+  var h = '<section class="dhead"><span class="tag">'+d.part+'</span><span class="min">DAY '+d.n+' · 약 '+d.min+'분</span>'
+        + '<h2>'+d.title+'</h2><p class="goal">'+d.goal+'</p></section>';
+
+  h += '<h3>암기 카드 <button type="button" class="tog" id="hidebtn" aria-pressed="'+(!!state.hide)+'">뜻 가리기</button></h3>';
+  h += '<p class="hint">가리기를 켜면 카드를 탭할 때 뜻과 해석이 보여요.</p>';
+  h += '<div class="cards'+(state.hide?' hide':'')+'" id="cards">';
+  d.cards.forEach(function(c){
+    h += '<button type="button" class="card"><p class="pat jp">'+c.p+'</p><p class="mean rev">'+c.m+'</p>';
+    if(c.ex) h += '<p class="ex rev">'+c.ex+'<span class="kr">'+c.kr+'</span></p>';
+    if(c.tip) h += '<p class="tip">'+c.tip+'</p>';
+    h += '</button>';
+  });
+  h += '</div>';
+
+  h += '<h3>미니 퀴즈</h3>';
+  d.quiz.forEach(function(q,i){ h += quizHtml(q, i, d.n, "Q"+(i+1)); });
+
+  h += '<h3>오늘 체크</h3><div class="tasks">';
+  tasksOf(d).forEach(function(t,i){
+    var id = "t"+d.n+"-"+i;
+    h += '<label class="task" for="'+id+'"><input type="checkbox" id="'+id+'" data-k="'+d.n+'-'+i+'"'+(state.done[d.n+"-"+i]?' checked':'')+'><span>'+t+'</span></label>';
+  });
+  h += '</div>';
+
+  h += '<div class="pager"><button type="button" id="prev"'+(cur===1?' disabled':'')+'>이전</button>'
+     + '<button type="button" class="next" id="next"'+(cur===DAYS.length?' disabled':'')+'>다음 날</button></div>';
+
+  document.getElementById("panel").innerHTML = h;
+}
+
+function quizHtml(q, i, dn, label){
+  var h = '<div class="q" data-qi="'+i+'" data-day="'+dn+'"><p class="qn">'+label+'</p>';
+  if(q.ctx) h += '<p class="ctx">'+q.ctx+'</p>';
+  h += '<p class="qt">'+String(q.q).replace(/\n/g,"<br>")+'</p><div class="opts">';
+  q.opts.forEach(function(o,j){ h += '<button type="button" class="opt" data-o="'+j+'"><span class="ol">('+"ABCD".charAt(j)+')</span> '+o+'</button>'; });
+  return h + '</div><p class="exp" hidden></p></div>';
+}
+
+function renderReview(){
+  var keys = Object.keys(state.wrong).sort(function(a,b){ var x=a.split("-"), y=b.split("-"); return (x[0]-y[0]) || (x[1]-y[1]); });
+  var h = '<section class="dhead"><span class="tag">복습</span><span class="min">틀린 문제만 모았어요</span><h2>오답 복습</h2><p class="goal">다시 풀어서 맞히면 목록에서 빠집니다.</p></section>';
+  if(!keys.length){ h += '<p class="hint" style="margin-top:20px">아직 틀린 문제가 없어요. 일차별 퀴즈를 풀면 틀린 문제가 여기에 쌓입니다.</p>'; }
+  h += '<div style="margin-top:14px">';
+  keys.forEach(function(k){
+    var p = k.split("-"), dn = +p[0], qi = +p[1];
+    var q = DAYS[dn-1] && DAYS[dn-1].quiz[qi];
+    if(q) h += quizHtml(q, qi, dn, "DAY "+dn+" · Q"+(qi+1));
+  });
+  document.getElementById("panel").innerHTML = h + '</div>';
+}
+
+function go(n, scroll){
+  if(n<0||n>DAYS.length) return;
+  cur = n;
+  var hs = n===0 ? "#review" : "#day-"+n;
+  try{ history.replaceState(null,"",hs); }catch(e){ location.hash = hs; }
+  renderNav(); if(n===0) renderReview(); else renderPanel();
+  if(scroll){ window.scrollTo({top:0}); }
+}
+
+document.getElementById("days").addEventListener("click", function(e){
+  var b = e.target.closest(".dbtn"); if(b) go(+b.dataset.day, true);
+});
+
+document.getElementById("panel").addEventListener("click", function(e){
+  var t = e.target;
+  if(t.closest("#hidebtn")){
+    state.hide = !state.hide; save();
+    var box = document.getElementById("cards");
+    box.classList.toggle("hide", !!state.hide);
+    box.querySelectorAll(".shown").forEach(function(x){ x.classList.remove("shown"); });
+    document.getElementById("hidebtn").setAttribute("aria-pressed", String(!!state.hide));
+    return;
+  }
+  var card = t.closest(".card");
+  if(card){ card.classList.toggle("shown"); return; }
+  var opt = t.closest(".opt");
+  if(opt){
+    var qEl = opt.closest(".q"); if(qEl.classList.contains("done")) return;
+    var dn = +qEl.dataset.day, q = DAYS[dn-1].quiz[+qEl.dataset.qi], pick = +opt.dataset.o, wk = dn+"-"+qEl.dataset.qi;
+    if(pick===q.a) delete state.wrong[wk]; else state.wrong[wk] = 1;
+    save(); var wc = document.getElementById("wcnt"); if(wc) wc.textContent = wrongCount()+"개";
+    qEl.classList.add("done");
+    qEl.querySelectorAll(".opt").forEach(function(o,j){
+      if(j===q.a) o.classList.add("ok");
+      else if(j===pick) o.classList.add("bad");
+    });
+    var ex = qEl.querySelector(".exp");
+    ex.innerHTML = (pick===q.a ? "<b>정답!</b> " : "<b>오답.</b> ") + q.e;
+    ex.hidden = false;
+    return;
+  }
+  if(t.closest("#prev")) go(cur-1, true);
+  if(t.closest("#next")) go(cur+1, true);
+});
+
+document.getElementById("panel").addEventListener("change", function(e){
+  var c = e.target.closest("input[data-k]"); if(!c) return;
+  if(c.checked) state.done[c.dataset.k] = true; else delete state.done[c.dataset.k];
+  save(); renderNav(); renderProgress();
+});
+
+var resetArmed = false;
+document.getElementById("reset").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  if(!resetArmed){ resetArmed = true; b.textContent = "정말 지울까요? 한 번 더 누르면 지워집니다"; return; }
+  state = {done:{}, wrong:{}}; save(); applyFuri(); resetArmed = false; b.textContent = "진행 기록 지우기";
+  renderNav(); renderProgress(); if(cur===0) renderReview(); else renderPanel();
+});
+
+function fromHash(){
+  if(location.hash === "#review") return 0;
+  var m = /^#day-(\d+)$/.exec(location.hash);
+  return m ? Math.min(DAYS.length, Math.max(1, +m[1])) : 1;
+}
+window.addEventListener("hashchange", function(){ var n = fromHash(); if(n!==cur) go(n, true); });
+var PLAN = [
+ {t:"1주차 · 문법 기초 (Part 5)", rows:[
+  ["월","<a href=\"#day-24\">24일차</a> 한자 읽기 + <a href=\"#day-1\">1일차</a> 원인·목적","문제집 Part 5"],
+  ["화","<a href=\"#day-25\">25일차</a> 한자 표기 + <a href=\"#day-2\">2일차</a> 역접·양보","문제집 Part 5"],
+  ["수","<a href=\"#day-26\">26일차</a> 같은 뜻·용법 + <a href=\"#day-3\">3일차</a> 시간·순서","문제집 Part 5"],
+  ["목","<a href=\"#day-4\">4일차</a> 추측·판단","문제집 Part 5"],
+  ["금","<a href=\"#day-5\">5일차</a> 부정·불가능","문제집 Part 5"],
+  ["토","<a href=\"#day-6\">6일차</a> 경향·범위","문제집 Part 5, 약한 유형 한 번 더"],
+  ["일","<a href=\"#day-7\">7일차</a> 경어와 1주 점검","<a href=\"#review\">복 탭</a> 전체 복습, 가볍게",1]
+ ]},
+ {t:"2주차 · 오문 정정·공란·독해 (Part 6~8)", rows:[
+  ["월","<a href=\"#day-8\">8일차</a> 오문 정정 유형","문제집 Part 6"],
+  ["화","<a href=\"#day-9\">9일차</a> 호응 부사","문제집 Part 6"],
+  ["수","<a href=\"#day-10\">10일차</a> 접속사","문제집 Part 7"],
+  ["목","<a href=\"#day-11\">11일차</a> 공란 풀이법·연어","문제집 Part 7"],
+  ["금","<a href=\"#day-12\">12일차</a> 주제 찾기·지시어","문제집 Part 8"],
+  ["토","<a href=\"#day-13\">13일차</a> 혼합 실전","문제집 Part 8, 시간 재고"],
+  ["일","<a href=\"#day-14\">14일차</a> 총복습","<a href=\"#review\">복 탭</a> 2주 오답 복습, 가볍게",1]
+ ]},
+ {t:"3주차 · 약점 보강", rows:[
+  ["월","<a href=\"#day-17\">17일차</a> 어휘 2","문제집 약한 파트"],
+  ["화","<a href=\"#day-18\">18일차</a> 어휘 3","문제집 약한 파트"],
+  ["수","<a href=\"#day-19\">19일차</a> 추가 문법","문제집 Part 5~6"],
+  ["목","<a href=\"#day-20\">20일차</a> 오문 정정","문제집 Part 6"],
+  ["금","<a href=\"#day-21\">21일차</a> Part 5 혼합","문제집 Part 7"],
+  ["토","<a href=\"#day-22\">22일차</a> 장문 독해 3편","문제집 Part 8"],
+  ["일","<a href=\"#day-15\">15일차</a> 어휘, <a href=\"#day-16\">16일차</a> 장문","<a href=\"#review\">복 탭</a> 3주 오답 복습, 가볍게",1]
+ ]},
+ {t:"4주차 · 실전", rows:[
+  ["월","<a href=\"#day-23\">23일차</a> 시간 재고 풀기","기출 Part 5~6 타이머"],
+  ["화","기출 1회분 RC를 시간 재고 풀기","채점 후 오답 정리"],
+  ["수","오답 유형별 보강","어휘·문법 카드 재암기"],
+  ["목","기출 2회분 RC를 시간 재고 풀기","채점 후 오답 정리"],
+  ["금","오답 정리","<a href=\"#review\">복 탭</a> 다시 풀기"],
+  ["토","기출 3회분 RC를 시험 시간처럼 풀기","채점 후 마지막 점검"],
+  ["일","총복습: <a href=\"#review\">복 탭</a>과 문법 카드","쉬엄쉬엄, 푹 자기",1]
+ ]}
+];
+function renderPlan(){
+  var h = '<p class="rule"><b>하루 2시간</b>: 암기 30분 + 문제집 풀이 50분 + 복습 40분<br><b>하루 3시간</b>: 풀이 +40분, 복습 +20분<br>일요일은 새로 배우지 않고 복습 중심으로 가볍게 합니다. 문제집은 공식 기출이나 구입한 교재를 쓰세요.</p>';
+  PLAN.forEach(function(w){
+    h += '<h4>'+w.t+'</h4>';
+    w.rows.forEach(function(r){
+      h += '<div class="prow'+(r[3]?' light':'')+'"><b>'+r[0]+'</b><div>'+r[1]+'<small>'+r[2]+'</small></div></div>';
+    });
+  });
+  document.getElementById("plan").innerHTML = h;
+}
+function applyFuri(){
+  var on = state.furi !== false;
+  document.body.classList.toggle("nofuri", !on);
+  document.getElementById("furibtn").setAttribute("aria-pressed", String(on));
+}
+document.getElementById("furibtn").addEventListener("click", function(){
+  state.furi = (state.furi === false); save(); applyFuri();
+});
+applyFuri();
+cur = fromHash();
+renderPlan();
+renderNav(); renderProgress(); if(cur===0) renderReview(); else renderPanel();
+</script>
