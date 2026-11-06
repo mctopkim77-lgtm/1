@@ -7,6 +7,7 @@ python3 -I lemmas.py > /dev/null 2>&1          # readings of every word -> lemma
 cp before_detail.html out.html                  # static page shell
 JPT_OUT=out.html python3 -I build3.py           # data, furigana, explanations -> out.html
 python3 -I post_patch.py out.html               # manual patches (see post_patch.py)
+python3 -I words_patch.py out.html              # 단어 tab (words_ui.js / words_ui.css)
 python3 -I - <<'PY'
 import re
 s = open('out.html', encoding='utf8').read()

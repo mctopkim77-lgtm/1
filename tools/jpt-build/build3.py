@@ -69,6 +69,8 @@ def opt_meaning(opt, day, correct, q=None):
     return None
 
 unmatched = {}
+USED = {}   # word -> set of day numbers
+QW = {}     # 'day-idx' -> main words of that question
 
 def word_items(text):
     text = strip_tags(text)
@@ -118,10 +120,13 @@ def build_x(d, i, q):
             if w not in words: words.append(w)
     if words:
         parts.append('<h5>단어</h5><ul class="wl">%s</ul>' % ''.join('<li><span class="jw">%s</span> %s</li>' % (ruby_word(w), GLOSS[w][1]) for w in words))
+    QW['%d-%d' % (n, i)] = list(words)
+    for w in words: USED.setdefault(w, set()).add(n)
     if ctx:
         cw = []
         for w in word_items(ctx):
             if w not in words and w not in cw: cw.append(w)
+        for w in cw: USED.setdefault(w, set()).add(n)
         if cw:
             parts.append('<details class="wd"><summary>지문 단어</summary><ul class="wl">%s</ul></details>' % ''.join('<li><span class="jw">%s</span> %s</li>' % (ruby_word(w), GLOSS[w][1]) for w in cw))
     # memory point from card of correct option
@@ -145,6 +150,23 @@ for d in days:
     for i, q in enumerate(d['quiz']):
         q['x'] = build_x(d, i, q)
 
+# ---- word-card data (for the 단어 tab) ----
+WL = {}
+for w, ds in USED.items():
+    WL[w] = [GLOSS[w][0], GLOSS[w][1], set(ds)]
+for d in days:
+    for c in d['cards']:
+        m = re.fullmatch(r'([^（]+)（([ぁ-ん]+)）', strip_tags(c['p']).strip())
+        if m and furi.HAS_KANJI.search(m.group(1)):
+            w = m.group(1)
+            if w in WL: WL[w][2].add(d['n'])
+            else: WL[w] = [m.group(2), c['m'], {d['n']}]
+order = sorted(WL, key=lambda w: (min(WL[w][2]), w))
+idx = {w: i for i, w in enumerate(order)}
+json.dump({'words': [[w, WL[w][0], WL[w][1], sorted(WL[w][2])] for w in order],
+           'qw': {k: [idx[w] for w in v if w in idx] for k, v in QW.items() if v}},
+          open('words.json', 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))
+print('word cards:', len(order), 'without reading:', [w for w in order if not WL[w][0]])
 print('unmatched options:', len(unmatched), json.dumps(unmatched, ensure_ascii=False))
 json.dump(days, open('days_new3.json', 'w', encoding='utf8'), ensure_ascii=False)
 
@@ -197,7 +219,7 @@ rep("""  var h = '<div class="q" data-qi="'+i+'" data-day="'+dn+'"><p class="qn"
   h += '<p class="qt">'+qs.replace(/\\n/g,"<br>")+'</p><div class="opts">';""")
 rep(".ol{font-family", ".inst{margin:0 0 8px;font-family:var(--f-jp);font-size:12.5px;line-height:1.8;color:var(--muted)}\n.ol{font-family")
 rep('<li><span>Part 5</span>24~26일 정답 찾기(한자 읽기·표기·같은 뜻·용법), 27일 공란 메우기 고급 문법</li>',
-    '<li><span>Part 5</span>24~26일 정답 찾기(한자 읽기·표기·같은 뜻·용법)</li>\\n        <li><span>Part 7</span>27일 고급 문법, 28일 활용형·의태어 (실제 기출은 이 코스보다 어휘 수준이 높습니다)</li>')
+    '<li><span>Part 5</span>24~26일 정답 찾기(한자 읽기·표기·같은 뜻·용법)</li>\n        <li><span>Part 7</span>27일 고급 문법, 28일 활용형·의태어 (실제 기출은 이 코스보다 어휘 수준이 높습니다)</li>')
 rep('["수","오답 유형별 보강","어휘·문법 카드 재암기"]',
     '["수","<a href=\\"#day-27\\">27일차</a>·<a href=\\"#day-28\\">28일차</a> 고급 문법·활용형","오답 유형별 보강, 카드 재암기"]')
 rep('<details class="ov">\n      <summary>2주 전체 일정 보기</summary>', """<details class="ov">
