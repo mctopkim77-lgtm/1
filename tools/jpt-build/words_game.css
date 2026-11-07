@@ -1,0 +1,65 @@
+/* ---- 단어 게임 ---- */
+.ghub{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0 4px}
+.glv{display:flex;align-items:center;gap:10px}
+.glv b{font-size:18px;color:var(--accent)}
+.glv span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.gbar,.gprog,.gtime,.gtimer{flex:1;height:8px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
+.gbar i,.gprog i,.gtimer i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.gstat{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.gstat b{color:var(--fg)}
+.gbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.gbig{min-height:64px;border-radius:12px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px;padding:8px 6px;line-height:1.3}
+.gbig small{display:block;font-weight:400;font-size:11.5px;margin-top:3px;opacity:.9}
+.gbig.alt{background:var(--surface);color:var(--accent)}
+.gwrap{padding-top:8px}
+.gtop{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-bottom:8px}
+.gtop span{font-weight:700}
+.gheart{color:var(--bad);font-size:18px;letter-spacing:2px}
+.gx{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:16px}
+.gprog{height:6px;margin-bottom:12px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center}
+.gtag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px}
+.gw{margin:14px 0 4px;font-family:var(--f-jp);font-weight:700;font-size:calc(40px * var(--fs));line-height:1.3;overflow-wrap:anywhere}
+.gr{margin:4px 0 0;min-height:26px;font-family:var(--f-jp);font-size:calc(18px * var(--fs));color:var(--accent)}
+.gm{margin:6px 0 0;font-size:20px;font-weight:700;overflow-wrap:anywhere}
+.ghint{margin:6px 0 12px;font-size:13px;color:var(--muted)}
+.gtime{margin:0 0 14px}
+.gtime i{width:0;animation:gfill 2s linear forwards}
+@keyframes gfill{to{width:100%}}
+.gtimer{display:block;flex:none;margin:6px 0 14px}
+.gtimer i{width:100%;transition:width .1s linear}
+.gtimer i.low{background:var(--bad)}
+.gshow{width:100%;min-height:52px;border-radius:12px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px}
+.gshow:disabled{background:var(--accent-soft);color:var(--muted);border-color:var(--line)}
+.grate{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:16px}
+.grate button{min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:15px}
+.grate .wno{color:var(--bad);border-color:var(--bad)}
+.grate .gmid{color:var(--fg)}
+.grate .wyes{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.gopts{display:grid;gap:8px}
+.gopt{min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:8px 12px;font-size:15px;text-align:center;overflow-wrap:anywhere}
+.gopt:active:not(:disabled){background:var(--accent-soft)}
+.gopt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:700}
+.gopt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.gfb{margin:12px 0 0;font-weight:700}
+.gfb.ok{color:var(--ok)}
+.gfb.bad{color:var(--bad)}
+.gend .gbigt{margin:12px 0 4px;font-size:26px;font-weight:700}
+.gsum{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.gsum b{color:var(--fg)}
+.gup{margin:10px 0 0;font-weight:700;color:var(--ok)}
+.gnote{margin:14px 0 6px;font-size:13px;color:var(--muted)}
+.gbad{list-style:none;margin:0;padding:0;text-align:left}
+.gbad li{padding:8px 0;border-top:1px solid var(--line);font-size:14px;overflow-wrap:anywhere}
+.gbad li b{font-family:var(--f-jp);font-size:calc(17px * var(--fs))}
+.gbad li span{font-family:var(--f-jp);color:var(--accent);margin-right:4px}
+/* ---- 기기 옮기기 ---- */
+.sync{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.sync h3{margin:0 0 4px;font-size:15px}
+.sync p{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.sync textarea{width:100%;height:64px;box-sizing:border-box;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:12px/1.4 monospace;padding:8px;resize:vertical}
+.syncbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.syncbtns button{min-height:46px;border-radius:10px;border:1px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;font-size:13.5px;padding:4px 6px}
+.syncbtns button#syncout{background:var(--accent);color:var(--accent-ink)}
+.syncmsg{margin:10px 0 0 !important;color:var(--ok) !important;font-weight:700}
+.syncmsg.bad{color:var(--bad) !important}

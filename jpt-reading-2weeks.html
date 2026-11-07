@@ -164,6 +164,71 @@ h3{font-size:13px;letter-spacing:.06em;color:var(--muted);margin:26px 0 10px;dis
 .wbtn .wno{color:var(--bad);border-color:var(--bad)}
 .wbtn .wyes{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
 .wmore{width:100%;min-height:46px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:700}
+/* ---- 단어 게임 ---- */
+.ghub{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0 4px}
+.glv{display:flex;align-items:center;gap:10px}
+.glv b{font-size:18px;color:var(--accent)}
+.glv span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.gbar,.gprog,.gtime,.gtimer{flex:1;height:8px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
+.gbar i,.gprog i,.gtimer i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.gstat{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.gstat b{color:var(--fg)}
+.gbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.gbig{min-height:64px;border-radius:12px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px;padding:8px 6px;line-height:1.3}
+.gbig small{display:block;font-weight:400;font-size:11.5px;margin-top:3px;opacity:.9}
+.gbig.alt{background:var(--surface);color:var(--accent)}
+.gwrap{padding-top:8px}
+.gtop{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-bottom:8px}
+.gtop span{font-weight:700}
+.gheart{color:var(--bad);font-size:18px;letter-spacing:2px}
+.gx{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:16px}
+.gprog{height:6px;margin-bottom:12px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center}
+.gtag{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px}
+.gw{margin:14px 0 4px;font-family:var(--f-jp);font-weight:700;font-size:calc(40px * var(--fs));line-height:1.3;overflow-wrap:anywhere}
+.gr{margin:4px 0 0;min-height:26px;font-family:var(--f-jp);font-size:calc(18px * var(--fs));color:var(--accent)}
+.gm{margin:6px 0 0;font-size:20px;font-weight:700;overflow-wrap:anywhere}
+.ghint{margin:6px 0 12px;font-size:13px;color:var(--muted)}
+.gtime{margin:0 0 14px}
+.gtime i{width:0;animation:gfill 2s linear forwards}
+@keyframes gfill{to{width:100%}}
+.gtimer{display:block;flex:none;margin:6px 0 14px}
+.gtimer i{width:100%;transition:width .1s linear}
+.gtimer i.low{background:var(--bad)}
+.gshow{width:100%;min-height:52px;border-radius:12px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px}
+.gshow:disabled{background:var(--accent-soft);color:var(--muted);border-color:var(--line)}
+.grate{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:16px}
+.grate button{min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:15px}
+.grate .wno{color:var(--bad);border-color:var(--bad)}
+.grate .gmid{color:var(--fg)}
+.grate .wyes{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.gopts{display:grid;gap:8px}
+.gopt{min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:8px 12px;font-size:15px;text-align:center;overflow-wrap:anywhere}
+.gopt:active:not(:disabled){background:var(--accent-soft)}
+.gopt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:700}
+.gopt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.gfb{margin:12px 0 0;font-weight:700}
+.gfb.ok{color:var(--ok)}
+.gfb.bad{color:var(--bad)}
+.gend .gbigt{margin:12px 0 4px;font-size:26px;font-weight:700}
+.gsum{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.gsum b{color:var(--fg)}
+.gup{margin:10px 0 0;font-weight:700;color:var(--ok)}
+.gnote{margin:14px 0 6px;font-size:13px;color:var(--muted)}
+.gbad{list-style:none;margin:0;padding:0;text-align:left}
+.gbad li{padding:8px 0;border-top:1px solid var(--line);font-size:14px;overflow-wrap:anywhere}
+.gbad li b{font-family:var(--f-jp);font-size:calc(17px * var(--fs))}
+.gbad li span{font-family:var(--f-jp);color:var(--accent);margin-right:4px}
+/* ---- 기기 옮기기 ---- */
+.sync{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.sync h3{margin:0 0 4px;font-size:15px}
+.sync p{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.sync textarea{width:100%;height:64px;box-sizing:border-box;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:12px/1.4 monospace;padding:8px;resize:vertical}
+.syncbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.syncbtns button{min-height:46px;border-radius:10px;border:1px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;font-size:13.5px;padding:4px 6px}
+.syncbtns button#syncout{background:var(--accent);color:var(--accent-ink)}
+.syncmsg{margin:10px 0 0 !important;color:var(--ok) !important;font-weight:700}
+.syncmsg.bad{color:var(--bad) !important}
 </style>
 
 <div class="fsfloat" role="group" aria-label="일본어 글자 크기"><button type="button" class="fsdown" aria-label="일본어 글자 작게">가−</button><button type="button" class="fsup" aria-label="일본어 글자 크게">가+</button></div>
@@ -207,6 +272,7 @@ h3{font-size:13px;letter-spacing:.06em;color:var(--muted);margin:26px 0 10px;dis
 
   <div class="nav"><div class="days" id="days" role="tablist" aria-label="일차 선택"></div></div>
   <main id="panel"></main>
+  <div class="sync" id="sync"><h3>기기 옮기기 (PC ↔ 폰)</h3><p>기록은 기기마다 따로 저장돼요. 옮기려면 한쪽에서 ‘기록 복사’, 다른 쪽에서 코드를 아래 칸에 붙여넣고 ‘불러오기’를 누르세요.</p><textarea id="synccode" aria-label="기록 코드" placeholder="여기에 기록 코드(JPT1.…)를 붙여넣기" spellcheck="false"></textarea><div class="syncbtns"><button type="button" id="syncout">기록 복사</button><button type="button" id="syncin">붙여넣은 기록 불러오기</button></div><p class="syncmsg" id="syncmsg" aria-live="polite"></p></div>
   <div class="reset"><button id="reset" type="button">진행 기록 지우기</button></div>
 </div>
 
@@ -333,18 +399,18 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>선생님이 가르쳐 준 덕분에 시험에 합격했다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>教<rt>おし</rt></ruby>える</span> 가르치다</li><li><span class=\"jw\"><ruby>試験<rt>しけん</rt></ruby></span> 시험</li><li><span class=\"jw\"><ruby>合格<rt>ごうかく</rt></ruby></span> 합격</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>医者<rt>いしゃ</rt></ruby>に　(B)なる　(C)ように、(D)<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>している。",
+    "q": "(A)<ruby>日本<rt>にほん</rt></ruby>へ　(B)<ruby>留学<rt>りゅうがく</rt></ruby>する　(C)ように、(D)<ruby>貯金<rt>ちょきん</rt></ruby>している。",
     "opts": [
-     "<ruby>医者<rt>いしゃ</rt></ruby>に",
-     "なる",
+     "<ruby>日本<rt>にほん</rt></ruby>へ",
+     "<ruby>留学<rt>りゅうがく</rt></ruby>する",
      "ように",
-     "<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>している"
+     "<ruby>貯金<rt>ちょきん</rt></ruby>している"
     ],
     "a": 2,
-    "e": "의지로 하는 목적은 ‘<b>ために</b>’.",
+    "e": "내 의지로 하는 행동(<ruby>留学<rt>りゅうがく</rt></ruby>する)의 목적은 ‘<b>ために</b>’예요. ‘ように’는 ‘なる·できる’처럼 마음대로 안 되는 말 앞에 써요.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>의사가 되기 위해 매일 공부하고 있다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>医者<rt>いしゃ</rt></ruby></span> 의사</li><li><span class=\"jw\"><ruby>毎日<rt>まいにち</rt></ruby></span> 매일</li><li><span class=\"jw\"><ruby>勉強<rt>べんきょう</rt></ruby></span> 공부</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>일본에 유학하기 위해 저금하고 있다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>日本<rt>にほん</rt></ruby></span> 일본</li><li><span class=\"jw\"><ruby>留学<rt>りゅうがく</rt></ruby></span> 유학</li><li><span class=\"jw\"><ruby>貯金<rt>ちょきん</rt></ruby></span> 저금</li></ul></div>"
    },
    {
     "q": "(A)<ruby>雨<rt>あめ</rt></ruby>が　(B)<ruby>降<rt>ふ</rt></ruby>った　(C)せい、(D)<ruby>試合<rt>しあい</rt></ruby>が<ruby>中止<rt>ちゅうし</rt></ruby>になった。",
@@ -375,14 +441,14 @@ var DAYS = [
    {
     "q": "<ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby>をしない＿＿＿＿、<ruby>前<rt>まえ</rt></ruby>の<ruby>晩<rt>ばん</rt></ruby>に<ruby>準備<rt>じゅんび</rt></ruby>する。",
     "opts": [
-     "ために",
+     "ものの",
      "ように",
      "だけに",
      "せいで"
     ],
     "a": 1,
-    "e": "‘しない’처럼 부정 표현 뒤에는 <b>ように</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>깜빡 두고 오는 물건이 없도록 전날 밤에 준비한다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> ために — ~하기 위해 (의지 동사) / ~때문에</li><li class=\"ok\"><b>(B)</b> ✓ ように — ~하도록 (가능·부정·무의지)</li><li class=\"\"><b>(C)</b> だけに — ~인 만큼</li><li class=\"\"><b>(D)</b> せいで — ~탓에 (나쁜 결과)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby></span> 깜빡 두고 온 물건</li><li><span class=\"jw\"><ruby>前<rt>まえ</rt></ruby></span> 전, 앞</li><li><span class=\"jw\"><ruby>晩<rt>ばん</rt></ruby></span> 저녁, 밤</li><li><span class=\"jw\"><ruby>準備<rt>じゅんび</rt></ruby></span> 준비</li></ul><h5>기억 포인트</h5><p>~ない, 가능형, 상태 앞에는 ように.</p></div>"
+    "e": "‘~하지 않도록’처럼 어떤 상태가 되게 하려는 목적은 <b>ように</b>.",
+    "x": "<div class=\"xt\"><h5>해석</h5><p>깜빡 두고 오는 물건이 없도록 전날 밤에 준비한다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> ものの — ~이긴 하지만</li><li class=\"ok\"><b>(B)</b> ✓ ように — ~하도록 (가능·부정·무의지)</li><li class=\"\"><b>(C)</b> だけに — ~인 만큼</li><li class=\"\"><b>(D)</b> せいで — ~탓에 (나쁜 결과)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby></span> 깜빡 두고 온 물건</li><li><span class=\"jw\"><ruby>前<rt>まえ</rt></ruby></span> 전, 앞</li><li><span class=\"jw\"><ruby>晩<rt>ばん</rt></ruby></span> 저녁, 밤</li><li><span class=\"jw\"><ruby>準備<rt>じゅんび</rt></ruby></span> 준비</li></ul><h5>기억 포인트</h5><p>~ない, 가능형, 상태 앞에는 ように.</p></div>"
    },
    {
     "q": "うっかり<ruby>鍵<rt>かぎ</rt></ruby>を＿＿＿＿ばかりに、<ruby>家<rt>いえ</rt></ruby>に<ruby>入<rt>い</rt></ruby>れなかった。",
@@ -571,14 +637,14 @@ var DAYS = [
    {
     "q": "<ruby>今<rt>いま</rt></ruby>さら<ruby>謝<rt>あやま</rt></ruby>った＿＿＿＿、<ruby>許<rt>ゆる</rt></ruby>してもらえないだろう。",
     "opts": [
-     "ものの",
+     "くせに",
      "つつ",
      "ながら",
      "ところで"
     ],
     "a": 3,
     "e": "뒤가 ‘소용없다’ 느낌이면 <b>~たところで</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>이제 와서 사과해 봤자 용서받지 못할 것이다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> ものの — ~이긴 하지만</li><li class=\"\"><b>(B)</b> つつ — ~하면서 (동시 진행)</li><li class=\"\"><b>(C)</b> ながら — ~이면서도</li><li class=\"ok\"><b>(D)</b> ✓ ところで — 그런데 (화제 전환)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby>さら</span> 이제 와서</li><li><span class=\"jw\"><ruby>謝<rt>あやま</rt></ruby>る</span> 사과하다</li><li><span class=\"jw\"><ruby>許<rt>ゆる</rt></ruby>す</span> 용서하다</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>이제 와서 사과해 봤자 용서받지 못할 것이다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> くせに — ~주제에 (비난)</li><li class=\"\"><b>(B)</b> つつ — ~하면서 (동시 진행)</li><li class=\"\"><b>(C)</b> ながら — ~이면서도</li><li class=\"ok\"><b>(D)</b> ✓ ところで — 그런데 (화제 전환)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby>さら</span> 이제 와서</li><li><span class=\"jw\"><ruby>謝<rt>あやま</rt></ruby>る</span> 사과하다</li><li><span class=\"jw\"><ruby>許<rt>ゆる</rt></ruby>す</span> 용서하다</li></ul></div>"
    },
    {
     "q": "<ruby>免許<rt>めんきょ</rt></ruby>は＿＿＿＿ものの、まだ<ruby>一度<rt>いちど</rt></ruby>も<ruby>運転<rt>うんてん</rt></ruby>していない。",
@@ -922,18 +988,18 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>그는 조심성이 많은 사람이다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> 要心 — (일반적으로 쓰지 않는 표기)</li><li class=\"\"><b>(B)</b> 用身 — (일반적으로 쓰지 않는 표기)</li><li class=\"\"><b>(C)</b> 容心 — (일반적으로 쓰지 않는 표기)</li><li class=\"ok\"><b>(D)</b> ✓ 用心 — 用心 — 조심</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼<rt>かれ</rt></ruby></span> 그</li><li><span class=\"jw\"><ruby>深<rt>ぶか</rt></ruby>い</span> 깊다</li><li><span class=\"jw\"><ruby>人<rt>ひと</rt></ruby></span> 사람</li><li><span class=\"jw\"><ruby>用心<rt>ようじん</rt></ruby></span> 조심</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>学生<rt>がくせい</rt></ruby>は　(B)<ruby>勉強<rt>べんきょう</rt></ruby>する　(C)はず　(D)だ。",
+    "q": "(A)<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>では　(B)<ruby>明日<rt>あした</rt></ruby>は　(C)<ruby>雨<rt>あめ</rt></ruby>が　(D)<ruby>降<rt>ふ</rt></ruby>るべきだ。",
     "opts": [
-     "<ruby>学生<rt>がくせい</rt></ruby>は",
-     "<ruby>勉強<rt>べんきょう</rt></ruby>する",
-     "はず",
-     "だ"
+     "<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>では",
+     "<ruby>明日<rt>あした</rt></ruby>は",
+     "<ruby>雨<rt>あめ</rt></ruby>が",
+     "<ruby>降<rt>ふ</rt></ruby>るべきだ"
     ],
-    "a": 2,
-    "e": "‘해야 한다’ 는 <b>べきだ</b>.",
+    "a": 3,
+    "e": "비가 오는 건 사람이 정할 수 없어서 ‘べき’(~해야 한다)는 안 맞아요. 예상은 ‘<ruby>降<rt>ふ</rt></ruby>る<b>はず</b>だ’.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>학생은 공부해야 한다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>学生<rt>がくせい</rt></ruby></span> 학생</li><li><span class=\"jw\"><ruby>勉強<rt>べんきょう</rt></ruby></span> 공부</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>일기예보로는 내일은 비가 올 것이다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>天気<rt>てんき</rt></ruby></span> 날씨</li><li><span class=\"jw\"><ruby>予報<rt>よほう</rt></ruby></span> 예보</li><li><span class=\"jw\"><ruby>明日<rt>あした</rt></ruby></span> 내일</li><li><span class=\"jw\"><ruby>雨<rt>あめ</rt></ruby></span> 비</li><li><span class=\"jw\"><ruby>降<rt>ふ</rt></ruby>る</span> (비·눈이) 내리다</li></ul></div>"
    },
    {
     "q": "(A)<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>に　(B)よると　(C)<ruby>明日<rt>あした</rt></ruby>は　(D)<ruby>雨<rt>あめ</rt></ruby>だそうに。",
@@ -950,21 +1016,21 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>일기예보에 따르면 내일은 비라고 한다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>天気<rt>てんき</rt></ruby></span> 날씨</li><li><span class=\"jw\"><ruby>予報<rt>よほう</rt></ruby></span> 예보</li><li><span class=\"jw\"><ruby>明日<rt>あした</rt></ruby></span> 내일</li><li><span class=\"jw\"><ruby>雨<rt>あめ</rt></ruby></span> 비</li></ul></div>"
    },
    {
-    "q": "(A)この　(B)<ruby>料理<rt>りょうり</rt></ruby>は　(C)おいしい　(D)そうに<ruby>見<rt>み</rt></ruby>える。",
+    "q": "(A)この　(B)<ruby>料理<rt>りょうり</rt></ruby>は　(C)おいしいそうに　(D)<ruby>見<rt>み</rt></ruby>える。",
     "opts": [
      "この",
      "<ruby>料理<rt>りょうり</rt></ruby>は",
-     "おいしい",
-     "そうに<ruby>見<rt>み</rt></ruby>える"
+     "おいしいそうに",
+     "<ruby>見<rt>み</rt></ruby>える"
     ],
     "a": 2,
-    "e": "양태는 어간+そう. ‘おいし<b>そう</b>’.",
+    "e": "い형용사에 そう를 붙일 때는 끝의 い를 떼요. ‘おいしい’ → ‘おいし<b>そう</b>に’.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
     "x": "<div class=\"xt\"><h5>해석</h5><p>이 요리는 맛있어 보인다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>料理<rt>りょうり</rt></ruby></span> 요리</li><li><span class=\"jw\"><ruby>見<rt>み</rt></ruby>える</span> 보이다</li></ul></div>"
    },
    {
-    "q": "A：<ruby>彼<rt>かれ</rt></ruby>、フランスに5<ruby>年<rt>ねん</rt></ruby><ruby>住<rt>す</rt></ruby>んでいたんだって。\nB：ああ、フランス<ruby>語<rt>ご</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>な＿＿＿＿ね。",
+    "q": "A：<ruby>彼<rt>かれ</rt></ruby>、フランスに5<ruby>年<rt>ねん</rt></ruby><ruby>住<rt>す</rt></ruby>んでいたんだって。\nB：ああ、<ruby>道理<rt>どうり</rt></ruby>でフランス<ruby>語<rt>ご</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>な＿＿＿＿ね。",
     "opts": [
      "はず",
      "べき",
@@ -973,7 +1039,7 @@ var DAYS = [
     ],
     "a": 2,
     "e": "사실을 듣고 ‘그래서 그렇구나’ 하고 납득하는 말은 <b>わけだ</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>A: 그 사람, 프랑스에 5년 살았대. B: 아, 프랑스어를 잘하는 게 당연하네.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> はず — ~일 것이다 (당연한 예상)</li><li class=\"\"><b>(B)</b> べき — ~해야 한다 (의무)</li><li class=\"ok\"><b>(C)</b> ✓ わけだ — 그러니까 ~인 거구나 (납득·결론)</li><li class=\"\"><b>(D)</b> らしい — ~라는 것 같다 (전해 들음) / ~답다</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼<rt>かれ</rt></ruby></span> 그</li><li><span class=\"jw\"><ruby>年<rt>ねん</rt></ruby></span> 해, 년</li><li><span class=\"jw\"><ruby>住<rt>す</rt></ruby>む</span> 살다</li><li><span class=\"jw\"><ruby>フランス語<rt>フランスご</rt></ruby></span> 프랑스어</li><li><span class=\"jw\"><ruby>上手<rt>じょうず</rt></ruby></span> 능숙함, 잘함</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>A: 그 사람, 프랑스에 5년 살았대. B: 아, 어쩐지 프랑스어를 잘하더라니.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> はず — ~일 것이다 (당연한 예상)</li><li class=\"\"><b>(B)</b> べき — ~해야 한다 (의무)</li><li class=\"ok\"><b>(C)</b> ✓ わけだ — 그러니까 ~인 거구나 (납득·결론)</li><li class=\"\"><b>(D)</b> らしい — ~라는 것 같다 (전해 들음) / ~답다</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼<rt>かれ</rt></ruby></span> 그</li><li><span class=\"jw\"><ruby>年<rt>ねん</rt></ruby></span> 해, 년</li><li><span class=\"jw\"><ruby>住<rt>す</rt></ruby>む</span> 살다</li><li><span class=\"jw\"><ruby>フランス語<rt>フランスご</rt></ruby></span> 프랑스어</li><li><span class=\"jw\"><ruby>上手<rt>じょうず</rt></ruby></span> 능숙함, 잘함</li></ul></div>"
    },
    {
     "q": "<ruby>学生<rt>がくせい</rt></ruby>は<ruby>勉強<rt>べんきょう</rt></ruby>する＿＿＿＿だ。",
@@ -1369,14 +1435,14 @@ var DAYS = [
    {
     "q": "<ruby>風邪<rt>かぜ</rt></ruby>＿＿＿＿で、<ruby>今日<rt>きょう</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>帰<rt>かえ</rt></ruby>ります。",
     "opts": [
-     "がち",
+     "だらけ",
      "つつある",
      "<ruby>気味<rt>きみ</rt></ruby>",
      "っぽい"
     ],
     "a": 2,
     "e": "명사 뒤에 붙어 ‘약간 ~한 기운’은 <b><ruby>気味<rt>きみ</rt></ruby></b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>감기 기운이 있어서 오늘은 일찍 돌아가겠습니다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> がち — ~하기 쉽다 (나쁜 경향)</li><li class=\"\"><b>(B)</b> つつある — 점점 ~하고 있다</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>気味<rt>きみ</rt></ruby> — ~한 기미, 약간 ~한 상태</li><li class=\"\"><b>(D)</b> っぽい — ~스러운, ~하기 쉬운</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>風邪<rt>かぜ</rt></ruby></span> 감기</li><li><span class=\"jw\"><ruby>今日<rt>きょう</rt></ruby></span> 오늘</li><li><span class=\"jw\"><ruby>早<rt>はや</rt></ruby>い</span> 이르다, 빠르다</li><li><span class=\"jw\"><ruby>帰<rt>かえ</rt></ruby>る</span> 돌아가다</li><li><span class=\"jw\"><ruby>気味<rt>きみ</rt></ruby></span> ~한 기미</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>감기 기운이 있어서 오늘은 일찍 돌아가겠습니다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> だらけ — ~투성이 (예: 泥だらけ). ‘風邪’ 뒤에는 쓰지 않음</li><li class=\"\"><b>(B)</b> つつある — 점점 ~하고 있다</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>気味<rt>きみ</rt></ruby> — ~한 기미, 약간 ~한 상태</li><li class=\"\"><b>(D)</b> っぽい — ~스러운, ~하기 쉬운</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>風邪<rt>かぜ</rt></ruby></span> 감기</li><li><span class=\"jw\"><ruby>今日<rt>きょう</rt></ruby></span> 오늘</li><li><span class=\"jw\"><ruby>早<rt>はや</rt></ruby>い</span> 이르다, 빠르다</li><li><span class=\"jw\"><ruby>帰<rt>かえ</rt></ruby>る</span> 돌아가다</li><li><span class=\"jw\"><ruby>気味<rt>きみ</rt></ruby></span> ~한 기미</li></ul></div>"
    },
    {
     "q": "<ruby>社長<rt>しゃちょう</rt></ruby>＿＿＿＿、<ruby>社員<rt>しゃいん</rt></ruby><ruby>全員<rt>ぜんいん</rt></ruby>が<ruby>参加<rt>さんか</rt></ruby>した。",
@@ -1570,7 +1636,7 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>제가 자료를 들어 드리겠습니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>私<rt>わたし</rt></ruby></span> 저, 나</li><li><span class=\"jw\"><ruby>資料<rt>しりょう</rt></ruby></span> 자료</li><li><span class=\"jw\"><ruby>持<rt>も</rt></ruby>つ</span> 들다, 가지다</li></ul></div>"
    },
    {
-    "q": "<ruby>先生<rt>せんせい</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>に＿＿＿＿ますか。",
+    "q": "<ruby>先生<rt>せんせい</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>に<ruby>学校<rt>がっこう</rt></ruby>に＿＿＿＿ますか。",
     "opts": [
      "いらっしゃい",
      "<ruby>参<rt>まい</rt></ruby>り",
@@ -1579,7 +1645,7 @@ var DAYS = [
     ],
     "a": 0,
     "e": "선생님의 행동이니 존경어 <b>いらっしゃる</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>선생님은 몇 시에 오십니까?</p><h5>보기 뜻</h5><ul><li class=\"ok\"><b>(A)</b> ✓ いらっしゃい — (いらっしゃる의 ます형) 계시다·가시다·오시다 (존경)</li><li class=\"\"><b>(B)</b> <ruby>参<rt>まい</rt></ruby>り — (参る의 ます형) 가다·오다의 겸양어</li><li class=\"\"><b>(C)</b> <ruby>伺<rt>うかが</rt></ruby>い — (伺う의 ます형) 찾아뵙다 (겸양)</li><li class=\"\"><b>(D)</b> おっしゃい — (おっしゃる의 ます형) 말씀하시다 (존경)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>何時<rt>なんじ</rt></ruby></span> 몇 시</li><li><span class=\"jw\"><ruby>参<rt>まい</rt></ruby>り</span> (参る의 ます형) 가다·오다의 겸양어</li><li><span class=\"jw\"><ruby>伺<rt>うかが</rt></ruby>う</span> 찾아뵙다, 여쭙다 (겸양어)</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>선생님은 몇 시에 학교에 오십니까?</p><h5>보기 뜻</h5><ul><li class=\"ok\"><b>(A)</b> ✓ いらっしゃい — (いらっしゃる의 ます형) 계시다·가시다·오시다 (존경)</li><li class=\"\"><b>(B)</b> <ruby>参<rt>まい</rt></ruby>り — (参る의 ます형) 가다·오다의 겸양어</li><li class=\"\"><b>(C)</b> <ruby>伺<rt>うかが</rt></ruby>い — (伺う의 ます형) 찾아뵙다 (겸양)</li><li class=\"\"><b>(D)</b> おっしゃい — (おっしゃる의 ます형) 말씀하시다 (존경)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>何時<rt>なんじ</rt></ruby></span> 몇 시</li><li><span class=\"jw\"><ruby>学校<rt>がっこう</rt></ruby></span> 학교</li><li><span class=\"jw\"><ruby>参<rt>まい</rt></ruby>り</span> (参る의 ます형) 가다·오다의 겸양어</li><li><span class=\"jw\"><ruby>伺<rt>うかが</rt></ruby>う</span> 찾아뵙다, 여쭙다 (겸양어)</li></ul></div>"
    },
    {
     "q": "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>、こちらのお<ruby>料理<rt>りょうり</rt></ruby>を＿＿＿＿ください。",
@@ -1776,32 +1842,32 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 전철이 멈춰 있어서 회사에 늦었습니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>電車<rt>でんしゃ</rt></ruby></span> 전철</li><li><span class=\"jw\"><ruby>止<rt>と</rt></ruby>める</span> 멈추다 (타동사)</li><li><span class=\"jw\"><ruby>会社<rt>かいしゃ</rt></ruby></span> 회사</li><li><span class=\"jw\"><ruby>遅<rt>おく</rt></ruby>れる</span> 늦다</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>先生<rt>せんせい</rt></ruby>は　(B)<ruby>学生<rt>がくせい</rt></ruby>に　(C)<ruby>本<rt>ほん</rt></ruby>を　(D)<ruby>貸<rt>か</rt></ruby>してもらいました。",
+    "q": "(A)<ruby>私<rt>わたし</rt></ruby>は　(B)<ruby>母<rt>はは</rt></ruby>に　(C)<ruby>花<rt>はな</rt></ruby>を　(D)くれました。",
     "opts": [
-     "<ruby>先生<rt>せんせい</rt></ruby>は",
-     "<ruby>学生<rt>がくせい</rt></ruby>に",
-     "<ruby>本<rt>ほん</rt></ruby>を",
-     "<ruby>貸<rt>か</rt></ruby>してもらいました。"
+     "<ruby>私<rt>わたし</rt></ruby>は",
+     "<ruby>母<rt>はは</rt></ruby>に",
+     "<ruby>花<rt>はな</rt></ruby>を",
+     "くれました。"
     ],
     "a": 3,
-    "e": "선생님이 학생에게 빌려준 것이라 ‘<ruby>貸<rt>か</rt></ruby>し<b>ました</b>’ 가 맞습니다.",
+    "e": "내가 어머니께 드린 것이라 ‘くれました’가 아니라 ‘<b>あげました</b>’. (くれる는 남이 나에게 줄 때)",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 선생님은 학생에게 책을 빌려주셨습니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>学生<rt>がくせい</rt></ruby></span> 학생</li><li><span class=\"jw\"><ruby>本<rt>ほん</rt></ruby></span> 책</li><li><span class=\"jw\"><ruby>貸<rt>か</rt></ruby>す</span> 빌려주다</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 나는 어머니께 꽃을 드렸다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>私<rt>わたし</rt></ruby></span> 저, 나</li><li><span class=\"jw\"><ruby>母<rt>はは</rt></ruby></span> (자기) 어머니</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>部長<rt>ぶちょう</rt></ruby>が　(B)<ruby>明日<rt>あした</rt></ruby>　(C)<ruby>会社<rt>かいしゃ</rt></ruby>に　(D)<ruby>参<rt>まい</rt></ruby>ります。",
+    "q": "(A)お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>が　(B)<ruby>明日<rt>あした</rt></ruby>　(C)<ruby>会社<rt>かいしゃ</rt></ruby>に　(D)<ruby>参<rt>まい</rt></ruby>ります。",
     "opts": [
-     "<ruby>部長<rt>ぶちょう</rt></ruby>が",
+     "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>が",
      "<ruby>明日<rt>あした</rt></ruby>",
      "<ruby>会社<rt>かいしゃ</rt></ruby>に",
      "<ruby>参<rt>まい</rt></ruby>ります。"
     ],
     "a": 3,
-    "e": "윗사람 행동에 겸양어 <ruby>参<rt>まい</rt></ruby>る는 오답. ‘<b>いらっしゃいます</b>’.",
+    "e": "손님의 행동에 겸양어 <ruby>参<rt>まい</rt></ruby>る는 오답. ‘<b>いらっしゃいます</b>’.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 부장님이 내일 회사에 오십니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>明日<rt>あした</rt></ruby></span> 내일</li><li><span class=\"jw\"><ruby>会社<rt>かいしゃ</rt></ruby></span> 회사</li><li><span class=\"jw\"><ruby>参<rt>まい</rt></ruby>る</span> 가다·오다의 겸양어</li><li><span class=\"jw\"><ruby>部長<rt>ぶちょう</rt></ruby></span> 부장</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 손님이 내일 회사에 오십니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\">お<ruby>客様<rt>きゃくさま</rt></ruby></span> 손님</li><li><span class=\"jw\"><ruby>明日<rt>あした</rt></ruby></span> 내일</li><li><span class=\"jw\"><ruby>会社<rt>かいしゃ</rt></ruby></span> 회사</li><li><span class=\"jw\"><ruby>参<rt>まい</rt></ruby>る</span> 가다·오다의 겸양어</li></ul></div>"
    },
    {
     "q": "(A)この　(B)<ruby>町<rt>まち</rt></ruby>は　(C)とても　(D)にぎやかのです。",
@@ -2910,14 +2976,14 @@ var DAYS = [
    {
     "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は＿＿＿＿<ruby>泣<rt>な</rt></ruby>き<ruby>出<rt>だ</rt></ruby>しそうな<ruby>顔<rt>かお</rt></ruby>をしている。",
     "opts": [
-     "まるで",
+     "めったに",
      "<ruby>決<rt>けっ</rt></ruby>して",
      "<ruby>今<rt>いま</rt></ruby>にも",
      "たとえ"
     ],
     "a": 2,
     "e": "<b><ruby>今<rt>いま</rt></ruby>にも~そうだ</b> 짝.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>그녀는 금방이라도 울 것 같은 얼굴을 하고 있다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> まるで — 마치 ~같다</li><li class=\"\"><b>(B)</b> <ruby>決<rt>けっ</rt></ruby>して — 결코 ~않다</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>今<rt>いま</rt></ruby>にも — 금방이라도 ~할 것 같다</li><li class=\"\"><b>(D)</b> たとえ — 설령 ~해도</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼女<rt>かのじょ</rt></ruby></span> 그녀</li><li><span class=\"jw\"><ruby>泣<rt>な</rt></ruby>く</span> 울다</li><li><span class=\"jw\"><ruby>出<rt>だ</rt></ruby>す</span> 내다</li><li><span class=\"jw\"><ruby>顔<rt>かお</rt></ruby></span> 얼굴</li><li><span class=\"jw\"><ruby>決<rt>けっ</rt></ruby>して</span> 결코</li><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby></span> 지금</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>그녀는 금방이라도 울 것 같은 얼굴을 하고 있다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> めったに — 좀처럼 ~않다</li><li class=\"\"><b>(B)</b> <ruby>決<rt>けっ</rt></ruby>して — 결코 ~않다</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>今<rt>いま</rt></ruby>にも — 금방이라도 ~할 것 같다</li><li class=\"\"><b>(D)</b> たとえ — 설령 ~해도</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼女<rt>かのじょ</rt></ruby></span> 그녀</li><li><span class=\"jw\"><ruby>泣<rt>な</rt></ruby>く</span> 울다</li><li><span class=\"jw\"><ruby>出<rt>だ</rt></ruby>す</span> 내다</li><li><span class=\"jw\"><ruby>顔<rt>かお</rt></ruby></span> 얼굴</li><li><span class=\"jw\"><ruby>決<rt>けっ</rt></ruby>して</span> 결코</li><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby></span> 지금</li></ul></div>"
    },
    {
     "q": "<ruby>部長<rt>ぶちょう</rt></ruby>が<ruby>資料<rt>しりょう</rt></ruby>を＿＿＿＿ました。",
@@ -4038,18 +4104,18 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 창문이 열려 있으니 닫아 주세요.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>窓<rt>まど</rt></ruby></span> 창문</li><li><span class=\"jw\"><ruby>開<rt>あ</rt></ruby>ける</span> 열다</li><li><span class=\"jw\"><ruby>閉<rt>し</rt></ruby>める</span> 닫다</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>先生<rt>せんせい</rt></ruby>は　(B)<ruby>私<rt>わたし</rt></ruby>に　(C)<ruby>宿題<rt>しゅくだい</rt></ruby>を　(D)<ruby>出<rt>だ</rt></ruby>してもらいました。",
+    "q": "(A)<ruby>私<rt>わたし</rt></ruby>は　(B)<ruby>先生<rt>せんせい</rt></ruby>に　(C)<ruby>宿題<rt>しゅくだい</rt></ruby>を　(D)<ruby>見<rt>み</rt></ruby>てくださいました。",
     "opts": [
-     "<ruby>先生<rt>せんせい</rt></ruby>は",
-     "<ruby>私<rt>わたし</rt></ruby>に",
+     "<ruby>私<rt>わたし</rt></ruby>は",
+     "<ruby>先生<rt>せんせい</rt></ruby>に",
      "<ruby>宿題<rt>しゅくだい</rt></ruby>を",
-     "<ruby>出<rt>だ</rt></ruby>してもらいました"
+     "<ruby>見<rt>み</rt></ruby>てくださいました"
     ],
     "a": 3,
-    "e": "선생님이 한 행동이므로 ‘<ruby>出<rt>だ</rt></ruby>して<b>くださいました</b>’ 가 맞습니다.",
+    "e": "내가 받은 입장이라 ‘<ruby>見<rt>み</rt></ruby>て<b>いただきました</b>’. ‘くださる’는 선생님이 해 주실 때 써요.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 선생님이 저에게 숙제를 내 주셨습니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>私<rt>わたし</rt></ruby></span> 저, 나</li><li><span class=\"jw\"><ruby>宿題<rt>しゅくだい</rt></ruby></span> 숙제</li><li><span class=\"jw\"><ruby>出<rt>だ</rt></ruby>す</span> 내다</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 선생님이 내 숙제를 봐 주셨다(내가 받은 입장).</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>私<rt>わたし</rt></ruby></span> 저, 나</li><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\"><ruby>宿題<rt>しゅくだい</rt></ruby></span> 숙제</li><li><span class=\"jw\"><ruby>見<rt>み</rt></ruby>る</span> 보다</li></ul></div>"
    },
    {
     "q": "(A)お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>が　(B)お<ruby>待<rt>ま</rt></ruby>ちして　(C)いらっしゃいます　(D)よ。",
@@ -4278,7 +4344,7 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>계약서에 서명하기 전에 내용을 잘 읽어 주세요.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> うちに — ~하는 동안에 (변하기 전에 해둔다)</li><li class=\"ok\"><b>(B)</b> ✓ <ruby>前<rt>まえ</rt></ruby>に — ~하기 전에</li><li class=\"\"><b>(C)</b> <ruby>間<rt>あいだ</rt></ruby>に — ~하는 사이에</li><li class=\"\"><b>(D)</b> とたん — ~하자마자</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>契約書<rt>けいやくしょ</rt></ruby></span> 계약서</li><li><span class=\"jw\"><ruby>内容<rt>ないよう</rt></ruby></span> 내용</li><li><span class=\"jw\"><ruby>読<rt>よ</rt></ruby>む</span> 읽다</li><li><span class=\"jw\"><ruby>前<rt>まえ</rt></ruby></span> 전, 앞</li><li><span class=\"jw\"><ruby>間<rt>あいだ</rt></ruby></span> 사이, 동안</li></ul></div>"
    },
    {
-    "q": "<ruby>先生<rt>せんせい</rt></ruby>のお<ruby>宅<rt>たく</rt></ruby>に＿＿＿＿ました。",
+    "q": "<ruby>私<rt>わたし</rt></ruby>は<ruby>先生<rt>せんせい</rt></ruby>のお<ruby>宅<rt>たく</rt></ruby>に＿＿＿＿ました。",
     "opts": [
      "いらっしゃい",
      "おっしゃい",
@@ -4287,7 +4353,7 @@ var DAYS = [
     ],
     "a": 2,
     "e": "내가 방문한 것은 겸양어 <b><ruby>伺<rt>うかが</rt></ruby>う</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>선생님 댁에 찾아뵈었습니다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> いらっしゃい — (いらっしゃる의 ます형) 계시다·가시다·오시다 (존경)</li><li class=\"\"><b>(B)</b> おっしゃい — (おっしゃる의 ます형) 말씀하시다 (존경)</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>伺<rt>うかが</rt></ruby>い — (伺う의 ます형) 찾아뵙다 (겸양)</li><li class=\"\"><b>(D)</b> <ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり — (召し上がる의 ます형) 드시다 (존경)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\">お<ruby>宅<rt>たく</rt></ruby></span> 댁</li><li><span class=\"jw\"><ruby>伺<rt>うかが</rt></ruby>う</span> 찾아뵙다, 여쭙다 (겸양어)</li><li><span class=\"jw\"><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がる</span> 드시다 (食べる의 존경어)</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>저는 선생님 댁에 찾아뵈었습니다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> いらっしゃい — (いらっしゃる의 ます형) 계시다·가시다·오시다 (존경)</li><li class=\"\"><b>(B)</b> おっしゃい — (おっしゃる의 ます형) 말씀하시다 (존경)</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>伺<rt>うかが</rt></ruby>い — (伺う의 ます형) 찾아뵙다 (겸양)</li><li class=\"\"><b>(D)</b> <ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり — (召し上がる의 ます형) 드시다 (존경)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>私<rt>わたし</rt></ruby></span> 저, 나</li><li><span class=\"jw\"><ruby>先生<rt>せんせい</rt></ruby></span> 선생님</li><li><span class=\"jw\">お<ruby>宅<rt>たく</rt></ruby></span> 댁</li><li><span class=\"jw\"><ruby>伺<rt>うかが</rt></ruby>う</span> 찾아뵙다, 여쭙다 (겸양어)</li><li><span class=\"jw\"><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がる</span> 드시다 (食べる의 존경어)</li></ul></div>"
    },
    {
     "q": "<ruby>彼女<rt>かのじょ</rt></ruby>は<ruby>結婚<rt>けっこん</rt></ruby>して＿＿＿＿、<ruby>仕事<rt>しごと</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けている。",
@@ -4565,18 +4631,18 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>실례지만 성함은 뭐라고 하십니까?</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>失礼<rt>しつれい</rt></ruby></span> 실례</li><li><span class=\"jw\"><ruby>名前<rt>なまえ</rt></ruby></span> 이름</li><li><span class=\"jw\"><ruby>何<rt>なに</rt></ruby></span> 무엇</li><li><span class=\"jw\"><ruby>申<rt>もう</rt></ruby>す</span> 말하다 (겸양어)</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>部長<rt>ぶちょう</rt></ruby>は　(B)<ruby>今<rt>いま</rt></ruby>　(C)<ruby>席<rt>せき</rt></ruby>に　(D)おります。",
+    "q": "(A)お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>は　(B)<ruby>今<rt>いま</rt></ruby>　(C)<ruby>席<rt>せき</rt></ruby>に　(D)おります。",
     "opts": [
-     "<ruby>部長<rt>ぶちょう</rt></ruby>は",
+     "お<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>は",
      "<ruby>今<rt>いま</rt></ruby>",
      "<ruby>席<rt>せき</rt></ruby>に",
-     "おります"
+     "おります。"
     ],
     "a": 3,
-    "e": "윗사람에게는 ‘<b>いらっしゃいます</b>’.",
+    "e": "손님에게는 ‘<b>いらっしゃいます</b>’. ‘おる’는 내 쪽을 낮추는 말이에요.",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>부장님은 지금 자리에 계십니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby></span> 지금</li><li><span class=\"jw\"><ruby>席<rt>せき</rt></ruby></span> 자리</li><li><span class=\"jw\"><ruby>部長<rt>ぶちょう</rt></ruby></span> 부장</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 손님은 지금 자리에 계십니다.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\">お<ruby>客様<rt>きゃくさま</rt></ruby></span> 손님</li><li><span class=\"jw\"><ruby>今<rt>いま</rt></ruby></span> 지금</li><li><span class=\"jw\"><ruby>席<rt>せき</rt></ruby></span> 자리</li></ul></div>"
    },
    {
     "q": "<ruby>彼<rt>かれ</rt></ruby>は<ruby>毎日<rt>まいにち</rt></ruby><ruby>練習<rt>れんしゅう</rt></ruby>している。＿＿＿＿、<ruby>試合<rt>しあい</rt></ruby>に<ruby>勝<rt>か</rt></ruby>てない。",
@@ -5585,7 +5651,7 @@ var DAYS = [
    {
     "q": "<ruby>彼<rt>かれ</rt></ruby>に<ruby>秘密<rt>ひみつ</rt></ruby>を＿＿＿＿ものなら、すぐ<ruby>広<rt>ひろ</rt></ruby>まってしまう。",
     "opts": [
-     "<ruby>話<rt>はな</rt></ruby>す",
+     "<ruby>話<rt>はな</rt></ruby>して",
      "<ruby>話<rt>はな</rt></ruby>した",
      "<ruby>話<rt>はな</rt></ruby>そう",
      "<ruby>話<rt>はな</rt></ruby>さぬ"
@@ -5593,7 +5659,7 @@ var DAYS = [
     "a": 2,
     "e": "‘~ものなら’ 앞에는 의지형 <b><ruby>話<rt>はな</rt></ruby>そう</b>.",
     "tag": "활용·어휘",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>그에게 비밀을 말했다간 금방 퍼지고 만다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> <ruby>話<rt>はな</rt></ruby>す — 말하다 (기본형)</li><li class=\"\"><b>(B)</b> <ruby>話<rt>はな</rt></ruby>した — 말했다 (과거형)</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>話<rt>はな</rt></ruby>そう — 말하자 (의지형)</li><li class=\"\"><b>(D)</b> <ruby>話<rt>はな</rt></ruby>さぬ — 말하지 않는 (문어체 부정)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼<rt>かれ</rt></ruby></span> 그</li><li><span class=\"jw\"><ruby>秘密<rt>ひみつ</rt></ruby></span> 비밀</li><li><span class=\"jw\"><ruby>広<rt>ひろ</rt></ruby>まる</span> 퍼지다, 널리 알려지다</li><li><span class=\"jw\"><ruby>話<rt>はな</rt></ruby>す</span> 말하다</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>그에게 비밀을 말했다간 금방 퍼지고 만다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> <ruby>話<rt>はな</rt></ruby>して — 말하고 (て형은 ‘ものなら’ 앞에 안 옴)</li><li class=\"\"><b>(B)</b> <ruby>話<rt>はな</rt></ruby>した — 말했다 (과거형)</li><li class=\"ok\"><b>(C)</b> ✓ <ruby>話<rt>はな</rt></ruby>そう — 말하자 (의지형)</li><li class=\"\"><b>(D)</b> <ruby>話<rt>はな</rt></ruby>さぬ — 말하지 않는 (문어체 부정)</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>彼<rt>かれ</rt></ruby></span> 그</li><li><span class=\"jw\"><ruby>秘密<rt>ひみつ</rt></ruby></span> 비밀</li><li><span class=\"jw\"><ruby>広<rt>ひろ</rt></ruby>まる</span> 퍼지다, 널리 알려지다</li><li><span class=\"jw\"><ruby>話<rt>はな</rt></ruby>す</span> 말하다</li></ul></div>"
    },
    {
     "q": "<ruby>長<rt>なが</rt></ruby>い<ruby>間<rt>あいだ</rt></ruby>＿＿＿＿あげく、<ruby>結局<rt>けっきょく</rt></ruby>その<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>辞<rt>や</rt></ruby>めた。",
@@ -6006,9 +6072,9 @@ var DAYS = [
     "x": "<div class=\"xt\"><h5>해석</h5><p>불이 켜져 있으니 꺼 주세요.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>電気<rt>でんき</rt></ruby></span> 전기, 전등</li><li><span class=\"jw\"><ruby>消<rt>け</rt></ruby>す</span> 끄다, 지우다</li></ul></div>"
    },
    {
-    "q": "(A)<ruby>授業<rt>じゅぎょう</rt></ruby>は　(B)9<ruby>時<rt>じ</rt></ruby>に　(C)<ruby>始<rt>はじ</rt></ruby>めます　(D)ので、<ruby>遅<rt>おく</rt></ruby>れないでください。",
+    "q": "(A)<ruby>授業<rt>じゅぎょう</rt></ruby>が　(B)9<ruby>時<rt>じ</rt></ruby>に　(C)<ruby>始<rt>はじ</rt></ruby>めます　(D)ので、<ruby>遅<rt>おく</rt></ruby>れないでください。",
     "opts": [
-     "<ruby>授業<rt>じゅぎょう</rt></ruby>は",
+     "<ruby>授業<rt>じゅぎょう</rt></ruby>が",
      "9<ruby>時<rt>じ</rt></ruby>に",
      "<ruby>始<rt>はじ</rt></ruby>めます",
      "ので"
@@ -6017,7 +6083,7 @@ var DAYS = [
     "e": "‘<ruby>授業<rt>じゅぎょう</rt></ruby>が<b><ruby>始<rt>はじ</rt></ruby>まります</b>’ (자동사).",
     "tag": "오문 정정",
     "inst": "<ruby>下<rt>した</rt></ruby>の＿＿＿<ruby>線<rt>せん</rt></ruby>の(A)、(B)、(C)、(D)の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>正<rt>ただ</rt></ruby>しくない<ruby>言葉<rt>ことば</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びなさい。",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>수업은 9시에 시작하니 늦지 마세요.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>授業<rt>じゅぎょう</rt></ruby></span> 수업</li><li><span class=\"jw\"><ruby>時<rt>とき</rt></ruby></span> 때</li><li><span class=\"jw\"><ruby>始<rt>はじ</rt></ruby>める</span> 시작하다</li><li><span class=\"jw\"><ruby>遅<rt>おく</rt></ruby>れる</span> 늦다</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>(바른 문장) 수업이 9시에 시작하니 늦지 마세요.</p><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>授業<rt>じゅぎょう</rt></ruby></span> 수업</li><li><span class=\"jw\"><ruby>時<rt>とき</rt></ruby></span> 때</li><li><span class=\"jw\"><ruby>始<rt>はじ</rt></ruby>める</span> 시작하다</li><li><span class=\"jw\"><ruby>遅<rt>おく</rt></ruby>れる</span> 늦다</li></ul></div>"
    },
    {
     "q": "(A)<ruby>車<rt>くるま</rt></ruby>が　(B)<ruby>道<rt>みち</rt></ruby>の　(C)<ruby>真<rt>ま</rt></ruby>ん<ruby>中<rt>なか</rt></ruby>で　(D)<ruby>止<rt>と</rt></ruby>めている。",
@@ -6292,14 +6358,14 @@ var DAYS = [
    {
     "q": "<ruby>試験<rt>しけん</rt></ruby><ruby>前<rt>まえ</rt></ruby>は<ruby>緊張<rt>きんちょう</rt></ruby>して＿＿＿＿がたまった。",
     "opts": [
-     "トラブル",
+     "ストレス",
      "チャンス",
      "ミス",
-     "ストレス"
+     "トラブル"
     ],
-    "a": 3,
+    "a": 0,
     "e": "쌓이는 것은 <b>ストレス</b>.",
-    "x": "<div class=\"xt\"><h5>해석</h5><p>시험 전에는 긴장해서 스트레스가 쌓였다.</p><h5>보기 뜻</h5><ul><li class=\"\"><b>(A)</b> トラブル — 문제, 말썽</li><li class=\"\"><b>(B)</b> チャンス — 기회</li><li class=\"\"><b>(C)</b> ミス — 실수</li><li class=\"ok\"><b>(D)</b> ✓ ストレス — 스트레스</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>試験<rt>しけん</rt></ruby></span> 시험</li><li><span class=\"jw\"><ruby>前<rt>まえ</rt></ruby></span> 전, 앞</li><li><span class=\"jw\"><ruby>緊張<rt>きんちょう</rt></ruby></span> 긴장</li></ul></div>"
+    "x": "<div class=\"xt\"><h5>해석</h5><p>시험 전에는 긴장해서 스트레스가 쌓였다.</p><h5>보기 뜻</h5><ul><li class=\"ok\"><b>(A)</b> ✓ ストレス — 스트레스</li><li class=\"\"><b>(B)</b> チャンス — 기회</li><li class=\"\"><b>(C)</b> ミス — 실수</li><li class=\"\"><b>(D)</b> トラブル — 문제, 말썽</li></ul><h5>단어</h5><ul class=\"wl\"><li><span class=\"jw\"><ruby>試験<rt>しけん</rt></ruby></span> 시험</li><li><span class=\"jw\"><ruby>前<rt>まえ</rt></ruby></span> 전, 앞</li><li><span class=\"jw\"><ruby>緊張<rt>きんちょう</rt></ruby></span> 긴장</li></ul></div>"
    },
    {
     "q": "<ruby>機械<rt>きかい</rt></ruby>の＿＿＿＿で、<ruby>工場<rt>こうじょう</rt></ruby>の<ruby>作業<rt>さぎょう</rt></ruby>が<ruby>止<rt>と</rt></ruby>まった。",
@@ -6695,8 +6761,8 @@ var DAYS = [
  }
 ];
 
-var WORDS = [["上達","じょうたつ","(실력이) 늘음",[1]],["中止","ちゅうし","중지",[1,13]],["信用","しんよう","신용",[1,24]],["先生","せんせい","선생님",[1,3,7,8,20,21,23,26,33]],["入れる","いれる","넣다",[1,20,33]],["前","まえ","전, 앞",[1,21,23,31]],["努力","どりょく","노력",[1]],["勉強","べんきょう","공부",[1,4,10,23,24,26,33]],["医者","いしゃ","의사",[1,5,13,25,26]],["合格","ごうかく","합격",[1]],["守る","まもる","지키다",[1,11,13,14,16]],["客","きゃく","손님",[1,16,26]],["家","いえ","집",[1,3,24,26,33]],["帰る","かえる","돌아가다",[1,6,27,29]],["彼","かれ","그",[1,2,4,5,8,9,10,13,14,15,19,20,21,23,24,26,27,28,31,32]],["後","あと","뒤, 후",[1,12,16,22,25,33]],["後悔","こうかい","후회",[1]],["忘れる","わすれる","잊다",[1,16,26]],["忘れ物","わすれもの","깜빡 두고 온 물건",[1]],["払う","はらう","지불하다",[1]],["指導","しどう","지도",[1]],["教える","おしえる","가르치다",[1,2]],["日本語","にほんご","일본어",[1,9,13,16,20,23,29]],["晩","ばん","저녁, 밤",[1]],["毎日","まいにち","매일",[1,2,15,21,23,26,27,33]],["汚い","きたない","더럽다",[1]],["準備","じゅんび","준비",[1]],["無理","むり","무리",[1,17]],["破る","やぶる","깨다, 어기다",[1,9,14,27]],["約束","やくそく","약속",[1,9,11,13,14,27,33]],["結ぶ","むすぶ","맺다, 묶다",[1]],["試合","しあい","시합",[1,2,9,13,21,23,29]],["試験","しけん","시험",[1,5,26,28,31]],["部屋","へや","방",[1,8,10,28]],["鍵","かぎ","열쇠",[1]],["降る","ふる","(비·눈이) 내리다",[1,3,4,9,13,20,21,26,33]],["雨","あめ","비",[1,3,4,9,13,15,20,21,26,33]],["一度","いちど","한 번",[2]],["不安","ふあん","불안",[2,22]],["今さら","いまさら","이제 와서",[2]],["会社","かいしゃ","회사",[2,8,11,13,17,21,27,28,29]],["免許","めんきょ","면허",[2]],["取る","とる","취하다, (책임을) 지다",[2,11]],["嘘","うそ","거짓말",[2]],["多い","おおい","많다",[2,11,12,16,22,29,32]],["失敗","しっぱい","실패",[2,11,22,27]],["寒い","さむい","춥다",[2,30]],["平気","へいき","태연함, 아무렇지 않음",[2]],["強い","つよい","강하다",[2,30]],["得る","える","얻다 (~ざるを得ない: ~할 수밖에 없다)",[2,5,13,20]],["忙しい","いそがしい","바쁘다",[2,12,18]],["抱える","かかえる","안다, 떠안다",[2]],["担ぐ","かつぐ","짊어지다, 메다",[2]],["掴む","つかむ","움켜쥐다",[2]],["握る","にぎる","쥐다",[2]],["日","ひ","날, 해",[2,26,33]],["春","はる","봄",[2]],["本当","ほんとう","진짜",[2,12]],["病気","びょうき","병",[2,21]],["知る","しる","알다",[2,25,32]],["終わる","おわる","끝나다",[2,12,15,18,26]],["続く","つづく","이어지다",[2]],["行う","おこなう","행하다, 실시하다",[2,6,9,21,29]],["行く","いく","가다",[2,5,9,18,19,20,21,26,27,28,29,33]],["計画","けいかく","계획",[2,15,17,21]],["許す","ゆるす","용서하다",[2]],["謝る","あやまる","사과하다",[2,16,27]],["通う","かよう","다니다",[2]],["運転","うんてん","운전",[2]],["雨天","うてん","우천",[2]],["顔","かお","얼굴",[2,13,14,32]],["中","なか","안, 속",[3,16,31,33]],["会議","かいぎ","회의",[3,6,10,17,18,29]],["写真","しゃしん","사진",[3,33]],["冷める","さめる","식다",[3]],["出す","だす","내다",[3,14,20,30,33]],["出る","でる","나가다",[3,26,28]],["召し上がる","めしあがる","드시다 (食べる의 존경어)",[3,7,14,21]],["始める","はじめる","시작하다",[3,16,22,26,30]],["小さな","ちいさな","작은",[3,27]],["山","やま","산",[3]],["席","せき","자리",[3,23]],["思い出す","おもいだす","떠올리다",[3]],["昔","むかし","옛날",[3]],["昼食","ちゅうしょく","점심 식사",[3]],["最中","さいちゅう","한창 ~하는 중",[3,13,23]],["村","むら","마을",[3]],["来る","くる","오다",[3,13]],["次第","しだい","~하는 대로",[3,13,18]],["渡る","わたる","건너다",[3,29]],["犯人","はんにん","범인",[3,4]],["着く","つく","도착하다",[3,33]],["確認","かくにん","확인",[3,31]],["答える","こたえる","대답하다",[3]],["茶","ちゃ","차",[3]],["見る","みる","보다",[3,12,13,14,28,33]],["話す","はなす","말하다",[3,11,13,24,28,32]],["警察","けいさつ","경찰",[3]],["超える","こえる","(한도·기준을) 넘다",[3]],["越える","こえる","(산·고비를) 넘다",[3]],["逃げ出す","にげだす","도망치다",[3]],["連絡","れんらく","연락",[3,5]],["避ける","さける","피하다",[3,22]],["間","あいだ","사이, 동안",[3,21,23,28]],["電話","でんわ","전화",[3,13,26,31,33]],["駅","えき","역",[3,12,16,26,29,33]],["鳴る","なる","울리다",[3]],["フランス語","フランスご","프랑스어",[4]],["上手","じょうず","능숙함, 잘함",[4,8,13,20,23,33]],["予報","よほう","예보",[4]],["人","ひと","사람",[4,9,11,12,16,20,22,24,25,28,29,30,32,33]],["今","いま","지금",[4,13,14,16,20,23,26,27]],["住む","すむ","살다",[4,26]],["何","なに","무엇",[4,12,22,23,27,28,33]],["包む","つつむ","싸다",[4]],["問題","もんだい","문제",[4,5,12,17,25,27]],["天気","てんき","날씨",[4]],["学生","がくせい","학생",[4,8,20,24,33]],["年","ねん","해, 년",[4,6]],["料理","りょうり","요리",[4,7,33]],["明日","あした","내일",[4,5,7,8,9,13,26,28,31]],["深い","ぶかい","깊다",[4,24]],["用心","ようじん","조심",[4,24]],["省く","はぶく","생략하다",[4]],["覆す","くつがえす","뒤집다",[4]],["見える","みえる","보이다",[4,12]],["違い","ちがい","차이",[4]],["隠す","かくす","숨기다",[4]],["雲","くも","구름",[4]],["黒い","くろい","검다",[4]],["上司","じょうし","상사",[5,20]],["不可能","ふかのう","불가능",[5]],["休暇","きゅうか","휴가",[5]],["住所","じゅうしょ","주소",[5]],["傷","きず","상처",[5]],["名前","なまえ","이름",[5,23]],["命令","めいれい","명령",[5]],["承認","しょうにん","승인",[5]],["探す","さがす","찾다",[5]],["無実","むじつ","무죄, 결백",[5]],["無視","むし","무시",[5]],["直す","なおす","고치다",[5,26]],["証明","しょうめい","증명",[5]],["説明","せつめい","설명",[5]],["責任者","せきにんしゃ","책임자",[5]],["賛成","さんせい","찬성",[5]],["越す","こす","넘다, 지나다",[5]],["連絡先","れんらくさき","연락처",[5]],["遊ぶ","あそぶ","놀다",[5]],["不足","ふそく","부족",[6,16,22]],["今日","きょう","오늘",[6,10,15]],["体","からだ","몸",[6,25]],["全員","ぜんいん","전원",[6,16]],["冬","ふゆ","겨울",[6]],["出席","しゅっせき","출석",[6]],["参加","さんか","참가",[6,26]],["味","あじ","맛",[6,14]],["崩す","くずす","무너뜨리다, (몸 상태를) 해치다",[6]],["新製品","しんせいひん","신제품",[6,11,25]],["早い","はやい","이르다, 빠르다",[6,12,33]],["暖かい","あたたかい","따뜻하다",[6]],["最近","さいきん","요즘",[6,11,12,16,31]],["気","き","마음",[6,26]],["気味","きみ","~한 기미",[6]],["消費者","しょうひしゃ","소비자",[6]],["痛い","いたい","아프다",[6,32]],["社員","しゃいん","사원",[6]],["社長","しゃちょう","사장",[6,7,8,13,14]],["組む","くむ","짜다, 엮다",[6]],["詰める","つめる","채우다",[6]],["調子","ちょうし","상태, 컨디션",[6]],["通ずる","つうじる","통하다",[6]],["運動","うんどう","운동",[6,15,22]],["配る","くばる","나눠 주다",[6]],["関心","かんしん","관심",[6,25]],["限り","かぎり","한정, 한",[6]],["集める","あつめる","모으다",[6,15,30]],["頭","あたま","머리",[6,10]],["風邪","かぜ","감기",[6,17,26]],["お客様","おきゃくさま","손님",[7,20]],["上がる","あがる","오르다",[7]],["伺う","うかがう","찾아뵙다, 여쭙다 (겸양어)",[7,21,23]],["何時","なんじ","몇 시",[7,29]],["参り","まいり","(参る의 ます형) 가다·오다의 겸양어",[7]],["参る","まいる","가다·오다의 겸양어",[7,8,13,14,23]],["学校","がっこう","학교",[7,26,29]],["待つ","まつ","기다리다",[7,20,26,33]],["承る","うけたまわる","삼가 받다, 듣다 (겸양어)",[7]],["拝見","はいけん","(보다의 겸양어) 삼가 봄",[7,14]],["持つ","もつ","들다, 가지다",[7,16,18,20,25,33]],["書く","かく","쓰다",[7,17,26,33]],["私","わたし","저, 나",[7,8,11,13,14,20,29,31,33]],["要望","ようぼう","요망, 바라는 것",[7,24]],["資料","しりょう","자료",[7,14]],["食べる","たべる","먹다",[7,32,33]],["伝える","つたえる","전하다",[8]],["友達","ともだち","친구",[8,24,29,32,33]],["本","ほん","책",[8,22,25,32,33]],["止める","とめる","멈추다 (타동사)",[8,30]],["消す","けす","끄다, 지우다",[8,30]],["町","まち","마을, 동네",[8]],["苦手","にがて","서투름, 질색",[8,20,33]],["英語","えいご","영어",[8,19,23]],["貸す","かす","빌려주다",[8]],["遅れる","おくれる","늦다",[8,12,30,33]],["部下","ぶか","부하",[8,14]],["部長","ぶちょう","부장",[8,14,23]],["野球","やきゅう","야구",[8]],["電気","でんき","전기, 전등",[8,30]],["電車","でんしゃ","전철",[8,12,22,26,29,31,33]],["静か","しずか","조용함",[8,11]],["人形","にんぎょう","인형",[9]],["全然","ぜんぜん","전혀",[9]],["彼女","かのじょ","그녀",[9,13,14,20,21,24]],["怒る","おこる","화내다",[9,16,26]],["怖い","こわい","무섭다",[9]],["恐らく","おそらく","아마",[9]],["決して","けっして","결코",[9,13,14,20]],["不合格","ふごうかく","불합격",[10]],["予定","よてい","예정",[10,33]],["以上","いじょう","이상 (끝, ~보다 위)",[10,25]],["会議室","かいぎしつ","회의실",[10,13,14]],["優しい","やさしい","상냥하다",[10,13]],["円","えん","엔",[10]],["半額","はんがく","반값",[10]],["場所","ばしょ","장소",[10,22]],["変更","へんこう","변경",[10,21]],["子供","こども","아이",[10,12,25,26]],["広い","ひろい","넓다",[10,12,32]],["性格","せいかく","성격",[10,25]],["日当たり","ひあたり","볕이 드는 정도",[10]],["時","とき","때",[10,26,29,30]],["来週","らいしゅう","다음 주",[10,15,23]],["良い","よい","좋다",[10,12,18]],["運賃","うんちん","운임",[10]],["一方","いっぽう","한편",[11,16]],["与える","あたえる","주다",[11]],["入る","はいる","들어가다",[11]],["同僚","どうりょう","동료",[11]],["周り","まわり","주위",[11]],["場合","ばあい","경우",[11,12]],["増える","ふえる","늘다",[11,12,16,22,25]],["声","こえ","목소리, 의견",[11,32]],["売り上げ","うりあげ","매출",[11,22]],["多く","おおく","많이, 대부분",[11,22,24]],["大きな","おおきな","큰",[11,32]],["孤独","こどく","고독",[11]],["実際","じっさい","실제로",[11]],["広がる","ひろがる","퍼지다",[11]],["影響","えいきょう","영향",[11]],["応える","こたえる","부응하다",[11]],["感じる","かんじる","느끼다",[11,16]],["時間","じかん","시간",[11,12,18,19,24,26,27,30,33]],["期待","きたい","기대",[11]],["機会","きかい","기회",[11,22,25]],["注意","ちゅうい","주의",[11]],["減る","へる","줄다",[11,12,15,16,22]],["発売","はつばい","발매",[11]],["結果","けっか","결과",[11,22,25]],["練習","れんしゅう","연습",[11,23]],["自分","じぶん","자기",[11,12,16,32,33]],["言葉","ことば","말",[11,12,16]],["責任","せきにん","책임",[11]],["走る","はしる","달리다",[11]],["車","くるま","차",[11,30]],["迷惑","めいわく","폐, 민폐",[11]],["通勤","つうきん","통근",[11,22]],["運転中","うんてんちゅう","운전 중",[11]],["一因","いちいん","한 가지 원인",[12]],["一番","いちばん","가장",[12]],["主張","しゅちょう","주장",[12,16]],["仕事","しごと","일",[12,13,17,18,19,21,22,24,26,27]],["使い方","つかいかた","사용법",[12,16]],["使う","つかう","사용하다",[12,16,22,31]],["便利","べんり","편리",[12,13,16,22]],["個人","こじん","개인",[12]],["健康","けんこう","건강",[12,15]],["優先","ゆうせん","우선",[12]],["先","さき","먼저, 앞",[12]],["内容","ないよう","내용",[12,16,21,22,33]],["力","ちから","힘",[12]],["危険","きけん","위험",[12]],["合う","あう","맞다",[12,16,22,26,33]],["呼ぶ","よぶ","부르다",[12]],["増やす","ふやす","늘리다",[12,16,22]],["増やせる","ふやせる","늘릴 수 있다",[12]],["壊れる","こわれる","부서지다, 고장 나다",[12]],["大切","たいせつ","소중함",[12,16,22,25]],["少子","しょうし","저출산",[12]],["弱い","よわい","약하다",[12]],["後回し","あとまわし","뒤로 미룸",[12]],["必ず","かならず","반드시",[12,18]],["必要","ひつよう","필요",[12]],["技術","ぎじゅつ","기술",[12,16]],["指す","さす","가리키다",[12,16]],["文章","ぶんしょう","글",[12]],["方法","ほうほう","방법",[12]],["日本","にほん","일본",[12,13,23]],["普及","ふきゅう","보급",[12,17]],["最も","もっとも","가장",[12]],["本文","ほんぶん","본문",[12,16,22,33]],["歩く","あるく","걷다",[12]],["決める","きめる","정하다",[12,27]],["現象","げんしょう","현상",[12]],["理由","りゆう","이유",[12,22,33]],["画面","がめん","화면",[12,22]],["確か","たしか","확실함",[12]],["立ち止まる","たちどまる","멈춰 서다",[12]],["筆者","ひっしゃ","필자",[12,13,16,22]],["節約","せつやく","절약",[12]],["簡単","かんたん","간단함",[12,18,24]],["考える","かんがえる","생각하다",[12,18,22]],["自由","じゆう","자유",[12]],["若い","わかい","젊다",[12]],["落ちる","おちる","떨어지다",[12,26]],["行動","こうどう","행동",[12]],["解決","かいけつ","해결",[12,15,25]],["言う","いう","말하다",[12,16,20,22,25,26,27,28,32,33]],["読書","どくしょ","독서",[12,15,22]],["買う","かう","사다",[12,16,22,31,32]],["述べる","のべる","서술하다",[12,16,22]],["限る","かぎる","한정하다",[12,18]],["順位","じゅんい","순위",[12]],["頼る","たよる","의지하다",[12]],["高齢化","こうれいか","고령화",[12]],["高齢者","こうれいしゃ","고령자",[12,16]],["休む","やすむ","쉬다",[13,26]],["勧める","すすめる","권하다",[13]],["少し","すこし","조금",[13,33]],["思う","おもう","생각하다",[13,16,18,29,33]],["悪い","わるい","나쁘다",[13,15,26,32]],["慣れる","なれる","익숙해지다",[13,15,16]],["有名","ゆうめい","유명",[13,25]],["泣く","なく","울다",[13,14,28]],["熱","ねつ","열",[13]],["環境","かんきょう","환경",[13,15,16,22,25]],["目","め","눈",[13]],["親切","しんせつ","친절",[13]],["選ぶ","えらぶ","고르다",[13]],["長い","ながい","길다",[13,16,28]],["高い","たかい","높다, 비싸다",[13,18,21,22,26]],["ご覧","ごらん","(보다의 존경어) 보심",[14]],["厳しい","きびしい","엄하다, 혹독하다",[14,33]],["安い","やすい","싸다",[14,16,20]],["宿題","しゅくだい","숙제",[14,20]],["徹夜","てつや","밤샘",[14]],["昨日","きのう","어제",[14,29,31]],["母","はは","(자기) 어머니",[14,26]],["眠い","ねむい","졸리다",[14,19]],["久しぶり","ひさしぶり","오랜만",[15]],["会う","あう","만나다",[15,29]],["作業","さぎょう","작업",[15,31]],["傾向","けいこう","경향",[15]],["元気","げんき","건강함, 기운",[15,26]],["分","ふん","분 (시간 단위)",[15,26,33]],["夏","なつ","여름",[15]],["帰れる","かえれる","돌아갈 수 있다",[15]],["延期","えんき","연기",[15]],["徐々","じょじょ","서서히",[15]],["徐々に","じょじょに","서서히",[15]],["意見","いけん","의견",[15]],["提出","ていしゅつ","제출",[15]],["改善","かいぜん","개선",[15]],["新しい","あたらしい","새롭다",[15,17,22,31]],["検討","けんとう","검토",[15,17]],["生活","せいかつ","생활",[15,27]],["相変わらず","あいかわらず","변함없이",[15]],["維持","いじ","유지",[15]],["職場","しょくば","직장",[15]],["若者","わかもの","젊은이",[15]],["行ける","いける","갈 수 있다",[15,26,27]],["運動会","うんどうかい","운동회",[15]],["都合","つごう","사정",[15]],["量","りょう","양",[15]],["需要","じゅよう","수요",[15]],["高まる","たかまる","높아지다",[15]],["お礼","おれい","감사 인사",[16]],["人件費","じんけんひ","인건비",[16]],["人手","ひとで","일손",[16]],["使える","つかえる","사용할 수 있다",[16]],["利点","りてん","이점",[16]],["同じ","おなじ","같다",[16,27]],["商品","しょうひん","상품",[16]],["場面","ばめん","장면",[16]],["好む","このむ","좋아하다",[16]],["少ない","すくない","적다",[16,18,22]],["工夫","くふう","궁리, 고안",[16]],["店","みせ","가게",[16,24,33]],["得意","とくい","잘함",[16]],["応援","おうえん","응원",[16]],["恥ずかしい","はずかしい","부끄럽다",[16]],["感謝","かんしゃ","감사",[16]],["手間","てま","수고, 품",[16]],["操作","そうさ","조작",[16]],["数","かず","수",[16]],["有料","ゆうりょう","유료",[16]],["機械","きかい","기계",[16,25,31]],["正しい","ただしい","올바르다",[16,22]],["気持ち","きもち","기분, 마음",[16,26]],["減らせる","へらせる","줄일 수 있다",[16]],["無人","むじん","무인",[16]],["無料","むりょう","무료",[16]],["相手","あいて","상대",[16]],["結局","けっきょく","결국",[16,18,28,33]],["絶対","ぜったい","절대",[16,22]],["続ける","つづける","계속하다",[16,21]],["考え","かんがえ","생각",[16,22]],["荷物","にもつ","짐",[16]],["表す","あらわす","나타내다",[16]],["表せる","あらわせる","나타낼 수 있다",[16]],["袋","ふくろ","봉투",[16]],["補う","おぎなう","보충하다",[16]],["補える","おぎなえる","보충할 수 있다",[16]],["見かける","みかける","눈에 띄다",[16]],["覚える","おぼえる","외우다, 기억하다",[16,22]],["言える","いえる","말할 수 있다",[16]],["誰","だれ","누구",[16,18,26,28]],["謝罪","しゃざい","사죄",[16]],["買い物","かいもの","쇼핑, 장보기",[16,31]],["近い","ちかい","가깝다",[16,22]],["違う","ちがう","다르다",[16]],["重い","おもい","무겁다",[16]],["関係","かんけい","관계",[16]],["世界中","せかいじゅう","전 세계",[17]],["事故","じこ","사고",[17,22]],["効果","こうか","효과",[17]],["原因","げんいん","원인",[17,22]],["取り組む","とりくむ","몰두하다",[17]],["実現","じつげん","실현",[17]],["履歴書","りれきしょ","이력서",[17]],["度","ど","번, 정도",[17,27]],["引き受ける","ひきうける","떠맡다",[17]],["従う","したがう","따르다",[17]],["応募","おうぼ","응모, 지원",[17]],["授業","じゅぎょう","수업",[17,30]],["方針","ほうしん","방침",[17]],["日程","にってい","일정",[17]],["条件","じょうけん","조건",[17]],["欠席","けっせき","결석",[17]],["申し込む","もうしこむ","신청하다",[17]],["目的","もくてき","목적",[17]],["真剣","しんけん","진지함",[17]],["薬","くすり","약",[17]],["見直す","みなおす","다시 검토하다",[17]],["調べる","しらべる","조사하다",[17]],["調整","ちょうせい","조정",[17]],["進める","すすめる","진행하다",[17]],["頭痛","ずつう","두통",[17]],["頼む","たのむ","부탁하다",[17,26,30]],["一応","いちおう","일단, 만일을 위해",[18]],["何度","なんど","몇 번",[18]],["傘","かさ","우산",[18,20]],["届ける","とどける","전하다, 배달하다",[18]],["成功","せいこう","성공",[18]],["暗い","くらい","어둡다",[18]],["案外","あんがい","의외로",[18]],["次第に","しだいに","점점, 차츰",[18]],["物","もの","물건",[18]],["相当","そうとう","상당히",[18]],["空","そら","하늘",[18]],["笑う","わらう","웃다",[18,19,26]],["聞く","きく","듣다, 묻다",[18,25,26,32]],["試す","ためす","시험해 보다",[18]],["話","はなし","이야기",[18,32]],["難しい","むずかしい","어렵다",[18]],["面白い","おもしろい","재미있다",[18,19,22,29]],["中国語","ちゅうごくご","중국어",[19]],["俳優","はいゆう","배우",[19]],["反面","はんめん","반면",[19]],["収入","しゅうにゅう","수입",[19]],["大変","たいへん","힘듦, 큰일",[19]],["応ずる","おうじる","따르다, 응하다",[19]],["歌手","かしゅ","가수",[19]],["決まる","きまる","정해지다",[19]],["税金","ぜいきん","세금",[19,21]],["話せる","はなせる","말할 수 있다",[19]],["急ぐ","いそぐ","서두르다",[20]],["歌","うた","노래",[20]],["窓","まど","창문",[20,30]],["閉める","しめる","닫다",[20,30]],["開ける","あける","열다",[20,30]],["間に合う","まにあう","시간에 맞추다",[20,28]],["韓国語","かんこくご","한국어",[20]],["お宅","おたく","댁",[21]],["予算","よさん","예산",[21]],["伺い","うかがい","(伺う의 ます형) 찾아뵙다 (겸양)",[21]],["国","くに","나라",[21]],["契約書","けいやくしょ","계약서",[21]],["結婚","けっこん","결혼",[21,27]],["読む","よむ","읽다",[21,22,26,33]],["足りる","たりる","충분하다",[21]],["一人","ひとり","한 명, 혼자",[22]],["久しい","ひさしい","오래되다",[22]],["今後","こんご","앞으로",[22]],["仕方ない","しかたない","어쩔 수 없다",[22]],["代わり","かわり","대신",[22]],["伸びる","のびる","늘어나다",[22]],["全く","まったく","전혀",[22]],["分かる","わかる","알다, 이해하다",[22]],["初めて","はじめて","처음으로",[22]],["変わる","かわる","바뀌다",[22,30]],["学ぶ","まなぶ","배우다",[22]],["安全","あんぜん","안전",[22]],["専用","せんよう","전용",[22]],["小説","しょうせつ","소설",[22]],["意味","いみ","의미",[22]],["成長","せいちょう","성장",[22]],["整える","ととのえる","정돈하다, 갖추다",[22]],["料金","りょうきん","요금",[22]],["本数","ほんすう","(운행) 편수",[22]],["止まる","とまる","멈추다 (자동사)",[22,26,30,31,33]],["混む","こむ","붐비다",[22,24]],["混雑","こんざつ","혼잡",[22]],["研究","けんきゅう","연구",[22]],["紙","かみ","종이",[22,28]],["経験","けいけん","경험",[22]],["自転車","じてんしゃ","자전거",[22]],["解消","かいしょう","해소",[22]],["課題","かだい","과제",[22]],["走れる","はしれる","달릴 수 있다",[22]],["近年","きんねん","근년, 최근 몇 년",[22]],["逃す","のがす","놓치다",[22]],["道","みち","길",[22,30,33]],["都市部","としぶ","도시 지역",[22]],["離れ","はなれ","멀어짐 (読書離れ: 독서 기피)",[22]],["勝てる","かてる","이길 수 있다",[23]],["失礼","しつれい","실례",[23]],["寝る","ねる","자다",[23,33]],["歯","は","이, 치아",[23]],["申し上げる","もうしあげる","말씀드리다 (겸양어)",[23]],["申す","もうす","말하다 (겸양어)",[23]],["磨く","みがく","닦다",[23]],["お客","おきゃく","손님",[24]],["一家","いっか","한 집안",[24]],["主に","おもに","주로",[24]],["付き合い","つきあい","교제",[24]],["信ずる","しんじる","믿다",[24]],["初日","しょにち","첫날",[24]],["執念","しゅうねん","집념",[24]],["大黒柱","だいこくばしら","집안의 기둥",[24]],["展覧会","てんらんかい","전람회",[24]],["怠る","おこたる","게을리하다",[24]],["手軽","てがる","손쉬움, 간편함",[24]],["敬遠","けいえん","경원, 꺼려서 멀리함",[24]],["朝","あさ","아침",[24,26,33]],["無口","むくち","말수가 적음",[24,28]],["父","ちち","(자기) 아버지",[24]],["用心深い","ようじんぶかい","신중한, 조심성이 많은",[24]],["費やす","ついやす","들이다, 쓰다",[24]],["長居","ながい","오래 머묾",[24]],["面倒","めんどう","귀찮음, 번거로움",[24]],["驚かす","おどろかす","놀라게 하다",[24]],["仮定","かてい","가정(假定)",[25]],["作家","さっか","작가",[25]],["公園","こうえん","공원",[25,26]],["公演","こうえん","공연",[25]],["出版","しゅっぱん","출판",[25]],["図る","はかる","꾀하다",[25]],["大阪","おおさか","오사카",[25,29]],["家庭","かてい","가정",[25]],["対照","たいしょう","대조",[25]],["対症","たいしょう","증상에 맞춤",[25]],["対称","たいしょう","대칭",[25]],["対象","たいしょう","대상",[25]],["市民","しみん","시민",[25]],["情報","じょうほう","정보",[25]],["感心","かんしん","감탄",[25]],["支店","してん","지점",[25]],["早起き","はやおき","일찍 일어남",[25]],["来月","らいげつ","다음 달",[25]],["歓心","かんしん","환심",[25]],["正確","せいかく","정확",[25]],["測る","はかる","(길이·넓이를) 재다",[25]],["留学","りゅうがく","유학",[25]],["異動","いどう","(인사) 이동",[25]],["異常","いじょう","이상, 정상이 아님",[25]],["移動","いどう","이동",[25]],["移譲","いじょう","양도",[25]],["習慣","しゅうかん","습관",[25]],["計る","はかる","(시간·수량을) 재다",[25]],["講演","こうえん","강연",[25]],["週間","しゅうかん","주간",[25]],["過程","かてい","과정",[25]],["量る","はかる","(무게·양을) 재다",[25]],["乗る","のる","타다",[26,29]],["兄","あに","(자기) 형·오빠",[26]],["先月","せんげつ","지난달",[26]],["反する","はんする","어긋나다",[26]],["喜ぶ","よろこぶ","기뻐하다",[26]],["図書館","としょかん","도서관",[26,32]],["地震","じしん","지진",[26]],["失望","しつぼう","실망",[26]],["好き嫌い","すききらい","호불호",[26]],["希望","きぼう","희망",[26]],["手紙","てがみ","편지",[26]],["断る","ことわる","거절하다",[26]],["来年","らいねん","내년",[26]],["毎朝","まいあさ","매일 아침",[26,29]],["油断","ゆだん","방심",[26]],["漫画","まんが","만화",[26]],["留守","るす","부재",[26]],["疲れる","つかれる","피곤하다",[26,33]],["眠る","ねむる","잠들다",[26]],["答え","こたえ","답",[26]],["誘い","さそい","권유",[26]],["負ける","まける","지다",[26]],["起きる","おきる","일어나다",[26,29,33]],["近く","ちかく","근처",[26,33]],["進む","すすむ","나아가다, 진행되다",[26]],["か月","かげつ","개월",[27]],["一緒","いっしょ","함께",[27]],["出かける","でかける","외출하다",[27,33]],["半年","はんとし","반년",[27]],["工事","こうじ","공사",[27]],["悩む","なやむ","고민하다",[27,28]],["文句","もんく","불평",[27]],["楽しい","たのしい","즐겁다",[27,33]],["欲","よく","욕심",[27,28]],["満足","まんぞく","만족",[27]],["裁判","さいばん","재판",[27]],["辞める","やめる","그만두다",[27,28]],["以外","いがい","이외, 제외",[28]],["切れる","きれる","베이다, 끊어지다",[28]],["前日","ぜんじつ","전날",[28]],["広まる","ひろまる","퍼지다, 널리 알려지다",[28]],["手","て","손",[28,32]],["旅行","りょこう","여행",[28]],["映画","えいが","영화",[28,33]],["楽しみ","たのしみ","기대, 즐거움",[28]],["無力","むりょく","무력함",[28]],["無欲","むよく","욕심이 없음",[28]],["無用","むよう","쓸모없음, 필요 없음",[28]],["無茶苦茶","むちゃくちゃ","엉망진창, 터무니없음",[28]],["物事","ものごと","사물, 일",[28]],["秘密","ひみつ","비밀",[28,32]],["立ち入り","たちいり","출입",[28]],["端","はし","가장자리, 끝",[28]],["締め切り","しめきり","마감",[28]],["遅い","おそい","늦다",[28]],["関係者","かんけいしゃ","관계자",[28]],["何人","なんにん","몇 명",[29]],["何本","なんぼん","몇 자루·몇 병",[29]],["何枚","なんまい","몇 장",[29]],["向こう側","むこうがわ","맞은편",[29]],["好き","すき","좋아함",[29]],["始まる","はじまる","시작되다 (자동사)",[29]],["新幹線","しんかんせん","신칸센",[29]],["東京","とうきょう","도쿄",[29]],["橋","はし","다리",[29]],["犬","いぬ","개",[29,32]],["修理","しゅうり","수리",[30]],["割る","わる","깨다 (타동사)",[30]],["困る","こまる","곤란하다, 어려움을 겪다",[30]],["時計","とけい","시계",[30]],["真ん中","まんなか","한가운데",[30]],["閉まる","しまる","닫히다",[30]],["開く","あく","열리다 (자동사)",[30]],["集まる","あつまる","모이다 (자동사)",[30]],["駅前","えきまえ","역 앞",[30,31]],["働く","はたらく","일하다",[31]],["工場","こうじょう","공장",[31]],["携帯","けいたい","휴대폰",[31]],["緊張","きんちょう","긴장",[31]],["違反","いはん","위반",[31]],["人気","にんき","인기",[32,33]],["借りる","かりる","빌리다",[32]],["切手","きって","우표",[32]],["口","くち","입",[32]],["堅い","かたい","굳다, 단단하다",[32]],["大きい","おおきい","크다",[32]],["大丈夫","だいじょうぶ","괜찮음",[32]],["欠点","けってん","결점, 단점",[32]],["知り合い","しりあい","아는 사람",[32]],["耳","みみ","귀",[32]],["聞こえる","きこえる","들리다",[32]],["足","あし","발, 다리",[32]],["靴","くつ","신발",[32]],["顔色","かおいろ","안색",[32]],["お客さん","おきゃくさん","손님",[33]],["三十","さんじゅう","30",[33]],["二十","にじゅう","20",[33]],["二十歳","はたち","스무 살",[33]],["五十","ごじゅう","50",[33]],["何分","なんぷん","몇 분",[33]],["作る","つくる","만들다",[33]],["作れる","つくれる","만들 수 있다",[33]],["先週","せんしゅう","지난주",[33]],["十分","じゅっぷん","10분 (십 분)",[33]],["卒業","そつぎょう","졸업",[33]],["土曜日","どようび","토요일",[33]],["大学","だいがく","대학",[33]],["家族","かぞく","가족",[33]],["寝坊","ねぼう","늦잠",[33]],["将来","しょうらい","장래",[33]],["平日","へいじつ","평일",[33]],["店員","てんいん","점원",[33]],["座る","すわる","앉다",[33]],["弁当","べんとう","도시락",[33]],["待ち合わせ","まちあわせ","약속하여 만남",[33]],["悲しい","かなしい","슬프다",[33]],["感ずる","かんじる","느끼다",[33]],["日曜日","にちようび","일요일",[33]],["月曜日","げつようび","월요일",[33]],["朝寝坊","あさねぼう","늦잠",[33]],["残念","ざんねん","아쉬움",[33]],["毎週","まいしゅう","매주",[33]],["火曜日","かようび","화요일",[33]],["田中","たなか","다나카 (성씨)",[33]],["直前","ちょくぜん","직전",[33]],["経済","けいざい","경제",[33]],["迷う","まよう","헤매다, 망설이다",[33]],["退屈","たいくつ","지루함",[33]],["間違える","まちがえる","착각하다, 틀리다",[33]]];
-var QW = {"1-0":[14,6,32,9],"1-1":[33,25,11,13],"1-2":[27,16,15],"1-3":[3,21,32,9],"1-4":[8,24,7],"1-5":[36,35,31,1],"1-6":[3,20,22,0],"1-7":[18,5,23,26],"1-8":[34,12,4,17],"1-9":[29,2,10,19,30,28],"2-0":[69,31,62],"2-1":[14,43,47,70],"2-2":[64,60,49,44,45],"2-3":[14,58,24,40,63],"2-4":[56,46,55,61],"2-5":[59,21],"2-6":[14,50,24,67],"2-7":[39,66,65],"2-8":[41,37,68,42],"2-9":[14,48,57,38,53,52,51,54],"3-0":[84,103,104,87],"3-1":[105,91,88,101],"3-2":[72,104,106,85,71],"3-3":[12,76,36,35,75],"3-4":[73,95,83,82],"3-5":[92,93],"3-6":[94,74,77,88,85],"3-7":[81,91,3,96,78,88,85],"3-8":[90,97,100,87],"3-9":[80,79,86,98,89,99,102],"4-0":[14,90,126],"4-1":[128,129,111,36,35],"4-2":[14,121,110,122],"4-3":[117,7],"4-4":[116,109,120,36],"4-5":[119,125],"4-6":[14,118,112,107,108],"4-7":[117,7],"4-8":[115],"4-9":[14,113,126,123,127,124,114],"5-0":[130,136,63,49],"5-1":[132],"5-2":[147,101],"5-3":[147,101],"5-4":[120,32,148],"5-5":[130,136,63,49],"5-6":[144,115,140,49],"5-7":[133,135,138,49,146],"5-8":[134,8,141],"5-9":[14,139,131,137,142,143,145],"6-0":[153,172,149],"6-1":[118,171,160],"6-2":[178,177,165,163,162,156],"6-3":[167,166,152,154],"6-4":[72,62],"6-5":[153,172,149],"6-6":[178,150,159,13,163],"6-7":[167,166,152,155,175],"6-8":[161,151,170,157],"6-9":[158,164,174,176,173,168,169],"7-0":[193,188],"7-1":[120,181],"7-2":[167,77,180],"7-3":[3,120,185,184],"7-4":[179,186],"7-5":[191,193,189],"7-6":[3,182,183,181],"7-7":[179,119,77,194,188],"7-8":[3,190],"7-9":[179,192,187,77],"8-0":[196,191,197,203],"8-1":[208,199],"8-2":[167,205,195],"8-3":[14,202,108],"8-4":[33,210],"8-5":[14,108,207,201],"8-6":[209,198,40,204],"8-7":[3,117,197,203],"8-8":[120,40,184,206],"8-9":[200],"9-0":[217,29,28],"9-1":[212],"9-2":[120,36,215,216],"9-3":[14,217],"9-4":[14,22,212],"9-5":[36,35,63],"9-6":[14,29,28,110,217],"9-7":[213,211,217],"9-8":[14,214],"9-9":[36,35,31,62,217],"10-0":[227,224],"10-1":[234,223],"10-2":[14,177,233,222,229],"10-3":[33,228,230],"10-4":[72,231,225,221],"10-5":[234,223,227,224],"10-6":[7,218],"10-7":[14,177,233,229,222],"10-8":[234,223,227,224],"10-9":[150,72,220,232,219,226],"11-0":[239,110,265],"11-1":[245,249,236],"11-2":[45,240,191,42,262],"11-3":[239,110,265],"11-4":[253,250,259],"11-5":[267,239,264,255,42,263],"11-6":[237,261,247],"11-7":[237,261,247,235],"11-8":[239,110,210,265,262,42,253,250,29,10],"11-9":[158,257,40,243,245,236,262,249,29,258],"12-0":[308,270,274,323,311,280,289,273,281,275,312],"12-1":[303,294,297,313,110,241,256,325,288,324,261],"12-2":[294,298,268,227,318,252,256,311],"12-3":[315,294,105,314,319,307,273,301,95],"12-4":[281,317,314,110,286,209,204,305,125],"12-5":[308,270,301,273,252,309,305,95,307,105,228],"12-6":[308,270,50,110,252,272,284,269,287,113,278,302,292,290],"12-7":[15,320,50,110,252,272,310,285,290,233,304,287,44],"12-8":[300,279,282,50,317,110,252,272,321,287,291,278,284,115,316],"12-9":[295,299,282,50,110,276,252,272,277,322,271,159,60,296,284,293],"13-0":[29,10],"13-1":[271,120,49],"13-2":[14,297,87,331,85,88],"13-3":[167,221,184],"13-4":[334,40,326],"13-5":[308,327,338,340],"13-6":[213,333,70,104,217,111],"13-7":[14,22,96,108],"13-8":[36,35,31,1],"13-9":[14,332,8,337],"14-0":[206,193,341],"14-1":[29,10],"14-2":[14,342,205],"14-3":[167,221,184],"14-4":[14,217,29,28],"14-5":[347,191,344,95],"14-6":[346,345,348],"14-7":[213,333,75,70,217,111],"14-8":[206,193,188,77,341],"14-9":[343,156],"15-0":[150,372,330,370],"15-1":[363,64,357,367,374,364],"15-2":[36,371,232,357,361,362,367],"15-3":[351,60,354,356,366],"15-4":[276,24,172,357,374,367,364],"15-5":[368,335,360,176,357,374,352,362],"15-6":[369,318,373,256,352,374,316,364],"15-7":[355,375,352,374,364,357],"15-8":[349,350,14,353,366,358],"15-9":[363,365,331,357,358],"16-0":[387,380,378,149,411,377,399,11,241,382,343,325,273],"16-1":[325,397,152,400,384,393,331,273,251,110,404,379,396,388,44],"16-2":[308,270,400,325,272,414,416,273,386,287,284,387,389],"16-3":[294,261,402,407,189,392,398,317,110,44],"16-4":[317,402,392,329,407,421,214,376,390],"16-5":[308,317,273,22,391,417,419,422,409,420],"16-6":[189,110,241,335,78,343,410,395,387],"16-7":[15,320,335,405,110,44,410,401,189,256,17,387,319],"16-8":[308,406,381,339,273,287,319,410,395,418],"16-9":[300,279,282,17,110,335,405,44,387,319,410,401],"17-0":[423,438,445,298,364],"17-1":[178,434,433,428,445,438],"17-2":[72,436,445,425,440,426],"17-3":[115,441,439,427,443,438],"17-4":[64,27,430,431,439,443,428],"17-5":[442,447,426,437,435,425],"17-6":[424,444,426,435,428,445],"17-7":[448,271,438,431,433,428],"17-8":[363,271,429,190,438,445,433,298],"17-9":[40,432,271,446,425,426,438,435],"18-0":[450,462,453,455],"18-1":[465,463,460,329,449],"18-2":[464,461,310,291,385,455,329],"18-3":[340,457,233,321,291],"18-4":[50,452,329,88],"18-5":[459,454,88,291,449],"18-6":[271,252,329,385,291],"18-7":[72,60,416,455,291],"18-8":[451,189,63,449,329],"18-9":[311,63,403,455,329],"19-0":[469,471,474,473],"19-1":[271,470,468],"19-2":[14,472,467],"19-3":[14,202,466,475],"19-4":[252,63],"19-5":[465,460],"19-6":[14,202,466,475,473],"19-7":[348,473,471],"19-8":[469,474,473,471],"19-9":[14,472,467,471,473],"20-0":[191,482,22,201],"20-1":[478,480,479],"20-2":[3,191,344,75],"20-3":[179,186],"20-4":[14,117,343,4],"20-5":[111,476,481],"20-6":[14,217],"20-7":[36,35,451,189],"20-8":[130,317,63,49],"20-9":[213,477,108,110],"21-0":[487],"21-1":[484,490,64,226],"21-2":[340,486,474],"21-3":[14,58,40,63],"21-4":[3,483,485,181],"21-5":[36,35,31,62],"21-6":[14,58,24,40,63],"21-7":[487,279,489,5,103],"21-8":[3,483,181,77],"21-9":[213,488,271,405],"22-0":[516,266,241,304,209,508,340,503,522,512,102,172,149,517,424,256],"22-1":[424,241,426,266,110,256,209,511,510,516,503,522,385],"22-2":[308,406,502,519,335,507,518,516,266,209,509,284,424,241,494],"22-3":[308,318,524,311,197,489,110,497,225,500,397,514,241,319],"22-4":[15,320,514,197,340,504,465,305,489,279,414,513,258,274],"22-5":[300,279,282,514,197,243,496,513,305,414,489,110,491,241],"22-6":[15,279,45,102,506,254,521,404,363,271,78,515,38,241],"22-7":[308,287,311,45,113,501,38,363,271,78],"22-8":[45,515,499,498,44,419,505,113,385],"22-9":[15,320,279,45,102,244,110,38,363,271,78,515,499,498,44],"23-0":[526,135],"23-1":[22,108],"23-2":[7,202],"23-3":[3,232,297,184],"23-4":[526,135,113,530],"23-5":[111,81,206],"23-6":[14,24,259,31,525],"23-7":[527,528,531,5,103,85],"23-8":[3,232,297,184,181],"23-9":[526,135,113,530,529],"24-0":[213,545,110,96],"24-1":[540,537,544,511],"24-2":[387,532,534,117],"24-3":[7,244,252,548],"24-4":[14,122,121,310,110,536],"24-5":[213,538,551],"24-6":[196,12,549],"24-7":[546,533,539],"24-8":[271,541,2],"24-9":[14,550,535,543],"25-0":[8,151,317,220,575,577],"25-1":[335,115,189,110,241,174,566,570],"25-2":[564,332,553,461,554,555,15,580],"25-3":[227,197,556,560,562,563,561],"25-4":[569,558,567,576,574],"25-5":[573,287,254,396],"25-6":[258,287,559,552,582],"25-7":[115,316,579,572,557,583],"25-8":[568,581,578],"25-9":[158,565,59,571,229],"26-0":[32,314,14,214,588,591,353,601,602],"26-1":[604,162,608,398,252,370,416,448,595],"26-2":[11,593,78,587,461,340,282],"26-3":[3,461,603],"26-4":[14,155,317,588,592],"26-5":[14,24,586,271,78,354,186,598,605,585,599,489],"26-6":[111,12,76,105,607,112,209,584,104,600,14,330,141],"26-7":[17,178,162,14,227,460,3,317,120,36,35],"26-8":[597,231,12,76,347,594,190,554,63,596,8,544,606],"26-9":[178,185,326,589,7,209,63,590,510,55,60],"27-0":[370,111,63,252],"27-1":[614,14,40,620],"27-2":[79,115,619],"27-3":[488,24,616],"27-4":[29,28,14,66],"27-5":[430,381,45,302],"27-6":[14,611,317,13],"27-7":[617,317,111,365,618],"27-8":[14,615,317,610,271,113],"27-9":[613,609,612],"28-0":[14,634,624,96],"28-1":[339,103,403,40,620,614],"28-2":[627,95,416,333],"28-3":[14,113,33,76,63,317],"28-4":[637,481],"28-5":[32,623,638],"28-6":[120,626,628],"28-7":[514,636,625,622],"28-8":[14,633,617,110,629,631,630,632],"28-9":[639,621,635,629,631,630,545],"29-0":[191,22,644,329],"29-1":[196,105,350,13],"29-2":[597,231,606,185,63],"29-3":[209,584,40,63],"29-4":[647,558,110,44],"29-5":[648,89,643,63],"29-6":[647,558,646,62],"29-7":[72,645,640,641,642,182],"29-8":[346,31,329,465],"29-9":[191,649,644],"30-0":[656,479],"30-1":[208,199],"30-2":[434,231,78,204],"30-3":[264,522,654,198],"30-4":[252,500,448],"30-5":[651,652],"30-6":[48,478,480,656],"30-7":[46,478,479,655],"30-8":[653,650,75,198,510],"30-9":[658,110,176,657],"31-0":[120,92],"31-1":[14,659],"31-2":[658,418],"31-3":[161],"31-4":[346,319],"31-5":[363,319,273],"31-6":[191],"31-7":[32,5,662],"31-8":[396,660,351,510],"31-9":[209,71,661,104,273,663],"32-0":[14,70,228,669,677,672,44,664],"32-1":[463,461,673,165,260,671,317,330,245,674],"32-2":[14,667,668,96,194,242,669,634,110],"32-3":[319,197],"32-4":[676,319,675,197],"32-5":[649],"32-6":[666,197],"32-7":[589,197,665],"32-8":[196,228,110,59,625,673,70,667],"32-9":[14,668,634,96,670,667,70,625,675],"33-0":[707,24,694,544,702,706,689,701],"33-1":[707,664,304,113,119,197,489,4,108,387,105,607,690,709,7],"33-2":[707,693,113,695,260,387,189,709,3,119,197,190],"33-3":[300,279,282,707,679,690,688,201,24,119,197,489],"33-4":[63,611,708,36,35,75,703,697,685,627,95],"33-5":[12,113,73,95,691,119,684,627,697,194,55,71,527],"33-6":[701,110,700,711,601,329,616,704,699],"33-7":[29,252,113,354,159,91,679,680],"33-8":[196,204,304,113,252,712,692,522,710,209,510],"33-9":[196,91,29,252,683,15,679,354,687,682]};
+var WORDS = [["上達","じょうたつ","(실력이) 늘음",[1]],["中止","ちゅうし","중지",[1,13]],["信用","しんよう","신용",[1,24]],["先生","せんせい","선생님",[1,3,7,20,21,23,26,33]],["入れる","いれる","넣다",[1,20,33]],["前","まえ","전, 앞",[1,21,23,31]],["努力","どりょく","노력",[1]],["合格","ごうかく","합격",[1]],["守る","まもる","지키다",[1,11,13,14,16]],["客","きゃく","손님",[1,16,26]],["家","いえ","집",[1,3,24,26,33]],["帰る","かえる","돌아가다",[1,6,27,29]],["彼","かれ","그",[1,2,4,5,8,9,10,13,14,15,19,20,21,23,24,26,27,28,31,32]],["後","あと","뒤, 후",[1,12,16,22,25,33]],["後悔","こうかい","후회",[1]],["忘れる","わすれる","잊다",[1,16,26]],["忘れ物","わすれもの","깜빡 두고 온 물건",[1]],["払う","はらう","지불하다",[1]],["指導","しどう","지도",[1]],["教える","おしえる","가르치다",[1,2]],["日本","にほん","일본",[1,12,13,23]],["日本語","にほんご","일본어",[1,9,13,16,20,23,29]],["晩","ばん","저녁, 밤",[1]],["汚い","きたない","더럽다",[1]],["準備","じゅんび","준비",[1]],["無理","むり","무리",[1,17]],["留学","りゅうがく","유학",[1,25]],["破る","やぶる","깨다, 어기다",[1,9,14,27]],["約束","やくそく","약속",[1,9,11,13,14,27,33]],["結ぶ","むすぶ","맺다, 묶다",[1]],["試合","しあい","시합",[1,2,9,13,21,23,29]],["試験","しけん","시험",[1,5,26,28,31]],["貯金","ちょきん","저금",[1]],["部屋","へや","방",[1,8,10,28]],["鍵","かぎ","열쇠",[1]],["降る","ふる","(비·눈이) 내리다",[1,3,4,9,13,20,21,26,33]],["雨","あめ","비",[1,3,4,9,13,15,20,21,26,33]],["一度","いちど","한 번",[2]],["不安","ふあん","불안",[2,22]],["今さら","いまさら","이제 와서",[2]],["会社","かいしゃ","회사",[2,8,11,13,17,21,27,28,29]],["免許","めんきょ","면허",[2]],["取る","とる","취하다, (책임을) 지다",[2,11]],["嘘","うそ","거짓말",[2]],["多い","おおい","많다",[2,11,12,16,22,29,32]],["失敗","しっぱい","실패",[2,11,22,27]],["寒い","さむい","춥다",[2,30]],["平気","へいき","태연함, 아무렇지 않음",[2]],["強い","つよい","강하다",[2,30]],["得る","える","얻다 (~ざるを得ない: ~할 수밖에 없다)",[2,5,13,20]],["忙しい","いそがしい","바쁘다",[2,12,18]],["抱える","かかえる","안다, 떠안다",[2]],["担ぐ","かつぐ","짊어지다, 메다",[2]],["掴む","つかむ","움켜쥐다",[2]],["握る","にぎる","쥐다",[2]],["日","ひ","날, 해",[2,26,33]],["春","はる","봄",[2]],["本当","ほんとう","진짜",[2,12]],["毎日","まいにち","매일",[2,15,21,23,26,27,33]],["病気","びょうき","병",[2,21]],["知る","しる","알다",[2,25,32]],["終わる","おわる","끝나다",[2,12,15,18,26]],["続く","つづく","이어지다",[2]],["行う","おこなう","행하다, 실시하다",[2,6,9,21,29]],["行く","いく","가다",[2,5,9,18,19,20,21,26,27,28,29,33]],["計画","けいかく","계획",[2,15,17,21]],["許す","ゆるす","용서하다",[2]],["謝る","あやまる","사과하다",[2,16,27]],["通う","かよう","다니다",[2]],["運転","うんてん","운전",[2]],["雨天","うてん","우천",[2]],["顔","かお","얼굴",[2,13,14,32]],["中","なか","안, 속",[3,16,31,33]],["会議","かいぎ","회의",[3,6,10,17,18,29]],["写真","しゃしん","사진",[3,33]],["冷める","さめる","식다",[3]],["出す","だす","내다",[3,14,30,33]],["出る","でる","나가다",[3,26,28]],["召し上がる","めしあがる","드시다 (食べる의 존경어)",[3,7,14,21]],["始める","はじめる","시작하다",[3,16,22,26,30]],["小さな","ちいさな","작은",[3,27]],["山","やま","산",[3]],["席","せき","자리",[3,23]],["思い出す","おもいだす","떠올리다",[3]],["昔","むかし","옛날",[3]],["昼食","ちゅうしょく","점심 식사",[3]],["最中","さいちゅう","한창 ~하는 중",[3,13,23]],["村","むら","마을",[3]],["来る","くる","오다",[3,13]],["次第","しだい","~하는 대로",[3,13,18]],["渡る","わたる","건너다",[3,29]],["犯人","はんにん","범인",[3,4]],["着く","つく","도착하다",[3,33]],["確認","かくにん","확인",[3,31]],["答える","こたえる","대답하다",[3]],["茶","ちゃ","차",[3]],["見る","みる","보다",[3,12,13,14,20,28,33]],["話す","はなす","말하다",[3,11,13,24,28,32]],["警察","けいさつ","경찰",[3]],["超える","こえる","(한도·기준을) 넘다",[3]],["越える","こえる","(산·고비를) 넘다",[3]],["逃げ出す","にげだす","도망치다",[3]],["連絡","れんらく","연락",[3,5]],["避ける","さける","피하다",[3,22]],["間","あいだ","사이, 동안",[3,21,23,28]],["電話","でんわ","전화",[3,13,26,31,33]],["駅","えき","역",[3,12,16,26,29,33]],["鳴る","なる","울리다",[3]],["フランス語","フランスご","프랑스어",[4]],["上手","じょうず","능숙함, 잘함",[4,8,13,20,23,33]],["予報","よほう","예보",[4]],["人","ひと","사람",[4,9,11,12,16,20,22,24,25,28,29,30,32,33]],["今","いま","지금",[4,13,14,16,20,23,26,27]],["住む","すむ","살다",[4,26]],["何","なに","무엇",[4,12,22,23,27,28,33]],["勉強","べんきょう","공부",[4,10,23,24,26,33]],["包む","つつむ","싸다",[4]],["問題","もんだい","문제",[4,5,12,17,25,27]],["天気","てんき","날씨",[4]],["学生","がくせい","학생",[4,20,24,33]],["年","ねん","해, 년",[4,6]],["料理","りょうり","요리",[4,7,33]],["明日","あした","내일",[4,5,7,8,9,13,26,28,31]],["深い","ぶかい","깊다",[4,24]],["用心","ようじん","조심",[4,24]],["省く","はぶく","생략하다",[4]],["覆す","くつがえす","뒤집다",[4]],["見える","みえる","보이다",[4,12]],["違い","ちがい","차이",[4]],["隠す","かくす","숨기다",[4]],["雲","くも","구름",[4]],["黒い","くろい","검다",[4]],["上司","じょうし","상사",[5,20]],["不可能","ふかのう","불가능",[5]],["休暇","きゅうか","휴가",[5]],["住所","じゅうしょ","주소",[5]],["傷","きず","상처",[5]],["医者","いしゃ","의사",[5,13,25,26]],["名前","なまえ","이름",[5,23]],["命令","めいれい","명령",[5]],["承認","しょうにん","승인",[5]],["探す","さがす","찾다",[5]],["無実","むじつ","무죄, 결백",[5]],["無視","むし","무시",[5]],["直す","なおす","고치다",[5,26]],["証明","しょうめい","증명",[5]],["説明","せつめい","설명",[5]],["責任者","せきにんしゃ","책임자",[5]],["賛成","さんせい","찬성",[5]],["越す","こす","넘다, 지나다",[5]],["連絡先","れんらくさき","연락처",[5]],["遊ぶ","あそぶ","놀다",[5]],["不足","ふそく","부족",[6,16,22]],["今日","きょう","오늘",[6,10,15]],["体","からだ","몸",[6,25]],["全員","ぜんいん","전원",[6,16]],["冬","ふゆ","겨울",[6]],["出席","しゅっせき","출석",[6]],["参加","さんか","참가",[6,26]],["味","あじ","맛",[6,14]],["崩す","くずす","무너뜨리다, (몸 상태를) 해치다",[6]],["新製品","しんせいひん","신제품",[6,11,25]],["早い","はやい","이르다, 빠르다",[6,12,33]],["暖かい","あたたかい","따뜻하다",[6]],["最近","さいきん","요즘",[6,11,12,16,31]],["気","き","마음",[6,26]],["気味","きみ","~한 기미",[6]],["消費者","しょうひしゃ","소비자",[6]],["痛い","いたい","아프다",[6,32]],["社員","しゃいん","사원",[6]],["社長","しゃちょう","사장",[6,7,8,13,14]],["組む","くむ","짜다, 엮다",[6]],["詰める","つめる","채우다",[6]],["調子","ちょうし","상태, 컨디션",[6]],["通ずる","つうじる","통하다",[6]],["運動","うんどう","운동",[6,15,22]],["配る","くばる","나눠 주다",[6]],["関心","かんしん","관심",[6,25]],["限り","かぎり","한정, 한",[6]],["集める","あつめる","모으다",[6,15,30]],["頭","あたま","머리",[6,10]],["風邪","かぜ","감기",[6,17,26]],["お客様","おきゃくさま","손님",[7,8,20,23]],["上がる","あがる","오르다",[7]],["伺う","うかがう","찾아뵙다, 여쭙다 (겸양어)",[7,21,23]],["何時","なんじ","몇 시",[7,29]],["参り","まいり","(参る의 ます형) 가다·오다의 겸양어",[7]],["参る","まいる","가다·오다의 겸양어",[7,8,13,14,23]],["学校","がっこう","학교",[7,26,29]],["待つ","まつ","기다리다",[7,20,26,33]],["承る","うけたまわる","삼가 받다, 듣다 (겸양어)",[7]],["拝見","はいけん","(보다의 겸양어) 삼가 봄",[7,14]],["持つ","もつ","들다, 가지다",[7,16,18,20,25,33]],["書く","かく","쓰다",[7,17,26,33]],["私","わたし","저, 나",[7,8,11,13,14,20,21,29,31,33]],["要望","ようぼう","요망, 바라는 것",[7,24]],["資料","しりょう","자료",[7,14]],["食べる","たべる","먹다",[7,32,33]],["伝える","つたえる","전하다",[8]],["友達","ともだち","친구",[8,24,29,32,33]],["本","ほん","책",[8,22,25,32,33]],["止める","とめる","멈추다 (타동사)",[8,30]],["母","はは","(자기) 어머니",[8,14,26]],["消す","けす","끄다, 지우다",[8,30]],["町","まち","마을, 동네",[8]],["苦手","にがて","서투름, 질색",[8,20,33]],["英語","えいご","영어",[8,19,23]],["貸す","かす","빌려주다",[8]],["遅れる","おくれる","늦다",[8,12,30,33]],["部下","ぶか","부하",[8,14]],["野球","やきゅう","야구",[8]],["電気","でんき","전기, 전등",[8,30]],["電車","でんしゃ","전철",[8,12,22,26,29,31,33]],["静か","しずか","조용함",[8,11]],["人形","にんぎょう","인형",[9]],["全然","ぜんぜん","전혀",[9]],["彼女","かのじょ","그녀",[9,13,14,20,21,24]],["怒る","おこる","화내다",[9,16,26]],["怖い","こわい","무섭다",[9]],["恐らく","おそらく","아마",[9]],["決して","けっして","결코",[9,13,14,20]],["不合格","ふごうかく","불합격",[10]],["予定","よてい","예정",[10,33]],["以上","いじょう","이상 (끝, ~보다 위)",[10,25]],["会議室","かいぎしつ","회의실",[10,13,14]],["優しい","やさしい","상냥하다",[10,13]],["円","えん","엔",[10]],["半額","はんがく","반값",[10]],["場所","ばしょ","장소",[10,22]],["変更","へんこう","변경",[10,21]],["子供","こども","아이",[10,12,25,26]],["広い","ひろい","넓다",[10,12,32]],["性格","せいかく","성격",[10,25]],["日当たり","ひあたり","볕이 드는 정도",[10]],["時","とき","때",[10,26,29,30]],["来週","らいしゅう","다음 주",[10,15,23]],["良い","よい","좋다",[10,12,18]],["運賃","うんちん","운임",[10]],["一方","いっぽう","한편",[11,16]],["与える","あたえる","주다",[11]],["入る","はいる","들어가다",[11]],["同僚","どうりょう","동료",[11]],["周り","まわり","주위",[11]],["場合","ばあい","경우",[11,12]],["増える","ふえる","늘다",[11,12,16,22,25]],["声","こえ","목소리, 의견",[11,32]],["売り上げ","うりあげ","매출",[11,22]],["多く","おおく","많이, 대부분",[11,22,24]],["大きな","おおきな","큰",[11,32]],["孤独","こどく","고독",[11]],["実際","じっさい","실제로",[11]],["広がる","ひろがる","퍼지다",[11]],["影響","えいきょう","영향",[11]],["応える","こたえる","부응하다",[11]],["感じる","かんじる","느끼다",[11,16]],["時間","じかん","시간",[11,12,18,19,24,26,27,30,33]],["期待","きたい","기대",[11]],["機会","きかい","기회",[11,22,25]],["注意","ちゅうい","주의",[11]],["減る","へる","줄다",[11,12,15,16,22]],["発売","はつばい","발매",[11]],["結果","けっか","결과",[11,22,25]],["練習","れんしゅう","연습",[11,23]],["自分","じぶん","자기",[11,12,16,32,33]],["言葉","ことば","말",[11,12,16]],["責任","せきにん","책임",[11]],["走る","はしる","달리다",[11]],["車","くるま","차",[11,30]],["迷惑","めいわく","폐, 민폐",[11]],["通勤","つうきん","통근",[11,22]],["運転中","うんてんちゅう","운전 중",[11]],["一因","いちいん","한 가지 원인",[12]],["一番","いちばん","가장",[12]],["主張","しゅちょう","주장",[12,16]],["仕事","しごと","일",[12,13,17,18,19,21,22,24,26,27]],["使い方","つかいかた","사용법",[12,16]],["使う","つかう","사용하다",[12,16,22,31]],["便利","べんり","편리",[12,13,16,22]],["個人","こじん","개인",[12]],["健康","けんこう","건강",[12,15]],["優先","ゆうせん","우선",[12]],["先","さき","먼저, 앞",[12]],["内容","ないよう","내용",[12,16,21,22,33]],["力","ちから","힘",[12]],["危険","きけん","위험",[12]],["合う","あう","맞다",[12,16,22,26,33]],["呼ぶ","よぶ","부르다",[12]],["増やす","ふやす","늘리다",[12,16,22]],["増やせる","ふやせる","늘릴 수 있다",[12]],["壊れる","こわれる","부서지다, 고장 나다",[12]],["大切","たいせつ","소중함",[12,16,22,25]],["少子","しょうし","저출산",[12]],["弱い","よわい","약하다",[12]],["後回し","あとまわし","뒤로 미룸",[12]],["必ず","かならず","반드시",[12,18]],["必要","ひつよう","필요",[12]],["技術","ぎじゅつ","기술",[12,16]],["指す","さす","가리키다",[12,16]],["文章","ぶんしょう","글",[12]],["方法","ほうほう","방법",[12]],["普及","ふきゅう","보급",[12,17]],["最も","もっとも","가장",[12]],["本文","ほんぶん","본문",[12,16,22,33]],["歩く","あるく","걷다",[12]],["決める","きめる","정하다",[12,27]],["現象","げんしょう","현상",[12]],["理由","りゆう","이유",[12,22,33]],["画面","がめん","화면",[12,22]],["確か","たしか","확실함",[12]],["立ち止まる","たちどまる","멈춰 서다",[12]],["筆者","ひっしゃ","필자",[12,13,16,22]],["節約","せつやく","절약",[12]],["簡単","かんたん","간단함",[12,18,24]],["考える","かんがえる","생각하다",[12,18,22]],["自由","じゆう","자유",[12]],["若い","わかい","젊다",[12]],["落ちる","おちる","떨어지다",[12,26]],["行動","こうどう","행동",[12]],["解決","かいけつ","해결",[12,15,25]],["言う","いう","말하다",[12,16,20,22,25,26,27,28,32,33]],["読書","どくしょ","독서",[12,15,22]],["買う","かう","사다",[12,16,22,31,32]],["述べる","のべる","서술하다",[12,16,22]],["限る","かぎる","한정하다",[12,18]],["順位","じゅんい","순위",[12]],["頼る","たよる","의지하다",[12]],["高齢化","こうれいか","고령화",[12]],["高齢者","こうれいしゃ","고령자",[12,16]],["休む","やすむ","쉬다",[13,26]],["勧める","すすめる","권하다",[13]],["少し","すこし","조금",[13,33]],["思う","おもう","생각하다",[13,16,18,29,33]],["悪い","わるい","나쁘다",[13,15,26,32]],["慣れる","なれる","익숙해지다",[13,15,16]],["有名","ゆうめい","유명",[13,25]],["泣く","なく","울다",[13,14,28]],["熱","ねつ","열",[13]],["環境","かんきょう","환경",[13,15,16,22,25]],["目","め","눈",[13]],["親切","しんせつ","친절",[13]],["選ぶ","えらぶ","고르다",[13]],["長い","ながい","길다",[13,16,28]],["高い","たかい","높다, 비싸다",[13,18,21,22,26]],["ご覧","ごらん","(보다의 존경어) 보심",[14]],["厳しい","きびしい","엄하다, 혹독하다",[14,33]],["安い","やすい","싸다",[14,16,20]],["宿題","しゅくだい","숙제",[14,20]],["徹夜","てつや","밤샘",[14]],["昨日","きのう","어제",[14,29,31]],["眠い","ねむい","졸리다",[14,19]],["部長","ぶちょう","부장",[14]],["久しぶり","ひさしぶり","오랜만",[15]],["会う","あう","만나다",[15,29]],["作業","さぎょう","작업",[15,31]],["傾向","けいこう","경향",[15]],["元気","げんき","건강함, 기운",[15,26]],["分","ふん","분 (시간 단위)",[15,26,33]],["夏","なつ","여름",[15]],["帰れる","かえれる","돌아갈 수 있다",[15]],["延期","えんき","연기",[15]],["徐々","じょじょ","서서히",[15]],["徐々に","じょじょに","서서히",[15]],["意見","いけん","의견",[15]],["提出","ていしゅつ","제출",[15]],["改善","かいぜん","개선",[15]],["新しい","あたらしい","새롭다",[15,17,22,31]],["検討","けんとう","검토",[15,17]],["生活","せいかつ","생활",[15,27]],["相変わらず","あいかわらず","변함없이",[15]],["維持","いじ","유지",[15]],["職場","しょくば","직장",[15]],["若者","わかもの","젊은이",[15]],["行ける","いける","갈 수 있다",[15,26,27]],["運動会","うんどうかい","운동회",[15]],["都合","つごう","사정",[15]],["量","りょう","양",[15]],["需要","じゅよう","수요",[15]],["高まる","たかまる","높아지다",[15]],["お礼","おれい","감사 인사",[16]],["人件費","じんけんひ","인건비",[16]],["人手","ひとで","일손",[16]],["使える","つかえる","사용할 수 있다",[16]],["利点","りてん","이점",[16]],["同じ","おなじ","같다",[16,27]],["商品","しょうひん","상품",[16]],["場面","ばめん","장면",[16]],["好む","このむ","좋아하다",[16]],["少ない","すくない","적다",[16,18,22]],["工夫","くふう","궁리, 고안",[16]],["店","みせ","가게",[16,24,33]],["得意","とくい","잘함",[16]],["応援","おうえん","응원",[16]],["恥ずかしい","はずかしい","부끄럽다",[16]],["感謝","かんしゃ","감사",[16]],["手間","てま","수고, 품",[16]],["操作","そうさ","조작",[16]],["数","かず","수",[16]],["有料","ゆうりょう","유료",[16]],["機械","きかい","기계",[16,25,31]],["正しい","ただしい","올바르다",[16,22]],["気持ち","きもち","기분, 마음",[16,26]],["減らせる","へらせる","줄일 수 있다",[16]],["無人","むじん","무인",[16]],["無料","むりょう","무료",[16]],["相手","あいて","상대",[16]],["結局","けっきょく","결국",[16,18,28,33]],["絶対","ぜったい","절대",[16,22]],["続ける","つづける","계속하다",[16,21]],["考え","かんがえ","생각",[16,22]],["荷物","にもつ","짐",[16]],["表す","あらわす","나타내다",[16]],["表せる","あらわせる","나타낼 수 있다",[16]],["袋","ふくろ","봉투",[16]],["補う","おぎなう","보충하다",[16]],["補える","おぎなえる","보충할 수 있다",[16]],["見かける","みかける","눈에 띄다",[16]],["覚える","おぼえる","외우다, 기억하다",[16,22]],["言える","いえる","말할 수 있다",[16]],["誰","だれ","누구",[16,18,26,28]],["謝罪","しゃざい","사죄",[16]],["買い物","かいもの","쇼핑, 장보기",[16,31]],["近い","ちかい","가깝다",[16,22]],["違う","ちがう","다르다",[16]],["重い","おもい","무겁다",[16]],["関係","かんけい","관계",[16]],["世界中","せかいじゅう","전 세계",[17]],["事故","じこ","사고",[17,22]],["効果","こうか","효과",[17]],["原因","げんいん","원인",[17,22]],["取り組む","とりくむ","몰두하다",[17]],["実現","じつげん","실현",[17]],["履歴書","りれきしょ","이력서",[17]],["度","ど","번, 정도",[17,27]],["引き受ける","ひきうける","떠맡다",[17]],["従う","したがう","따르다",[17]],["応募","おうぼ","응모, 지원",[17]],["授業","じゅぎょう","수업",[17,30]],["方針","ほうしん","방침",[17]],["日程","にってい","일정",[17]],["条件","じょうけん","조건",[17]],["欠席","けっせき","결석",[17]],["申し込む","もうしこむ","신청하다",[17]],["目的","もくてき","목적",[17]],["真剣","しんけん","진지함",[17]],["薬","くすり","약",[17]],["見直す","みなおす","다시 검토하다",[17]],["調べる","しらべる","조사하다",[17]],["調整","ちょうせい","조정",[17]],["進める","すすめる","진행하다",[17]],["頭痛","ずつう","두통",[17]],["頼む","たのむ","부탁하다",[17,26,30]],["一応","いちおう","일단, 만일을 위해",[18]],["何度","なんど","몇 번",[18]],["傘","かさ","우산",[18,20]],["届ける","とどける","전하다, 배달하다",[18]],["成功","せいこう","성공",[18]],["暗い","くらい","어둡다",[18]],["案外","あんがい","의외로",[18]],["次第に","しだいに","점점, 차츰",[18]],["物","もの","물건",[18]],["相当","そうとう","상당히",[18]],["空","そら","하늘",[18]],["笑う","わらう","웃다",[18,19,26]],["聞く","きく","듣다, 묻다",[18,25,26,32]],["試す","ためす","시험해 보다",[18]],["話","はなし","이야기",[18,32]],["難しい","むずかしい","어렵다",[18]],["面白い","おもしろい","재미있다",[18,19,22,29]],["中国語","ちゅうごくご","중국어",[19]],["俳優","はいゆう","배우",[19]],["反面","はんめん","반면",[19]],["収入","しゅうにゅう","수입",[19]],["大変","たいへん","힘듦, 큰일",[19]],["応ずる","おうじる","따르다, 응하다",[19]],["歌手","かしゅ","가수",[19]],["決まる","きまる","정해지다",[19]],["税金","ぜいきん","세금",[19,21]],["話せる","はなせる","말할 수 있다",[19]],["急ぐ","いそぐ","서두르다",[20]],["歌","うた","노래",[20]],["窓","まど","창문",[20,30]],["閉める","しめる","닫다",[20,30]],["開ける","あける","열다",[20,30]],["間に合う","まにあう","시간에 맞추다",[20,28]],["韓国語","かんこくご","한국어",[20]],["お宅","おたく","댁",[21]],["予算","よさん","예산",[21]],["伺い","うかがい","(伺う의 ます형) 찾아뵙다 (겸양)",[21]],["国","くに","나라",[21]],["契約書","けいやくしょ","계약서",[21]],["結婚","けっこん","결혼",[21,27]],["読む","よむ","읽다",[21,22,26,33]],["足りる","たりる","충분하다",[21]],["一人","ひとり","한 명, 혼자",[22]],["久しい","ひさしい","오래되다",[22]],["今後","こんご","앞으로",[22]],["仕方ない","しかたない","어쩔 수 없다",[22]],["代わり","かわり","대신",[22]],["伸びる","のびる","늘어나다",[22]],["全く","まったく","전혀",[22]],["分かる","わかる","알다, 이해하다",[22]],["初めて","はじめて","처음으로",[22]],["変わる","かわる","바뀌다",[22,30]],["学ぶ","まなぶ","배우다",[22]],["安全","あんぜん","안전",[22]],["専用","せんよう","전용",[22]],["小説","しょうせつ","소설",[22]],["意味","いみ","의미",[22]],["成長","せいちょう","성장",[22]],["整える","ととのえる","정돈하다, 갖추다",[22]],["料金","りょうきん","요금",[22]],["本数","ほんすう","(운행) 편수",[22]],["止まる","とまる","멈추다 (자동사)",[22,26,30,31,33]],["混む","こむ","붐비다",[22,24]],["混雑","こんざつ","혼잡",[22]],["研究","けんきゅう","연구",[22]],["紙","かみ","종이",[22,28]],["経験","けいけん","경험",[22]],["自転車","じてんしゃ","자전거",[22]],["解消","かいしょう","해소",[22]],["課題","かだい","과제",[22]],["走れる","はしれる","달릴 수 있다",[22]],["近年","きんねん","근년, 최근 몇 년",[22]],["逃す","のがす","놓치다",[22]],["道","みち","길",[22,30,33]],["都市部","としぶ","도시 지역",[22]],["離れ","はなれ","멀어짐 (読書離れ: 독서 기피)",[22]],["勝てる","かてる","이길 수 있다",[23]],["失礼","しつれい","실례",[23]],["寝る","ねる","자다",[23,33]],["歯","は","이, 치아",[23]],["申し上げる","もうしあげる","말씀드리다 (겸양어)",[23]],["申す","もうす","말하다 (겸양어)",[23]],["磨く","みがく","닦다",[23]],["お客","おきゃく","손님",[24]],["一家","いっか","한 집안",[24]],["主に","おもに","주로",[24]],["付き合い","つきあい","교제",[24]],["信ずる","しんじる","믿다",[24]],["初日","しょにち","첫날",[24]],["執念","しゅうねん","집념",[24]],["大黒柱","だいこくばしら","집안의 기둥",[24]],["展覧会","てんらんかい","전람회",[24]],["怠る","おこたる","게을리하다",[24]],["手軽","てがる","손쉬움, 간편함",[24]],["敬遠","けいえん","경원, 꺼려서 멀리함",[24]],["朝","あさ","아침",[24,26,33]],["無口","むくち","말수가 적음",[24,28]],["父","ちち","(자기) 아버지",[24]],["用心深い","ようじんぶかい","신중한, 조심성이 많은",[24]],["費やす","ついやす","들이다, 쓰다",[24]],["長居","ながい","오래 머묾",[24]],["面倒","めんどう","귀찮음, 번거로움",[24]],["驚かす","おどろかす","놀라게 하다",[24]],["仮定","かてい","가정(假定)",[25]],["作家","さっか","작가",[25]],["公園","こうえん","공원",[25,26]],["公演","こうえん","공연",[25]],["出版","しゅっぱん","출판",[25]],["図る","はかる","꾀하다",[25]],["大阪","おおさか","오사카",[25,29]],["家庭","かてい","가정",[25]],["対照","たいしょう","대조",[25]],["対症","たいしょう","증상에 맞춤",[25]],["対称","たいしょう","대칭",[25]],["対象","たいしょう","대상",[25]],["市民","しみん","시민",[25]],["情報","じょうほう","정보",[25]],["感心","かんしん","감탄",[25]],["支店","してん","지점",[25]],["早起き","はやおき","일찍 일어남",[25]],["来月","らいげつ","다음 달",[25]],["歓心","かんしん","환심",[25]],["正確","せいかく","정확",[25]],["測る","はかる","(길이·넓이를) 재다",[25]],["異動","いどう","(인사) 이동",[25]],["異常","いじょう","이상, 정상이 아님",[25]],["移動","いどう","이동",[25]],["移譲","いじょう","양도",[25]],["習慣","しゅうかん","습관",[25]],["計る","はかる","(시간·수량을) 재다",[25]],["講演","こうえん","강연",[25]],["週間","しゅうかん","주간",[25]],["過程","かてい","과정",[25]],["量る","はかる","(무게·양을) 재다",[25]],["乗る","のる","타다",[26,29]],["兄","あに","(자기) 형·오빠",[26]],["先月","せんげつ","지난달",[26]],["反する","はんする","어긋나다",[26]],["喜ぶ","よろこぶ","기뻐하다",[26]],["図書館","としょかん","도서관",[26,32]],["地震","じしん","지진",[26]],["失望","しつぼう","실망",[26]],["好き嫌い","すききらい","호불호",[26]],["希望","きぼう","희망",[26]],["手紙","てがみ","편지",[26]],["断る","ことわる","거절하다",[26]],["来年","らいねん","내년",[26]],["毎朝","まいあさ","매일 아침",[26,29]],["油断","ゆだん","방심",[26]],["漫画","まんが","만화",[26]],["留守","るす","부재",[26]],["疲れる","つかれる","피곤하다",[26,33]],["眠る","ねむる","잠들다",[26]],["答え","こたえ","답",[26]],["誘い","さそい","권유",[26]],["負ける","まける","지다",[26]],["起きる","おきる","일어나다",[26,29,33]],["近く","ちかく","근처",[26,33]],["進む","すすむ","나아가다, 진행되다",[26]],["か月","かげつ","개월",[27]],["一緒","いっしょ","함께",[27]],["出かける","でかける","외출하다",[27,33]],["半年","はんとし","반년",[27]],["工事","こうじ","공사",[27]],["悩む","なやむ","고민하다",[27,28]],["文句","もんく","불평",[27]],["楽しい","たのしい","즐겁다",[27,33]],["欲","よく","욕심",[27,28]],["満足","まんぞく","만족",[27]],["裁判","さいばん","재판",[27]],["辞める","やめる","그만두다",[27,28]],["以外","いがい","이외, 제외",[28]],["切れる","きれる","베이다, 끊어지다",[28]],["前日","ぜんじつ","전날",[28]],["広まる","ひろまる","퍼지다, 널리 알려지다",[28]],["手","て","손",[28,32]],["旅行","りょこう","여행",[28]],["映画","えいが","영화",[28,33]],["楽しみ","たのしみ","기대, 즐거움",[28]],["無力","むりょく","무력함",[28]],["無欲","むよく","욕심이 없음",[28]],["無用","むよう","쓸모없음, 필요 없음",[28]],["無茶苦茶","むちゃくちゃ","엉망진창, 터무니없음",[28]],["物事","ものごと","사물, 일",[28]],["秘密","ひみつ","비밀",[28,32]],["立ち入り","たちいり","출입",[28]],["端","はし","가장자리, 끝",[28]],["締め切り","しめきり","마감",[28]],["遅い","おそい","늦다",[28]],["関係者","かんけいしゃ","관계자",[28]],["何人","なんにん","몇 명",[29]],["何本","なんぼん","몇 자루·몇 병",[29]],["何枚","なんまい","몇 장",[29]],["向こう側","むこうがわ","맞은편",[29]],["好き","すき","좋아함",[29]],["始まる","はじまる","시작되다 (자동사)",[29]],["新幹線","しんかんせん","신칸센",[29]],["東京","とうきょう","도쿄",[29]],["橋","はし","다리",[29]],["犬","いぬ","개",[29,32]],["修理","しゅうり","수리",[30]],["割る","わる","깨다 (타동사)",[30]],["困る","こまる","곤란하다, 어려움을 겪다",[30]],["時計","とけい","시계",[30]],["真ん中","まんなか","한가운데",[30]],["閉まる","しまる","닫히다",[30]],["開く","あく","열리다 (자동사)",[30]],["集まる","あつまる","모이다 (자동사)",[30]],["駅前","えきまえ","역 앞",[30,31]],["働く","はたらく","일하다",[31]],["工場","こうじょう","공장",[31]],["携帯","けいたい","휴대폰",[31]],["緊張","きんちょう","긴장",[31]],["違反","いはん","위반",[31]],["人気","にんき","인기",[32,33]],["借りる","かりる","빌리다",[32]],["切手","きって","우표",[32]],["口","くち","입",[32]],["堅い","かたい","굳다, 단단하다",[32]],["大きい","おおきい","크다",[32]],["大丈夫","だいじょうぶ","괜찮음",[32]],["欠点","けってん","결점, 단점",[32]],["知り合い","しりあい","아는 사람",[32]],["耳","みみ","귀",[32]],["聞こえる","きこえる","들리다",[32]],["足","あし","발, 다리",[32]],["靴","くつ","신발",[32]],["顔色","かおいろ","안색",[32]],["お客さん","おきゃくさん","손님",[33]],["三十","さんじゅう","30",[33]],["二十","にじゅう","20",[33]],["二十歳","はたち","스무 살",[33]],["五十","ごじゅう","50",[33]],["何分","なんぷん","몇 분",[33]],["作る","つくる","만들다",[33]],["作れる","つくれる","만들 수 있다",[33]],["先週","せんしゅう","지난주",[33]],["十分","じゅっぷん","10분 (십 분)",[33]],["卒業","そつぎょう","졸업",[33]],["土曜日","どようび","토요일",[33]],["大学","だいがく","대학",[33]],["家族","かぞく","가족",[33]],["寝坊","ねぼう","늦잠",[33]],["将来","しょうらい","장래",[33]],["平日","へいじつ","평일",[33]],["店員","てんいん","점원",[33]],["座る","すわる","앉다",[33]],["弁当","べんとう","도시락",[33]],["待ち合わせ","まちあわせ","약속하여 만남",[33]],["悲しい","かなしい","슬프다",[33]],["感ずる","かんじる","느끼다",[33]],["日曜日","にちようび","일요일",[33]],["月曜日","げつようび","월요일",[33]],["朝寝坊","あさねぼう","늦잠",[33]],["残念","ざんねん","아쉬움",[33]],["毎週","まいしゅう","매주",[33]],["火曜日","かようび","화요일",[33]],["田中","たなか","다나카 (성씨)",[33]],["直前","ちょくぜん","직전",[33]],["経済","けいざい","경제",[33]],["迷う","まよう","헤매다, 망설이다",[33]],["退屈","たいくつ","지루함",[33]],["間違える","まちがえる","착각하다, 틀리다",[33]]];
+var QW = {"1-0":[12,6,31,7],"1-1":[33,23,9,11],"1-2":[25,14,13],"1-3":[3,19,31,7],"1-4":[20,26,32],"1-5":[36,35,30,1],"1-6":[3,18,21,0],"1-7":[16,5,22,24],"1-8":[34,10,4,15],"1-9":[28,2,8,17,29,27],"2-0":[70,30,63],"2-1":[12,43,47,71],"2-2":[65,61,49,44,45],"2-3":[12,59,58,40,64],"2-4":[56,46,55,62],"2-5":[60,19],"2-6":[12,50,58,68],"2-7":[39,67,66],"2-8":[41,37,69,42],"2-9":[12,48,57,38,53,52,51,54],"3-0":[85,104,105,88],"3-1":[106,92,89,102],"3-2":[73,105,107,86,72],"3-3":[10,77,36,35,76],"3-4":[74,96,84,83],"3-5":[93,94],"3-6":[95,75,78,89,86],"3-7":[82,92,3,97,79,89,86],"3-8":[91,98,101,88],"3-9":[81,80,87,99,90,100,103],"4-0":[12,91,128],"4-1":[130,131,112,36,35],"4-2":[12,123,111,124],"4-3":[118,110,122,36,35],"4-4":[118,110,122,36],"4-5":[121,127],"4-6":[12,120,113,108,109],"4-7":[119,115],"4-8":[117],"4-9":[12,114,128,125,129,126,116],"5-0":[132,139,64,49],"5-1":[134],"5-2":[150,102],"5-3":[150,102],"5-4":[122,31,151],"5-5":[132,139,64,49],"5-6":[147,117,143,49],"5-7":[135,138,141,49,149],"5-8":[136,137,144],"5-9":[12,142,133,140,145,146,148],"6-0":[156,175,152],"6-1":[120,174,163],"6-2":[181,180,168,166,165,159],"6-3":[170,169,155,157],"6-4":[73,63],"6-5":[156,175,152],"6-6":[181,153,162,11,166],"6-7":[170,169,155,158,178],"6-8":[164,154,173,160],"6-9":[161,167,177,179,176,171,172],"7-0":[196,191],"7-1":[122,184],"7-2":[170,78,183],"7-3":[3,122,188,187],"7-4":[182,189],"7-5":[194,196,192],"7-6":[3,185,188,186,184],"7-7":[182,121,78,197,191],"7-8":[3,193],"7-9":[182,195,190,78],"8-0":[199,194,200,207],"8-1":[211,203],"8-2":[170,209,198],"8-3":[12,206,109],"8-4":[33,213],"8-5":[12,109,210,205],"8-6":[212,201,40,208],"8-7":[194,202],"8-8":[182,122,40,187],"8-9":[204],"9-0":[220,28,27],"9-1":[215],"9-2":[122,36,218,219],"9-3":[12,220],"9-4":[12,21,215],"9-5":[36,35,64],"9-6":[12,28,27,111,220],"9-7":[216,214,220],"9-8":[12,217],"9-9":[36,35,30,63,220],"10-0":[230,227],"10-1":[237,226],"10-2":[12,180,236,225,232],"10-3":[33,231,233],"10-4":[73,234,228,224],"10-5":[237,226,230,227],"10-6":[115,221],"10-7":[12,180,236,232,225],"10-8":[237,226,230,227],"10-9":[153,73,223,235,222,229],"11-0":[242,111,268],"11-1":[248,252,239],"11-2":[45,243,194,42,265],"11-3":[242,111,268],"11-4":[256,253,262],"11-5":[270,242,267,258,42,266],"11-6":[240,264,250],"11-7":[240,264,250,238],"11-8":[242,111,213,268,265,42,256,253,28,8],"11-9":[161,260,40,246,248,239,265,252,28,261],"12-0":[310,273,277,325,313,283,292,276,284,278,314],"12-1":[305,297,20,315,111,244,259,327,291,326,264],"12-2":[297,300,271,230,320,255,259,313],"12-3":[317,297,106,316,321,309,276,303,96],"12-4":[284,319,316,111,289,212,208,307,127],"12-5":[310,273,303,276,255,311,307,96,309,106,231],"12-6":[310,273,50,111,255,275,287,272,290,114,281,304,295,293],"12-7":[13,322,50,111,255,275,312,288,293,236,306,290,44],"12-8":[302,282,285,50,319,111,255,275,323,290,294,281,287,117,318],"12-9":[298,301,285,50,111,279,255,275,280,324,274,162,61,299,287,296],"13-0":[28,8],"13-1":[274,122,49],"13-2":[12,20,88,333,86,89],"13-3":[170,224,187],"13-4":[336,40,328],"13-5":[310,329,340,342],"13-6":[216,335,71,105,220,112],"13-7":[12,21,97,109],"13-8":[36,35,30,1],"13-9":[12,334,137,339],"14-0":[350,196,343],"14-1":[28,8],"14-2":[12,344,209],"14-3":[170,224,187],"14-4":[12,220,28,27],"14-5":[202,194,346,96],"14-6":[348,347,349],"14-7":[216,335,76,71,220,112],"14-8":[350,196,191,78,343],"14-9":[345,159],"15-0":[153,374,332,372],"15-1":[365,65,359,369,376,366],"15-2":[36,373,235,359,363,364,369],"15-3":[353,61,356,358,368],"15-4":[279,58,175,359,376,369,366],"15-5":[370,337,362,179,359,376,354,364],"15-6":[371,320,375,259,354,376,318,366],"15-7":[357,377,354,376,366,359],"15-8":[351,352,12,355,368,360],"15-9":[365,367,333,359,360],"16-0":[389,382,380,152,413,379,401,9,244,384,345,327,276],"16-1":[327,399,155,402,386,395,333,276,254,111,406,381,398,390,44],"16-2":[310,273,402,327,275,416,418,276,388,290,287,389,391],"16-3":[297,264,404,409,192,394,400,319,111,44],"16-4":[319,404,394,331,409,423,217,378,392],"16-5":[310,319,276,21,393,419,421,424,411,422],"16-6":[192,111,244,337,79,345,412,397,389],"16-7":[13,322,337,407,111,44,412,403,192,259,15,389,321],"16-8":[310,408,383,341,276,290,321,412,397,420],"16-9":[302,282,285,15,111,337,407,44,389,321,412,403],"17-0":[425,440,447,300,366],"17-1":[181,436,435,430,447,440],"17-2":[73,438,447,427,442,428],"17-3":[117,443,441,429,445,440],"17-4":[65,25,432,433,441,445,430],"17-5":[444,449,428,439,437,427],"17-6":[426,446,428,437,430,447],"17-7":[450,274,440,433,435,430],"17-8":[365,274,431,193,440,447,435,300],"17-9":[40,434,274,448,427,428,440,437],"18-0":[452,464,455,457],"18-1":[467,465,462,331,451],"18-2":[466,463,312,294,387,457,331],"18-3":[342,459,236,323,294],"18-4":[50,454,331,89],"18-5":[461,456,89,294,451],"18-6":[274,255,331,387,294],"18-7":[73,61,418,457,294],"18-8":[453,192,64,451,331],"18-9":[313,64,405,457,331],"19-0":[471,473,476,475],"19-1":[274,472,470],"19-2":[12,474,469],"19-3":[12,206,468,477],"19-4":[255,64],"19-5":[467,462],"19-6":[12,206,468,477,475],"19-7":[349,475,473],"19-8":[471,476,475,473],"19-9":[12,474,469,473,475],"20-0":[194,484,21,205],"20-1":[480,482,481],"20-2":[194,3,346,96],"20-3":[182,189],"20-4":[12,119,345,4],"20-5":[112,478,483],"20-6":[12,220],"20-7":[36,35,453,192],"20-8":[132,319,64,49],"20-9":[216,479,109,111],"21-0":[489],"21-1":[486,492,65,229],"21-2":[342,488,476],"21-3":[12,59,40,64],"21-4":[3,485,487,184],"21-5":[36,35,30,63],"21-6":[12,59,58,40,64],"21-7":[489,282,491,5,104],"21-8":[194,3,485,184,78],"21-9":[216,490,274,407],"22-0":[518,269,244,306,212,510,342,505,524,514,103,175,152,519,426,259],"22-1":[426,244,428,269,111,259,212,513,512,518,505,524,387],"22-2":[310,408,504,521,337,509,520,518,269,212,511,287,426,244,496],"22-3":[310,320,526,313,200,491,111,499,228,502,399,516,244,321],"22-4":[13,322,516,200,342,506,467,307,491,282,416,515,261,277],"22-5":[302,282,285,516,200,246,498,515,307,416,491,111,493,244],"22-6":[13,282,45,103,508,257,523,406,365,274,79,517,38,244],"22-7":[310,290,313,45,114,503,38,365,274,79],"22-8":[45,517,501,500,44,421,507,114,387],"22-9":[13,322,282,45,103,247,111,38,365,274,79,517,501,500,44],"23-0":[528,138],"23-1":[21,109],"23-2":[115,206],"23-3":[3,235,20,187],"23-4":[528,138,114,532],"23-5":[182,112,82],"23-6":[12,58,262,30,527],"23-7":[529,530,533,5,104,86],"23-8":[3,235,20,187,184],"23-9":[528,138,114,532,531],"24-0":[216,547,111,97],"24-1":[542,539,546,513],"24-2":[389,534,536,119],"24-3":[115,247,255,550],"24-4":[12,124,123,312,111,538],"24-5":[216,540,553],"24-6":[199,10,551],"24-7":[548,535,541],"24-8":[274,543,2],"24-9":[12,552,537,545],"25-0":[137,154,319,223,576,578],"25-1":[337,117,192,111,244,177,568,572],"25-2":[566,334,555,463,556,557,13,581],"25-3":[230,200,558,562,564,565,563],"25-4":[571,560,569,577,575],"25-5":[26,290,257,398],"25-6":[261,290,561,554,583],"25-7":[117,318,580,574,559,584],"25-8":[570,582,579],"25-9":[161,567,60,573,232],"26-0":[31,316,12,217,589,592,355,602,603],"26-1":[605,165,609,400,255,372,418,450,596],"26-2":[9,594,79,588,463,342,285],"26-3":[3,463,604],"26-4":[12,158,319,589,593],"26-5":[12,58,587,274,79,356,189,599,606,586,600,491],"26-6":[112,10,77,106,608,113,212,585,105,601,12,332,144],"26-7":[15,181,165,12,230,462,3,319,122,36,35],"26-8":[598,234,10,77,202,595,193,556,64,597,137,546,607],"26-9":[181,188,328,590,115,212,64,591,512,55,61],"27-0":[372,112,64,255],"27-1":[615,12,40,621],"27-2":[80,117,620],"27-3":[490,58,617],"27-4":[28,27,12,67],"27-5":[432,383,45,304],"27-6":[12,612,319,11],"27-7":[618,319,112,367,619],"27-8":[12,616,319,611,274,114],"27-9":[614,610,613],"28-0":[12,635,625,97],"28-1":[341,104,405,40,621,615],"28-2":[628,96,418,335],"28-3":[12,114,33,77,64,319],"28-4":[638,483],"28-5":[31,624,639],"28-6":[122,627,629],"28-7":[516,637,626,623],"28-8":[12,634,618,111,630,632,631,633],"28-9":[640,622,636,630,632,631,547],"29-0":[194,21,645,331],"29-1":[199,106,352,11],"29-2":[598,234,607,188,64],"29-3":[212,585,40,64],"29-4":[648,560,111,44],"29-5":[649,90,644,64],"29-6":[648,560,647,63],"29-7":[73,646,641,642,643,185],"29-8":[348,30,331,467],"29-9":[194,650,645],"30-0":[657,481],"30-1":[211,203],"30-2":[436,234,79,208],"30-3":[267,524,655,201],"30-4":[255,502,450],"30-5":[652,653],"30-6":[48,480,482,657],"30-7":[46,480,481,656],"30-8":[654,651,76,201,512],"30-9":[659,111,179,658],"31-0":[122,93],"31-1":[12,660],"31-2":[659,420],"31-3":[164],"31-4":[348,321],"31-5":[365,321,276],"31-6":[194],"31-7":[31,5,663],"31-8":[398,661,353,512],"31-9":[212,72,662,105,276,664],"32-0":[12,71,231,670,678,673,44,665],"32-1":[465,463,674,168,263,672,319,332,248,675],"32-2":[12,668,669,97,197,245,670,635,111],"32-3":[321,200],"32-4":[677,321,676,200],"32-5":[650],"32-6":[667,200],"32-7":[590,200,666],"32-8":[199,231,111,60,626,674,71,668],"32-9":[12,669,635,97,671,668,71,626,676],"33-0":[708,58,695,546,703,707,690,702],"33-1":[708,665,306,114,121,200,491,4,109,389,106,608,691,710,115],"33-2":[708,694,114,696,263,389,192,710,3,121,200,193],"33-3":[302,282,285,708,680,691,689,205,58,121,200,491],"33-4":[64,612,709,36,35,76,704,698,686,628,96],"33-5":[10,114,74,96,692,121,685,628,698,197,55,72,529],"33-6":[702,111,701,712,602,331,617,705,700],"33-7":[28,255,114,356,162,92,680,681],"33-8":[199,208,306,114,255,713,693,524,711,212,512],"33-9":[199,92,28,255,684,13,680,356,688,683]};
 
 var DEFAULT_TASKS = ["카드 읽고 예문 소리 내어 3번 읽기","‘뜻 가리기’로 셀프 테스트","퀴즈 풀기","틀린 것 오답노트에 적기"];
 var KEY = "jpt14-v1";
@@ -6791,7 +6857,7 @@ function renderReview(){
   document.getElementById("panel").innerHTML = h + '</div>';
 }
 
-function renderCur(){ if(cur===-1) renderWords(); else if(cur===0) renderReview(); else renderPanel(); }
+function renderCur(){ if(cur!==-1 && gv){ gstop(); gv=null; } if(cur===-1) renderWords(); else if(cur===0) renderReview(); else renderPanel(); }
 function go(n, scroll){
   if(n<-1||n>DAYS.length) return;
   cur = n;
@@ -6907,9 +6973,11 @@ function renderWList(){
   document.getElementById("wlist").innerHTML = h;
 }
 function renderWords(){
+  if(gv){ renderGame(); return; }
   if(wmode === null) wmode = wlist("due").length ? "due" : wlist("unk").length ? "unk" : "all";
   var h = '<section class="dhead"><span class="tag">단어</span><span class="min">한자 · 읽기 · 뜻</span><h2>단어 카드</h2>'
     + '<p class="goal">퀴즈에서 틀린 문제의 단어는 자동으로 모아져요. 모르는 단어는 1일·3일·7일 뒤에 다시 보여 줍니다.</p></section>'
+    + ghub()
     + '<div id="whead">' + whead() + '</div>'
     + '<div class="wtools"><button type="button" class="tog" id="wtr" aria-pressed="' + (state.wr !== false) + '">읽기 가리기</button>'
     + '<button type="button" class="tog" id="wtm" aria-pressed="' + (state.wm !== false) + '">뜻 가리기</button>';
@@ -6922,6 +6990,7 @@ function renderWords(){
 }
 function wordsClick(e){
   var t = e.target, el;
+  if(gameClick(e)) return;
   if((el = t.closest("[data-wm]"))){ wmode = el.dataset.wm; wshown = 40; renderWords(); return; }
   if(t.closest("#wtr")){ state.wr = (state.wr === false); save(); renderWords(); return; }
   if(t.closest("#wtm")){ state.wm = (state.wm === false); save(); renderWords(); return; }
@@ -6951,6 +7020,289 @@ function wordsClick(e){
 document.getElementById("panel").addEventListener("change", function(e){
   if(e.target.id === "wday"){ wday = +e.target.value; wshown = 40; renderWList(); }
 });
+
+/* ---- 단어 게임: 오늘의 퀘스트(간격 반복) + 단어 배틀(스피드 퀴즈) ---- */
+var gv = null, gtimer = null, gwait = null;
+var GQ = 20, GB = 10, GTIME = 6000, GXPLV = 200;
+function gs(){ if(!state.g) state.g = {xp: 0, st: 0, last: 0, best: 0, qd: 0, n: 0}; return state.g; }
+function glevel(xp){ return 1 + Math.floor(xp / GXPLV); }
+function gstreak(){ var g = gs(), T = today(); return (g.last === T || g.last === T - 1) ? g.st : 0; }
+function gstop(){ clearInterval(gtimer); clearTimeout(gwait); gtimer = gwait = null; }
+function gshuf(a){ for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function gmark(){ var g = gs(), T = today(); if(g.last !== T){ g.st = (g.last === T - 1) ? g.st + 1 : 1; g.last = T; } }
+function gxp(n){ var g = gs(); g.xp += n; }
+
+function ghub(){
+  var g = gs(), lv = glevel(g.xp), cur = g.xp % GXPLV, qd = g.qd === today();
+  return '<div class="ghub"><div class="glv"><b>Lv.' + lv + '</b><div class="gbar"><i style="width:' + (cur / GXPLV * 100) + '%"></i></div><span>' + cur + '/' + GXPLV + '</span></div>'
+    + '<p class="gstat">연속 <b>' + gstreak() + '</b>일 · 배틀 최고 <b>' + g.best + '</b>점 · 퀘스트 <b>' + g.n + '</b>회</p>'
+    + '<div class="gbtns"><button type="button" class="gbig" data-g="quest">오늘의 퀘스트<small>' + (qd ? '완료 · 한 번 더 하기' : GQ + '단어 · 약 5분') + '</small></button>'
+    + '<button type="button" class="gbig alt" data-g="battle">단어 배틀<small>' + GB + '문제 · 하트 3개</small></button></div></div>';
+}
+
+/* ---------- 퀘스트 ---------- */
+function questPick(){
+  var E = ws(), K = state.wk || {}, G = state.wg || {};
+  var ids = wlist("due").slice(0, GQ);
+  if(ids.length < GQ){
+    var pool = [];
+    WORDS.forEach(function(x, i){ if(!E[x[0]] && !K[x[0]] && !G[x[0]]) pool.push(i); });
+    pool.sort(function(a, b){ return WORDS[b][3].length - WORDS[a][3].length || a - b; });
+    ids = ids.concat(pool.slice(0, GQ - ids.length));
+  }
+  return ids;
+}
+function startQuest(){
+  var ids = questPick();
+  if(!ids.length){ gv = {t: "empty"}; renderGame(); return; }
+  gv = {t: "quest", ids: ids, i: 0, rev: false, combo: 0, xp: 0, k: 0, h: 0, m: 0, bad: [], lv0: glevel(gs().xp), done: false};
+  renderGame();
+}
+function gtopQ(v){
+  return '<div class="gtop"><button type="button" class="gx" data-g="home" aria-label="그만하기">✕</button><span>' + (v.i + 1) + ' / ' + v.ids.length + '</span><span>콤보 ' + v.combo + '</span><span>+' + v.xp + ' XP</span></div>'
+    + '<div class="gprog"><i style="width:' + (v.i / v.ids.length * 100) + '%"></i></div>';
+}
+function questHTML(){
+  var v = gv, x = WORDS[v.ids[v.i]], e = ws()[x[0]];
+  var h = gtopQ(v) + '<div class="gcard"><span class="gtag">' + (e ? '복습 단어' : '새 단어') + '</span><p class="gw">' + esc(x[0]) + '</p>';
+  if(!v.rev){
+    h += '<p class="ghint">뜻을 먼저 떠올려 보세요</p><div class="gtime"><i></i></div>'
+      + '<button type="button" class="gshow" id="gshow" data-g="show" disabled>생각하는 중…</button>';
+  } else {
+    h += '<p class="gr">' + (x[1] ? esc(x[1]) : '—') + '</p><p class="gm">' + esc(x[2]) + '</p>'
+      + '<div class="grate"><button type="button" class="wno" data-g="r0">몰랐다</button><button type="button" class="gmid" data-g="r1">헷갈렸다</button><button type="button" class="wyes" data-g="r2">알았다</button></div>';
+  }
+  return h + '</div>';
+}
+function questRate(r){
+  var v = gv, i = v.ids[v.i], w = WORDS[i][0], T = today(), E = ws(), x = E[w], pts;
+  if(x){
+    if(r === 2){ x.s++; x.l = T; if(x.s >= WINT.length){ delete E[w]; if(!state.wg) state.wg = {}; state.wg[w] = 1; } }
+    else if(r === 1){ x.s = Math.max(0, x.s - 1); x.t = T; x.l = T; }
+    else { x.s = 0; x.t = T; x.l = T; }
+  } else if(r === 2){
+    if(!state.wk) state.wk = {}; state.wk[w] = 1;
+  } else {
+    E[w] = {t: T, s: 0, l: T};
+    if(state.wg) delete state.wg[w];
+  }
+  if(r === 2){ v.combo++; v.k++; pts = 10 + Math.min(v.combo - 1, 4) * 2; }
+  else if(r === 1){ v.combo = 0; v.h++; pts = 5; v.bad.push(i); }
+  else { v.combo = 0; v.m++; pts = 2; v.bad.push(i); }
+  v.xp += pts; gxp(pts);
+  v.i++; v.rev = false;
+  if(v.i >= v.ids.length){
+    var g = gs(), T2 = today();
+    v.bonus = (g.qd !== T2) ? 50 : 0;
+    gxp(v.bonus); g.qd = T2; g.n++; gmark(); v.done = true;
+  }
+  save(); updateWNav();
+}
+function questEndHTML(){
+  var v = gv, g = gs(), lv = glevel(g.xp), up = lv > v.lv0;
+  var h = '<div class="gcard gend"><span class="gtag">퀘스트 완료</span><p class="gbigt">' + (v.k >= v.ids.length * 0.8 ? '아주 좋아요!' : '수고했어요!') + '</p>'
+    + '<p class="gsum">알았다 <b>' + v.k + '</b> · 헷갈렸다 <b>' + v.h + '</b> · 몰랐다 <b>' + v.m + '</b></p>'
+    + '<p class="gsum">XP <b>+' + (v.xp + v.bonus) + '</b>' + (v.bonus ? ' (완료 보너스 ' + v.bonus + ' 포함)' : '') + ' · 연속 <b>' + gstreak() + '</b>일</p>'
+    + (up ? '<p class="gup">레벨 업! Lv.' + lv + '</p>' : '');
+  if(v.bad.length){
+    h += '<p class="gnote">틀리거나 헷갈린 ' + v.bad.length + '개는 내일 다시 나와요.</p><ul class="gbad">';
+    v.bad.forEach(function(i){ var x = WORDS[i]; h += '<li><b>' + esc(x[0]) + '</b> ' + (x[1] ? '<span>' + esc(x[1]) + '</span> ' : '') + esc(x[2]) + '</li>'; });
+    h += '</ul>';
+  }
+  return h + '<div class="grate"><button type="button" data-g="home">홈으로</button><button type="button" class="wyes" data-g="quest">한 번 더</button></div></div>';
+}
+
+/* ---------- 배틀 ---------- */
+function battlePick(){
+  var E = ws(), ids = wlist("due").slice(0, GB);
+  if(ids.length < GB){
+    wlist("unk").forEach(function(i){ if(ids.length < GB && ids.indexOf(i) < 0) ids.push(i); });
+  }
+  if(ids.length < GB){
+    var rest = [];
+    WORDS.forEach(function(x, i){ if(ids.indexOf(i) < 0) rest.push(i); });
+    gshuf(rest);
+    ids = ids.concat(rest.slice(0, GB - ids.length));
+  }
+  return gshuf(ids);
+}
+function battleOpts(i){
+  var m = WORDS[i][2], L = m.length, cand = [], seen = {};
+  seen[m] = 1;
+  WORDS.forEach(function(x, j){ if(j !== i && !seen[x[2]]) cand.push([Math.abs(x[2].length - L) + Math.random() * 3, x[2]]); });
+  cand.sort(function(a, b){ return a[0] - b[0]; });
+  var opts = [m];
+  for(var k = 0; k < cand.length && opts.length < 4; k++){ if(!seen[cand[k][1]]){ seen[cand[k][1]] = 1; opts.push(cand[k][1]); } }
+  gshuf(opts);
+  return {opts: opts, ans: opts.indexOf(m)};
+}
+function startBattle(){
+  gv = {t: "battle", ids: battlePick(), i: 0, hearts: 3, score: 0, combo: 0, ok: 0, bad: [], lv0: glevel(gs().xp), done: false};
+  battleNext(true);
+}
+function battleNext(first){
+  var v = gv;
+  if(!first) v.i++;
+  if(v.hearts <= 0 || v.i >= v.ids.length){ battleEnd(); return; }
+  var o = battleOpts(v.ids[v.i]);
+  v.opts = o.opts; v.ans = o.ans; v.pick = -2; v.left = GTIME;
+  renderGame();
+}
+function gtopB(v){
+  var hs = ""; for(var k = 0; k < 3; k++) hs += k < v.hearts ? "♥" : "♡";
+  return '<div class="gtop"><button type="button" class="gx" data-g="home" aria-label="그만하기">✕</button><span class="gheart">' + hs + '</span><span>콤보 ' + v.combo + '</span><span>' + v.score + '점</span></div>'
+    + '<div class="gprog"><i style="width:' + (v.i / v.ids.length * 100) + '%"></i></div>';
+}
+function battleHTML(){
+  var v = gv, x = WORDS[v.ids[v.i]], locked = v.pick !== -2;
+  var h = gtopB(v) + '<div class="gcard"><span class="gtag">' + (v.i + 1) + ' / ' + v.ids.length + '</span><p class="gw">' + esc(x[0]) + '</p>'
+    + (locked ? '<p class="gr">' + (x[1] ? esc(x[1]) : '—') + '</p>' : '<p class="gr">&nbsp;</p>')
+    + '<div class="gtimer"><i id="gbar"></i></div><div class="gopts">';
+  v.opts.forEach(function(t, k){
+    var c = "gopt";
+    if(locked){ if(k === v.ans) c += " ok"; else if(k === v.pick) c += " bad"; }
+    h += '<button type="button" class="' + c + '" data-g="o' + k + '"' + (locked ? ' disabled' : '') + '>' + esc(t) + '</button>';
+  });
+  h += '</div>';
+  if(locked) h += '<p class="gfb ' + (v.pick === v.ans ? 'ok' : 'bad') + '">' + (v.pick === v.ans ? '정답!' : (v.pick === -1 ? '시간 초과' : '아쉬워요')) + '</p>';
+  return h + '</div>';
+}
+function battleTick(){
+  var v = gv, bar = document.getElementById("gbar");
+  if(!v || v.t !== "battle" || cur !== -1 || !bar || v.pick !== -2){ gstop(); if(cur !== -1) gv = null; return; }
+  v.left -= 100;
+  bar.style.width = Math.max(0, v.left / GTIME * 100) + "%";
+  if(v.left <= 3000) bar.classList.add("low");
+  if(v.left <= 0) battleAnswer(-1);
+}
+function battleAnswer(k){
+  var v = gv; if(!v || v.pick !== -2) return;
+  gstop();
+  var i = v.ids[v.i], w = WORDS[i][0], T = today(), E = ws();
+  v.pick = k;
+  if(k === v.ans){
+    v.combo++; v.ok++;
+    var pts = 10 + Math.min(v.combo - 1, 4) * 5;
+    v.score += pts; gxp(pts);
+  } else {
+    v.hearts--; v.combo = 0; v.bad.push(i);
+    if(!E[w]){ E[w] = {t: T, s: 0, l: T}; if(state.wg) delete state.wg[w]; }
+  }
+  save(); updateWNav();
+  renderGame();
+  gwait = setTimeout(function(){ if(gv === v && cur === -1) battleNext(false); }, k === v.ans ? 700 : 1600);
+}
+function battleEnd(){
+  var v = gv, g = gs();
+  v.bonus = (v.hearts > 0 && v.ok === v.ids.length) ? 20 : 0;
+  if(v.bonus){ v.score += v.bonus; gxp(v.bonus); }
+  v.newBest = v.score > g.best;
+  if(v.newBest) g.best = v.score;
+  gmark(); v.done = true;
+  save(); updateWNav();
+  renderGame();
+}
+function battleEndHTML(){
+  var v = gv, g = gs(), lv = glevel(g.xp), up = lv > v.lv0;
+  var h = '<div class="gcard gend"><span class="gtag">' + (v.hearts > 0 ? '배틀 클리어' : '게임 오버') + '</span><p class="gbigt">' + v.score + '점</p>'
+    + '<p class="gsum">맞힌 문제 <b>' + v.ok + '</b> / ' + v.ids.length + (v.bonus ? ' · 올 클리어 보너스 ' + v.bonus : '') + '</p>'
+    + (v.newBest ? '<p class="gup">최고 기록!</p>' : '<p class="gsum">최고 기록 <b>' + g.best + '</b>점</p>')
+    + (up ? '<p class="gup">레벨 업! Lv.' + lv + '</p>' : '');
+  if(v.bad.length){
+    h += '<p class="gnote">틀린 ' + v.bad.length + '개는 단어 복습에 들어갔어요.</p><ul class="gbad">';
+    v.bad.forEach(function(i){ var x = WORDS[i]; h += '<li><b>' + esc(x[0]) + '</b> ' + (x[1] ? '<span>' + esc(x[1]) + '</span> ' : '') + esc(x[2]) + '</li>'; });
+    h += '</ul>';
+  }
+  return h + '<div class="grate"><button type="button" data-g="home">홈으로</button><button type="button" class="wyes" data-g="battle">다시 도전</button></div></div>';
+}
+
+/* ---------- 공통 ---------- */
+function renderGame(){
+  var v = gv, h = "";
+  gstop();
+  if(v.t === "empty") h = '<div class="gcard gend"><p class="gbigt">오늘 할 단어가 없어요</p><p class="gnote">모든 단어를 이미 알고 있어요. 배틀로 실력을 확인해 보세요.</p><div class="grate"><button type="button" data-g="home">홈으로</button><button type="button" class="wyes" data-g="battle">단어 배틀</button></div></div>';
+  else if(v.t === "quest") h = v.done ? questEndHTML() : questHTML();
+  else h = v.done ? battleEndHTML() : battleHTML();
+  document.getElementById("panel").innerHTML = '<div class="gwrap">' + h + '</div>';
+  if(v.t === "quest" && !v.done && !v.rev){
+    gwait = setTimeout(function(){
+      var b = document.getElementById("gshow");
+      if(b){ b.disabled = false; b.textContent = "정답 보기"; }
+    }, 2000);
+  } else if(v.t === "battle" && !v.done && v.pick === -2){
+    gtimer = setInterval(battleTick, 100);
+  }
+  var r = document.getElementById("panel").getBoundingClientRect();
+  if(r.top > 160 || r.top < 0) window.scrollTo(0, Math.max(0, window.scrollY + r.top - 12));
+}
+function gameClick(e){
+  var b = e.target.closest("[data-g]");
+  if(!gv){ if(!b) return false; gameStart(b.dataset.g); return true; }
+  if(!b) return true;
+  var k = b.dataset.g;
+  if(k === "home"){ gstop(); gv = null; wmode = null; renderWords(); return true; }
+  if(k === "quest" || k === "battle"){ gameStart(k); return true; }
+  if(gv.t === "quest"){
+    if(k === "show" && !b.disabled){ gv.rev = true; renderGame(); }
+    else if(/^r[012]$/.test(k) && gv.rev){ questRate(+k.charAt(1)); renderGame(); }
+  } else if(gv.t === "battle" && /^o[0-3]$/.test(k)){
+    battleAnswer(+k.charAt(1));
+  }
+  return true;
+}
+function gameStart(k){ if(k === "quest") startQuest(); else if(k === "battle") startBattle(); }
+
+
+/* ---- 기기 옮기기: 기록 복사 / 붙여넣기 ---- */
+var SYNC_PRE = "JPT1.";
+function syncEncode(){
+  var o = {t: Date.now(), s: state};
+  return SYNC_PRE + btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+}
+function syncDecode(txt){
+  txt = (txt || "").replace(/\s+/g, "");
+  var i = txt.indexOf(SYNC_PRE); if(i < 0) return null;
+  try{
+    var o = JSON.parse(decodeURIComponent(escape(atob(txt.slice(i + SYNC_PRE.length)))));
+    if(!o || !o.s || typeof o.s.done !== "object" || typeof o.s.wrong !== "object") return null;
+    return o;
+  }catch(e){ return null; }
+}
+function syncSummary(s){
+  var g = s.g || {};
+  return "완료 체크 " + Object.keys(s.done || {}).length + "개 · 오답 " + Object.keys(s.wrong || {}).length + "개 · 모르는 단어 " + Object.keys(s.words || {}).length + "개 · 레벨 " + (1 + Math.floor((g.xp || 0) / 200));
+}
+(function(){
+  var box = document.getElementById("sync"); if(!box) return;
+  var ta = document.getElementById("synccode"), msg = document.getElementById("syncmsg"), armed = null;
+  function say(t, bad){ msg.textContent = t; msg.className = "syncmsg" + (bad ? " bad" : ""); }
+  box.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b) return;
+    if(b.id === "syncout"){
+      armed = null; document.getElementById("syncin").textContent = "붙여넣은 기록 불러오기";
+      ta.value = syncEncode(); ta.focus(); ta.select();
+      var done = function(){ say("복사했어요. 다른 기기에서 ‘붙여넣은 기록 불러오기’를 누르세요. (" + syncSummary(state) + ")"); };
+      var fail = function(){ say("자동 복사가 막혀 있어요. 위 칸의 글자를 길게 눌러 ‘복사’를 누르세요."); };
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, function(){ try{ document.execCommand("copy") ? done() : fail(); }catch(x){ fail(); } });
+        else { document.execCommand("copy") ? done() : fail(); }
+      }catch(x){ fail(); }
+    } else if(b.id === "syncin"){
+      var o = syncDecode(ta.value);
+      if(!o){ armed = null; b.textContent = "붙여넣은 기록 불러오기"; say("위 칸에 복사한 기록 코드를 붙여넣은 뒤 다시 눌러 주세요. (JPT1.으로 시작하는 글자)", true); return; }
+      if(armed !== ta.value){
+        armed = ta.value; b.textContent = "정말 덮어쓸까요? 한 번 더 누르세요";
+        var d = new Date(o.t);
+        say("가져올 기록(" + (d.getMonth() + 1) + "/" + d.getDate() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + " 저장): " + syncSummary(o.s) + ". 지금 기기의 기록은 이 내용으로 바뀝니다.");
+        return;
+      }
+      state = o.s; if(!state.done) state.done = {}; if(!state.wrong) state.wrong = {};
+      save(); armed = null; b.textContent = "붙여넣은 기록 불러오기"; ta.value = "";
+      say("불러왔어요. 화면을 다시 불러옵니다.");
+      setTimeout(function(){ location.reload(); }, 400);
+    }
+  });
+})();
 
 var resetArmed = false;
 document.getElementById("reset").addEventListener("click", function(e){

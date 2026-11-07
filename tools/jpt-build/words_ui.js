@@ -60,9 +60,11 @@ function renderWList(){
   document.getElementById("wlist").innerHTML = h;
 }
 function renderWords(){
+  if(gv){ renderGame(); return; }
   if(wmode === null) wmode = wlist("due").length ? "due" : wlist("unk").length ? "unk" : "all";
   var h = '<section class="dhead"><span class="tag">단어</span><span class="min">한자 · 읽기 · 뜻</span><h2>단어 카드</h2>'
     + '<p class="goal">퀴즈에서 틀린 문제의 단어는 자동으로 모아져요. 모르는 단어는 1일·3일·7일 뒤에 다시 보여 줍니다.</p></section>'
+    + ghub()
     + '<div id="whead">' + whead() + '</div>'
     + '<div class="wtools"><button type="button" class="tog" id="wtr" aria-pressed="' + (state.wr !== false) + '">읽기 가리기</button>'
     + '<button type="button" class="tog" id="wtm" aria-pressed="' + (state.wm !== false) + '">뜻 가리기</button>';
@@ -75,6 +77,7 @@ function renderWords(){
 }
 function wordsClick(e){
   var t = e.target, el;
+  if(gameClick(e)) return;
   if((el = t.closest("[data-wm]"))){ wmode = el.dataset.wm; wshown = 40; renderWords(); return; }
   if(t.closest("#wtr")){ state.wr = (state.wr === false); save(); renderWords(); return; }
   if(t.closest("#wtm")){ state.wm = (state.wm === false); save(); renderWords(); return; }
