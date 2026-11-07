@@ -17,26 +17,27 @@
 | `jpt-reading-2weeks.html` | 모바일 학습 페이지(파일 하나, 약 420KB). 1~33일차, 퀴즈 330문제, 단어 탭, 복습 탭 |
 | `tools/jpt-build/` | 위 HTML을 만드는 스크립트(`run_all.sh`, `build3.py`, `post_patch.py`, `words_patch.py` 등). **HTML을 직접 고치지 말고 여기서 고쳐 다시 빌드** |
 | `tools/jpt-mock/` | JPT 독해 모의고사(Word 파일) 제작 도구 |
-| `JPT_독해_모의고사_1~5회.docx` | 완성된 모의고사 5회분(문제지 + 답안지 + 정답표 + 상세 해설) |
+| `JPT_독해_모의고사_1~10회.docx` | 완성된 모의고사 10회분(문제지 + 답안지 + 정답표 + 상세 해설) |
 | `HANDOFF.md` | 인수인계 노트(일차 구성, 저장 키, 과거 결정 등) |
 
 ## 3. 모의고사 만들기 (`tools/jpt-mock/`)
 - 회차별 데이터: `setN/part5.js`, `part6.js`, `part7a.js`, `part7b.js`, `part8a.js`, `part8b.js`, `easy.js`
   - 제1회는 예외: 데이터가 `tools/jpt-mock/part*.js`, 친절 해설이 `set1easy.js`, 빌더가 `build.js`.
-- 빌더: `buildN.js`(제2~5회). 새 회차는 `build5.js`를 복사해 경로(`./set5/`→`./set6/`)와 제목만 바꿉니다.
+- 빌더: `buildN.js`(제2~10회). 새 회차는 `build10.js`를 복사해 경로(`./set10/`→`./set11/`)와 제목만 바꿉니다.
 - **순서**: 데이터 작성 → `node check.js ./setN` → 빌드 → 후처리 → 검증
 
 ```bash
 cd tools/jpt-mock
-node check.js ./set6                       # 보기·정답·해설 일치 검사(통과해야 빌드)
-node build6.js ../../JPT_독해_모의고사_6회.docx
-python3 -I fix_docx.py ../../JPT_독해_모의고사_6회.docx   # Word 스키마 순서 보정
-python3 <docx 스킬 경로>/scripts/office/validate.py ../../JPT_독해_모의고사_6회.docx
+node check.js ./set11                      # 보기·정답·해설 일치 검사(통과해야 빌드)
+node build11.js ../../JPT_독해_모의고사_11회.docx
+python3 -I fix_docx.py ../../JPT_독해_모의고사_11회.docx   # Word 스키마 순서 보정
+python3 <docx 스킬 경로>/scripts/office/validate.py ../../JPT_독해_모의고사_11회.docx
 ```
 - 필요한 것: Node.js + `docx` npm 패키지, Python 3, (눈으로 확인하려면) LibreOffice(`soffice`) + `pdftoppm`.
 - 알려진 오탐: `check.js`가 제2회 162번, 제3회 144번을 지적하지만 문제 없음.
 
 ### 문제 데이터 규칙
+- 제7~10회는 `tools/jpt-mock/mkset.py`로 만들었음: `data/dataN.py`(보기를 ‘정답 먼저’ 순서로 쓰고 해설에 `(@0)`~`(@3)` 표시)를 `python3 mkset.py setN data/dataN.py 시드`로 돌리면 정답 위치를 B 많게·3연속 금지로 자동 배치하고 해설의 (A)~(D) 글자도 바꿔 줌. Part 6만 수동 배치. 그 뒤 `easy.js`를 쓰고 `check.js` → `buildN.js`.
 - 번호 (101)~(200). Part 5 = 20문항, Part 6 = 20, Part 7 = 30, Part 8 = 지문 8편 30문항(3·4·3·4·4·4·4·4).
 - 항목 필드: `lab`(유형 이름표), `q`(밑줄은 `[[...]]`, Part 6은 `[[A|text]]`), `o`(보기 4개), `a`(정답 0~3), `e`(해설), `t`(해석), `m`(보기 뜻, 정답에 ✓ 또는 `(○)`), `w`(`漢字|よみ|뜻;...`). Part 6은 `wr`(틀린 표현)·`rt`(바른 표현), Part 8 지문은 `kind`·`text[]`·`tr`·`w`·`qs[]`.
 - 정답 분포는 **B가 조금 많게**(실제 시험 경향), **같은 글자가 3번 연속 나오지 않게**.
@@ -61,5 +62,5 @@ node words_test.js     # 단어 탭 동작 테스트(필요 시)
 
 ## 5. 작업 팁
 - 파일을 고친 뒤에는 **직접 열어서 확인**하세요: 학습 페이지는 브라우저, 모의고사는 PDF로 변환해 몇 쪽 눈으로 확인.
-- 새 회차(제6회 이후)도 같은 형식: 소재·어휘를 앞 회차와 겹치지 않게, 난이도는 Part 7을 N5→N2로 점점 올리고 Part 8 마지막은 격식체 안내문.
+- 새 회차(제11회 이후)도 같은 형식: 소재·어휘를 앞 회차와 겹치지 않게, 난이도는 Part 7을 N5→N2로 점점 올리고 Part 8 마지막은 격식체 안내문.
 - 임시 파일은 저장소 밖(`/tmp` 등)에 두고, 완성 파일만 저장소에 둡니다.
